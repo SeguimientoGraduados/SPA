@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet.css'
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import ciudadesACoordenadas from '@/app/utils/ciudadesACoordenadasMapping';
@@ -8,7 +8,8 @@ import CiudadMarker from '../CiudadMarkerComponent';
 
 const coordenadas = ciudadesACoordenadas["Bahía Blanca"]
 
-const Mapa = ({ciudades}) => {
+const Mapa = ({ ciudades, selectedCity, setSelectedCity }) => {
+
   return (
     <MapContainer center={[coordenadas.latitude, coordenadas.longitude]} zoom={3} scrollWheelZoom={false} style={{ height: '600px', width: '100%' }}>
       <TileLayer
@@ -16,11 +17,17 @@ const Mapa = ({ciudades}) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {ciudades.map((ciudad, index)=>(
-        <CiudadMarker key={index} ciudad={ciudad} />
+      {ciudades.map((ciudad, index) => (
+        <CiudadMarker
+          key={index}
+          ciudad={ciudad}
+          selectedCity={selectedCity}
+          setSelectedCity={setSelectedCity}
+        />
       ))}
-      
+
     </MapContainer>
+
   );
 };
 
