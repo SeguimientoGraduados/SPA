@@ -1,9 +1,9 @@
 "use client";
 import { Card, Typography } from "@material-tailwind/react";
 import graduados from './Graduado';
- 
+
 const TABLE_HEAD = ["Nombre", "Título", "Año", "Ciudad"];
- 
+
 const TablaGraduados = ({ selectedCity }) => {
 
   const filteredGraduates = graduados.filter((graduado) => graduado.ciudad === selectedCity);
@@ -13,8 +13,12 @@ const TablaGraduados = ({ selectedCity }) => {
       <table className="w-full min-w-max table-auto text-center">
         <thead>
           <tr>
-            {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+            {TABLE_HEAD.map((head, index) => (
+              <th
+                key={head}
+                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                style={{ width: '150px' }} 
+              >
                 <Typography
                   variant="small"
                   color="blue-gray"
