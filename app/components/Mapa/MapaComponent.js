@@ -13,7 +13,7 @@ const coordenadas = ciudadesACoordenadas["Bahía Blanca"]
 const Mapa = ({ ciudades, selectedCity, setSelectedCity }) => {
 
   return (
-    <MapContainer center={[coordenadas.latitude, coordenadas.longitude]} zoom={3} scrollWheelZoom={false} style={{ height: '600px', width: '100%' }} zoomControl={false}>
+    <MapContainer className="z-30" center={[coordenadas.latitude, coordenadas.longitude]} zoom={3} scrollWheelZoom={false} style={{ height: '600px', width: '100%' }} zoomControl={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
