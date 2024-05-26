@@ -13,7 +13,7 @@ const BotonFiltros = () => {
         <div style={{ position: "absolute", top: 10, left: 10, zIndex: 1000 }}>
             <IconButton className="mt-2 ml-2" id="boton" color="white" onClick={handleButtonClicked}>
                 <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                 </svg>
             </IconButton>
 
