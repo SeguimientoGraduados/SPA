@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
     Card,
     Input,
@@ -19,25 +20,27 @@ const ModalLogin = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/login', {
-                method: 'POST',
+            const response = await axios.post('http://localhost:8000/api/login', {
+                email: email,
+                password: password
+            }, {
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
+                }
             });
-            if (!response.ok) {
+
+            if (response.status !== 200) {
                 throw new Error('Error en la solicitud');
             }
-            const data = await response.json();
-            console.log(data);
+
+            const data = response.data.data;
+            localStorage.setItem('token', data.token);
+            setOpen(false);
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
         }
     };
+    
 
     return (
         <>
