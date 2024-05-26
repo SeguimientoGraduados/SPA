@@ -1,18 +1,40 @@
 'use client';
 import Mapa from "./components/Mapa";
-import getCiudades from "./services/ciudadesService";
+import obtenerGraduados from "./services/graduadosService";
+import obtenerTodasLasCiudades from "./services/ciudadesService";
 import TablaGraduados from "./components/Graduados/TablaGraduadosComponent"
-import React, { useState } from "react";
-
-const ciudades = getCiudades()
+import React, { useState , useEffect } from "react";
 
 const Home = () => {
-
+  const [graduados, setGraduados] = useState([]);
+  const [ciudades, setCiudades] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const dataGraduados = await obtenerGraduados();
+          const dataCiudades = await obtenerTodasLasCiudades();
+
+          const ciudadesGraduadosIds = dataGraduados.map(graduado => graduado.ciudad_id);
+          const ciudadesFiltradas = dataCiudades.filter(ciudad => ciudadesGraduadosIds.includes(ciudad.id));
+          setGraduados(dataGraduados);
+          setCiudades(ciudadesFiltradas)
+        } catch (error) {
+          console.log(error)
+        } finally {
+          setLoading(false);
+        }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <section className="bg-gray-200 flex min-h-screen flex-col items-center justify-between p-24">
       <Mapa
+        graduados={graduados}
         ciudades={ciudades}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
