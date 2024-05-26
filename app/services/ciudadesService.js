@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 //TODO: utilizar variables de entorno / constantes globales
-const API_URL = 'http://localhost:8000/api/ciudades';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const obtenerTodasLasCiudades = async (headers = {}) => {
     try {
-        const response = await axios.get(API_URL, {
+        const response = await axios.get(`${API_URL}/ciudades`, {
             headers: {
                 'Content-Type': 'application/json'
             }
