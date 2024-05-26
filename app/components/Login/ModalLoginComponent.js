@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { toTitleCase } from '../../utils/utils';
+import login from '../../services/loginService';
+import { AuthContext } from '../../context/AuthContext';
+import Dropdown from './Dropdown';
 import {
     Card,
     Input,
@@ -16,35 +19,41 @@ const ModalLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { setAuthState } = useContext(AuthContext);
+    const { authState } = useContext(AuthContext);
+
     const handleOpen = () => setOpen((cur) => !cur);
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/login', {
-                email: email,
-                password: password
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.status !== 200) {
-                throw new Error('Error en la solicitud');
-            }
-
-            const data = response.data.data;
+            const data = await login(email, password);
             localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            setAuthState({ isAuthenticated: true, user: data.user });
             setOpen(false);
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
         }
     };
-    
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setAuthState({ isAuthenticated: false, user: null });
+    };
 
     return (
         <>
-            <Button className="bg-sky-600 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded" onClick={handleOpen}>Iniciar Sesión</Button>
+            <div>
+                {authState.isAuthenticated ? (
+                    <Dropdown
+                        user={toTitleCase(authState.user.name)}
+                        onLogout={handleLogout}
+                    />
+                ) : (
+                    <Button className="bg-sky-600 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded" onClick={handleOpen}>Iniciar Sesión</Button>
+                )}
+            </div>
+
             <Dialog
                 size="xs"
                 open={open}
