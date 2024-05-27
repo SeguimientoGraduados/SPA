@@ -19,18 +19,7 @@ const SegundoBloque = () => {
                 }}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
-                RRSS
-            </Typography>
-            <Input
-                size="lg"
-                placeholder="-"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Página Web
+                Redes Sociales
             </Typography>
             <Input
                 size="lg"
@@ -42,6 +31,28 @@ const SegundoBloque = () => {
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
                 CV
+            </Typography>
+            <Input
+                size="lg"
+                placeholder="-"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                    className: "before:content-none after:content-none",
+                }}
+            />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Educación/Formación
+            </Typography>
+            <Input
+                size="lg"
+                placeholder="-"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                    className: "before:content-none after:content-none",
+                }}
+            />
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Intereses/Predisposición a
             </Typography>
             <Input
                 size="lg"
