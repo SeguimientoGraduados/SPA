@@ -1,10 +1,13 @@
 import {
   Input,
   Typography,
-  Textarea 
+  Textarea,
+  Select,
+  Option
 } from "@material-tailwind/react";
 import React from "react";
 import CheckboxVertical from '../../Utils/CheckboxVertical'
+import DatePicker from '../../Utils/DatePicker'
 
 
 const PrimerBloque = () => {
@@ -21,8 +24,9 @@ const PrimerBloque = () => {
           className: "before:content-none after:content-none",
         }}
       />
+
       <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Email
+        DNI
       </Typography>
       <Input
         size="lg"
@@ -31,77 +35,78 @@ const PrimerBloque = () => {
           className: "before:content-none after:content-none",
         }}
       />
-      {/* Ocupación Actual */}
+
       <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Ocupación Actual
+        Fecha Nacimiento
       </Typography>
+      <DatePicker />
 
-      <div className="flex space-x-6 ml-3">
-        <div className="flex flex-col">
-          <Typography variant="h5" color="blue-gray">
-            Tipo de Trabajo
-          </Typography>
-          <CheckboxVertical items={['Relación de dependencia', 'Autónomo']} />
-        </div>
-        <div className="flex flex-col">
-          <Typography variant="h5" color="blue-gray">
-            Sector
-          </Typography>
-          <CheckboxVertical items={['Privado', 'Público']} />
-        </div>
-      </div>
-
-      <Typography variant="h5" color="blue-gray" className="ml-3 -mt-5 -mb-3">
-        Información Adicional
+      <Typography variant="h4" color="blue-gray" className="-mb-3">
+        Título
       </Typography>
-      <Textarea 
+      <Select label="Selecciona el Título">
+        <Option>Ingeniería en Sistemas de Información</Option>
+        <Option>Licenciatura en Ciencias de la Computación</Option>
+        <Option>Abogacía</Option>
+      </Select>
+
+      <Typography variant="h4" color="blue-gray" className="-mb-3">
+        Año de Graduación
+      </Typography>
+      <Input
         size="lg"
-        placeholder="-"
-        className=" ml-3 !border-t-blue-gray-200 focus:!border-t-gray-900"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-      />
-      {/* Experiencia Laboral */}
-      <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Experiencia Laboral
-      </Typography>
-
-      <div className="flex space-x-6 ml-3">
-        <div className="flex flex-col">
-          <Typography variant="h5" color="blue-gray">
-            Categoría
-          </Typography>
-          <CheckboxVertical items={['Junior', 'Semi Senior', 'Senior']} />
-        </div>
-        <div className="flex flex-col">
-          <Typography variant="h5" color="blue-gray" className=" whitespace-nowrap">
-            Información Adicional
-          </Typography>
-          <Textarea 
-            size="lg"
-            placeholder="-"
-            className="mt-4 !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
-      </div>
-
-
-      {/* Habilidades/Competencias */}
-      <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Habilidades/Competencias
-      </Typography>
-      <Textarea 
-        size="lg"
-        placeholder="-"
         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
         labelProps={{
           className: "before:content-none after:content-none",
         }}
       />
+
+      <Typography variant="h4" color="blue-gray" className="-mb-3">
+        Ciudad
+      </Typography>
+      <Input
+        size="lg"
+        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+        labelProps={{
+          className: "before:content-none after:content-none",
+        }}
+      />
+
+      <Typography variant="h4" color="blue-gray" className="-mb-3">
+        Contacto
+      </Typography>
+      <div className="flex items-center">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/768px-Gmail_icon_%282020%29.svg.png"
+          alt="Gmail Logo"
+          className="h-8 w-10 mr-2"
+        />
+        <Input
+          size="lg"
+          className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+        />
+      </div>
+
+      <Typography variant="h4" color="blue-gray" className="-mb-3">
+        Redes Sociales
+      </Typography>
+      <div className="flex items-center">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"
+          alt="Gmail Logo"
+          className="h-10 w-10 mr-2"
+        />
+        <Input
+          size="lg"
+          className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+        />
+      </div>
     </>
   );
 }

@@ -13,7 +13,7 @@ const CiudadMarker = ({ ciudad, selectedCity, setSelectedCity }) => {
         click: handleMarkerClick
       }}
     >
-      <Popup>{ciudad.nombre} NASHE</Popup>
+      <Popup>{ciudad.nombre}</Popup>
     </Marker>
   );
 };
