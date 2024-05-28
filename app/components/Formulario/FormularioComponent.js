@@ -44,8 +44,8 @@ const Form = () => {
         La información que proporciones es invaluable para comprender mejor el perfil y las trayectorias laborales de los graduados de la Universidad Nacional del Sur (UNS). Tus respuestas serán tratadas de manera confidencial y se utilizarán únicamente con fines estadísticos y de investigación.
       </Typography>
 
-      <Card color="transparent" shadow={false}>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+      <Card color="transparent" shadow={false}  className="w-full items-center">
+        <form className="mt-8 mb-2 max-w-screen-lg sm:w-full">
           <div className="mb-1 flex flex-col gap-6">
             {renderInputsForPage(currentPage)}
           </div>

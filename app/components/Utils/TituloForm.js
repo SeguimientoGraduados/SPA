@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Select, Option, Input, Button } from '@material-tailwind/react';
 
-const DynamicForm = () => {
+const TituloForm = () => {
     const [titles, setTitles] = useState([{ title: '', year: '' }]);
 
     const addTitle = () => {
@@ -24,7 +24,7 @@ const DynamicForm = () => {
         <div>
             {titles.map((item, index) => (
                 <div key={index}>
-                    <Typography variant="h4" color="blue-gray" className="mb-3">
+                    <Typography variant="h4" color="blue-gray" className="mb-2">
                         Título
                     </Typography>
                     <Select
@@ -36,7 +36,7 @@ const DynamicForm = () => {
                         <Option value="Licenciatura en Ciencias de la Computación">Licenciatura en Ciencias de la Computación</Option>
                         <Option value="Abogacía">Abogacía</Option>
                     </Select>
-                    <Typography variant="h4" color="blue-gray" className="mb-3 mt-3">
+                    <Typography variant="h4" color="blue-gray" className="mb-2 mt-6">
                         Año de Graduación
                     </Typography>
                     <Input
@@ -50,11 +50,11 @@ const DynamicForm = () => {
                     />
                 </div>
             ))}
-            <div className="flex justify-end mt-4 -mb-4">
+            <div className="flex justify-end mt-4 -mb-6">
                 <Button className="w-auto" onClick={addTitle}>Añadir más</Button>
             </div>
         </div>
     );
 };
 
-export default DynamicForm;
+export default TituloForm;
