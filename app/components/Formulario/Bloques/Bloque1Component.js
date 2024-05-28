@@ -1,16 +1,14 @@
 import {
   Input,
   Typography,
-  Textarea,
-  Select,
-  Option
 } from "@material-tailwind/react";
 import React from "react";
-import CheckboxVertical from '../../Utils/CheckboxVertical'
 import DatePicker from '../../Utils/DatePicker'
+import TituloForm from '../../Utils/TituloForm'
 
 
 const PrimerBloque = () => {
+
 
   return (
     <>
@@ -41,25 +39,7 @@ const PrimerBloque = () => {
       </Typography>
       <DatePicker />
 
-      <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Título
-      </Typography>
-      <Select label="Selecciona el Título">
-        <Option>Ingeniería en Sistemas de Información</Option>
-        <Option>Licenciatura en Ciencias de la Computación</Option>
-        <Option>Abogacía</Option>
-      </Select>
-
-      <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Año de Graduación
-      </Typography>
-      <Input
-        size="lg"
-        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-      />
+      <TituloForm />
 
       <Typography variant="h4" color="blue-gray" className="-mb-3">
         Ciudad
@@ -95,18 +75,38 @@ const PrimerBloque = () => {
       </Typography>
       <div className="flex items-center">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"
-          alt="Gmail Logo"
+          src={`/logos/Linkedin.png`}
+          alt="Linkedin Logo"
           className="h-10 w-10 mr-2"
         />
         <Input
           size="lg"
-          className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-          labelProps={{
-            className: "before:content-none after:content-none",
-          }}
+          label="Ingrese la Url"
         />
       </div>
+      <div className="flex items-center">
+        <img
+          src={`/logos/Facebook.png`}
+          alt="Facebook Logo"
+          className="h-10 w-10 mr-2"
+        />
+        <Input
+          size="lg"
+          label="Ingrese la Url"
+        />
+      </div>
+      <div className="flex items-center">
+        <img
+          src={`/logos/X.png`}
+          alt="X Logo"
+          className="h-10 w-10 mr-2"
+        />
+        <Input
+          size="lg"
+          label="Ingrese la Url"
+        />
+      </div>
+
     </>
   );
 }
