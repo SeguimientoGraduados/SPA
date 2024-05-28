@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-//TODO: utilizar variables de entorno / constantes globales
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const obtenerGraduados = async (headers = {}) => {

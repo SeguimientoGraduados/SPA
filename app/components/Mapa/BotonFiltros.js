@@ -5,7 +5,6 @@ const BotonFiltros = () => {
     const [mostrarSelects, setMostrarSelects] = useState(false);
 
     const handleButtonClicked = () => {
-        console.log("hello world");
         setMostrarSelects(!mostrarSelects);
     };
 
