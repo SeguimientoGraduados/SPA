@@ -75,7 +75,7 @@ const PrimerBloque = () => {
       </Typography>
       <div className="flex items-center">
         <img
-          src={`/logos/Linkedin.png`}
+          src={`/logos/Linkedin.webp`}
           alt="Linkedin Logo"
           className="h-10 w-10 mr-2"
         />
@@ -86,7 +86,7 @@ const PrimerBloque = () => {
       </div>
       <div className="flex items-center">
         <img
-          src={`/logos/Facebook.png`}
+          src={`/logos/Facebook.webp`}
           alt="Facebook Logo"
           className="h-10 w-10 mr-2"
         />
@@ -97,7 +97,7 @@ const PrimerBloque = () => {
       </div>
       <div className="flex items-center">
         <img
-          src={`/logos/X.png`}
+          src={`/logos/X.webp`}
           alt="X Logo"
           className="h-10 w-10 mr-2"
         />

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logoUns from "../../../public/logo.svg"
+import logoUns from "../../../public/logo.webp"
 import Link from 'next/link';
 import ModalLogin from '../Login/ModalLoginComponent';
 import React from "react";
