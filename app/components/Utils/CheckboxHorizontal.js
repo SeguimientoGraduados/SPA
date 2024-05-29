@@ -8,19 +8,20 @@ import {
     Typography,
 } from "@material-tailwind/react";
 
-const CheckboxVertical = ({ items }) => {
+const CheckboxHorizontal = ({ items }) => {
     return (
         <Card className="bg-transparent shadow-none">
-            <List className="bg-transparent">
+            <List className="flex-row bg-transparent">
                 {items.map((item, index) => (
                     <ListItem className="p-0 bg-transparent" key={index}>
                         <label
-                            htmlFor={`vertical-list-${item.toLowerCase()}`}
-                            className="flex w-full cursor-pointer items-center py-2 bg-transparent"
+                            htmlFor={`horizontal-list-${item.toLowerCase()}`}
+                            className="flex flex-col items-center w-full cursor-pointer px-1 py-1 bg-transparent"
                         >
-                            <ListItemPrefix className="mr-3">
+                            <ListItemPrefix>
                                 <Checkbox
-                                    id={`vertical-list-${item.toLowerCase()}`}
+                                    color="blue"
+                                    id={`horizontal-list-${item.toLowerCase()}`}
                                     ripple={false}
                                     className="hover:before:opacity-0 bg-transparent"
                                     containerProps={{
@@ -28,7 +29,7 @@ const CheckboxVertical = ({ items }) => {
                                     }}
                                 />
                             </ListItemPrefix>
-                            <Typography color="blue-gray" className="font-medium whitespace-nowrap">
+                            <Typography color="blue-gray" variant="small" className="whitespace-nowrap">
                                 {item}
                             </Typography>
                         </label>
@@ -39,4 +40,4 @@ const CheckboxVertical = ({ items }) => {
     );
 };
 
-export default CheckboxVertical;
+export default CheckboxHorizontal;

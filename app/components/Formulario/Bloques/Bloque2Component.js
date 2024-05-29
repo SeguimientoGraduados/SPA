@@ -4,82 +4,69 @@ import {
     Textarea
 } from "@material-tailwind/react";
 import React from "react";
-import CheckboxVertical from '../../Utils/CheckboxVertical'
+import CheckboxHorizontal from '../../Utils/CheckboxHorizontal'
+import RadioHorizontal from '../../Utils/RadioHorizontal'
 
 const SegundoBloque = () => {
     return (
         <>
-            {/* Ocupación Actual */}
-            <Typography variant="h4" color="blue-gray" className="-mb-3">
-                Ocupación Actual
+            <Typography
+                variant="h3"
+                color="blue-gray"
+                className="text-center font-normal"
+            >
+                Información Laboral
             </Typography>
 
-            <div className="flex space-x-6 ml-3">
-                <div className="flex flex-col">
-                    <Typography variant="h5" color="blue-gray">
-                        Tipo de Trabajo
+            <div className="flex flex-col gap-4">
+
+                <Typography className="font-normal text-center" variant="h4" color="blue-gray">
+                    Ocupación Actual
+                </Typography>
+                <CheckboxHorizontal items={['Relación de dependencia', 'Autónomo']} />
+                <Input label="Nombre de la Empresa" labelProps={{ className: "font-semibold" }} />
+
+                <CheckboxHorizontal items={['Sector Privado', 'Sector Público']} />
+                <Textarea variant="outlined" label="Información Adicional" labelProps={{ className: "font-semibold" }} />
+
+                <div className="flex items-center flex-row">
+                    <Typography className="text-center font-semibold" variant="small" color="blue-gray">
+                        Visibilidad de Información:
                     </Typography>
-                    <CheckboxVertical items={['Relación de dependencia', 'Autónomo']} />
+                    <RadioHorizontal />
                 </div>
-                <div className="flex flex-col">
-                    <Typography variant="h5" color="blue-gray">
-                        Sector
+
+                <Typography variant="h4" color="blue-gray" className="font-normal text-center">
+                    Experiencia Laboral
+                </Typography>
+
+
+                <Typography className="font-normal text-center" variant="h5" color="blue-gray">
+                    Años de Experiencia:
+                </Typography>
+                <CheckboxHorizontal items={['0 a 2 años', '2 a 5 años', '5 a 10 años', 'Más de 10 años']} />
+                <Textarea variant="outlined" label="Información Adicional" labelProps={{ className: "font-semibold" }} />
+
+                <div className="flex items-center flex-row">
+                    <Typography className="text-center font-semibold" variant="small" color="blue-gray">
+                        Visibilidad de Información:
                     </Typography>
-                    <CheckboxVertical items={['Privado', 'Público']} />
+                    <RadioHorizontal />
                 </div>
+
+
+                <Typography variant="h4" color="blue-gray" className="font-normal text-center">
+                    Habilidades/Competencias
+                </Typography>
+                <Textarea
+                    size="md"
+                    placeholder="-"
+                    className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                    labelProps={{
+                        className: "before:content-none after:content-none",
+                    }}
+                />
             </div>
-
-            <Typography variant="h5" color="blue-gray" className="ml-3 -mt-5 -mb-3">
-                Información Adicional
-            </Typography>
-            <Textarea
-                size="lg"
-                placeholder="-"
-                className=" ml-3 !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
-            {/* Experiencia Laboral */}
-            <Typography variant="h4" color="blue-gray" className="-mb-3">
-                Experiencia Laboral
-            </Typography>
-
-            <div className="flex space-x-6 ml-3">
-                <div className="flex flex-col">
-                    <Typography variant="h5" color="blue-gray">
-                        Categoría
-                    </Typography>
-                    <CheckboxVertical items={['Junior', 'Semi Senior', 'Senior']} />
-                </div>
-                <div className="flex flex-col">
-                    <Typography variant="h5" color="blue-gray" className=" whitespace-nowrap">
-                        Información Adicional
-                    </Typography>
-                    <Textarea
-                        size="lg"
-                        placeholder="-"
-                        className="mt-4 !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                            className: "before:content-none after:content-none",
-                        }}
-                    />
-                </div>
-            </div>
-
-
-            {/* Habilidades/Competencias */}
-            <Typography variant="h4" color="blue-gray" className="-mb-3">
-                Habilidades/Competencias
-            </Typography>
-            <Textarea
-                size="lg"
-                placeholder="-"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
         </>
     );
 }
