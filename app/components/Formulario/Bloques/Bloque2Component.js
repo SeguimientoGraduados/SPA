@@ -6,7 +6,7 @@ import {
 import React from "react";
 import CheckboxHorizontal from '../../Utils/CheckboxHorizontal'
 import RadioHorizontal from '../../Utils/RadioHorizontal'
-import Tooltip from '../../Utils/Tooltip'
+import Tooltip from '../../Utils/TooltipVisibilidad'
 
 const SegundoBloque = () => {
     return (
@@ -24,6 +24,7 @@ const SegundoBloque = () => {
                 <Typography className="font-normal text-center" variant="h4" color="blue-gray">
                     Ocupación Actual
                 </Typography>
+                
                 <CheckboxHorizontal items={['Relación de dependencia', 'Autónomo']} />
                 <Input label="Nombre de la Empresa" labelProps={{ className: "font-semibold" }} />
 

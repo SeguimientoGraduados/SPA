@@ -1,56 +1,61 @@
-import {
-    Input,
-    Typography,
-} from "@material-tailwind/react";
-import React from "react";
+import { Input, Typography, IconButton, Checkbox } from "@material-tailwind/react";
+import React, { useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 const TercerBloque = () => {
+    const [formaciones, setFormaciones] = useState([0]);
+
+    const addFormacion = () => {
+        setFormaciones([...formaciones, formaciones.length]);
+    };
+
     return (
         <>
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Educación/Formación
+            <Typography
+                variant="h3"
+                color="blue-gray"
+                className="text-center font-normal"
+            >
+                Información Adicional
             </Typography>
-            <Input
-                size="lg"
-                placeholder="name@mail.com"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Campo 2
-            </Typography>
-            <Input
-                size="lg"
-                placeholder="-"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Campo 3
-            </Typography>
-            <Input
-                size="lg"
-                placeholder="-"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Campo 4
-            </Typography>
-            <Input
-                size="lg"
-                placeholder="-"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
-            />
+
+            <div className="flex flex-col gap-4">
+                <Input label="CV" placeholder="https://drive.google.com/CV_Ejemplo" labelProps={{ className: "font-semibold" }} />
+
+                {formaciones.map((index) => (
+                    <div key={index}>
+                        <Input label="Educación/Formación" labelProps={{ className: "font-semibold" }} />
+                    </div>
+                ))}
+                <div className="flex flex-col items-center">
+                    <IconButton variant="outlined" onClick={addFormacion}>
+                        <PlusIcon className="h-5 w-5" />
+                    </IconButton>
+                </div>
+
+
+                <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
+                    Interés/Predisposición a:
+                </Typography>
+                <div className="flex flex-row items-center gap-2">
+                    <Checkbox color="blue" />
+                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
+                        1. Comunidad /integrar red (Ecosistema)
+                    </Typography>
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                    <Checkbox color="blue" />
+                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
+                        2. Proponer iniciativas (Oferta)
+                    </Typography>
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                    <Checkbox color="blue" />
+                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
+                        3. Recibir consultas (Demanda)
+                    </Typography>
+                </div>
+            </div>
         </>
     );
 }
