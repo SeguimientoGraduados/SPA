@@ -6,6 +6,7 @@ import {
 import React from "react";
 import CheckboxHorizontal from '../../Utils/CheckboxHorizontal'
 import RadioHorizontal from '../../Utils/RadioHorizontal'
+import Tooltip from '../../Utils/Tooltip'
 
 const SegundoBloque = () => {
     return (
@@ -30,10 +31,12 @@ const SegundoBloque = () => {
                 <Textarea variant="outlined" label="Información Adicional" labelProps={{ className: "font-semibold" }} />
 
                 <div className="flex items-center flex-row">
+                    <Tooltip />
                     <Typography className="text-center font-semibold" variant="small" color="blue-gray">
                         Visibilidad de Información:
                     </Typography>
                     <RadioHorizontal />
+
                 </div>
 
                 <Typography variant="h4" color="blue-gray" className="font-normal text-center">
@@ -48,6 +51,7 @@ const SegundoBloque = () => {
                 <Textarea variant="outlined" label="Información Adicional" labelProps={{ className: "font-semibold" }} />
 
                 <div className="flex items-center flex-row">
+                    <Tooltip />
                     <Typography className="text-center font-semibold" variant="small" color="blue-gray">
                         Visibilidad de Información:
                     </Typography>
