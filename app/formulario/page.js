@@ -4,7 +4,7 @@ import React from "react";
 
 const Formulario = () => {
   return (
-    <section className="bg-gray-200 flex min-h-screen flex-col items-center justify-between p-24">
+    <section className="flex flex-col items-center justify-between py-4 bg-gray-200">
       <Form />
     </section>
   );

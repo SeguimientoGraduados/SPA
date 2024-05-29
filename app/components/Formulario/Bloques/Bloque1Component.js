@@ -1,161 +1,88 @@
-import {
-  Input,
-  Typography,
-} from "@material-tailwind/react";
+import { Input, Typography } from "@material-tailwind/react";
 import React from "react";
-import DatePicker from '../../Utils/DatePicker'
-import TituloForm from '../../Utils/TituloForm'
-
+import DatePicker from "../../Utils/DatePicker";
+import TituloForm from "../../Utils/TituloForm";
 
 const PrimerBloque = () => {
-
-
   return (
     <>
-      <Typography variant="h3" color="blue-gray" className="text-center -mb-3">
+      <Typography
+        variant="h3"
+        color="blue-gray"
+        className="text-center font-normal"
+      >
         Información Personal
       </Typography>
 
-      <div className="flex">
-        <div className="w-1/2 pr-4 mr-12">
-          <Typography variant="h4" color="blue-gray" className="mb-2">
-            Nombre
-          </Typography>
+      <div className="flex flex-col gap-4">
+        <Input label="Nombre" labelProps={{ className: "font-semibold" }} />
+
+        <Input label="DNI" labelProps={{ className: "font-semibold" }} />
+
+        <DatePicker />
+
+        <TituloForm />
+
+        <Input label="Ciudad" labelProps={{ className: "font-semibold" }} />
+
+        <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
+          Informacion de Contacto
+        </Typography>
+        <div className="flex flex-row gap-2">
+          <img
+            src={`/logos/gmail.svg`}
+            alt="Gmail Logo"
+            className="h-8 w-10 mr-2"
+          />
           <Input
-            size="lg"
+            placeholder="ejemplo@mail.com"
             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
           />
-
-          <Typography variant="h4" color="blue-gray" className="mt-6 mb-2">
-            DNI
-          </Typography>
-          <Input
-            size="lg"
-            className="mb-3 !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-
-          <Typography variant="h4" color="blue-gray" className="mt-6 mb-2">
-            Fecha Nacimiento
-          </Typography>
-          <DatePicker />
-
-          <div className="mt-6">
-            <TituloForm />
-          </div>
-
         </div>
-
-      <Typography variant="h4" color="blue-gray" className="-mb-3">
-        Redes Sociales
-      </Typography>
-      <div className="flex items-center">
-        <img
-          src={`/logos/Linkedin.webp`}
-          alt="Linkedin Logo"
-          className="h-10 w-10 mr-2"
-        />
-        <Input
-          size="lg"
-          label="Ingrese la Url"
-        />
-      </div>
-      <div className="flex items-center">
-        <img
-          src={`/logos/Facebook.webp`}
-          alt="Facebook Logo"
-          className="h-10 w-10 mr-2"
-        />
-        <Input
-          size="lg"
-          label="Ingrese la Url"
-        />
-      </div>
-      <div className="flex items-center">
-        <img
-          src={`/logos/X.webp`}
-          alt="X Logo"
-          className="h-10 w-10 mr-2"
-        />
-        <Input
-          size="lg"
-          label="Ingrese la Url"
-        />
-        <div className="w-1/2 pl-4">
-          <Typography variant="h4" color="blue-gray" className="mb-2">
-            Ciudad
-          </Typography>
+        <div className="flex flex-row gap-2">
+          <img
+            src={`/logos/Linkedin.webp`}
+            alt="Linkedin Logo"
+            className="h-10 w-10 mr-2"
+          />
           <Input
-            size="lg"
+            placeholder="https://www.linkedin.com/in/ejemplo/"
             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
           />
-
-          <Typography variant="h4" color="blue-gray" className="mb-2 mt-6">
-            Contacto
-          </Typography>
-          <div className="flex items-center">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/768px-Gmail_icon_%282020%29.svg.png"
-              alt="Gmail Logo"
-              className="h-8 w-10 mr-2"
-            />
-            <Input
-              size="lg"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-          </div>
-
-          <Typography variant="h4" color="blue-gray" className="mb-2 mt-6">
-            Redes Sociales
-          </Typography>
-          <div className="flex items-center">
-            <img
-              src={`/logos/Linkedin.png`}
-              alt="Linkedin Logo"
-              className="h-10 w-10 mr-2"
-            />
-            <Input
-              size="lg"
-              label="Ingrese la Url"
-            />
-          </div>
-          <div className="flex items-center mt-6">
-            <img
-              src={`/logos/Facebook.png`}
-              alt="Facebook Logo"
-              className="h-10 w-10 mr-2"
-            />
-            <Input
-              size="lg"
-              label="Ingrese la Url"
-            />
-          </div>
-          <div className="flex items-center mt-6">
-            <img
-              src={`/logos/X.png`}
-              alt="X Logo"
-              className="h-10 w-10 mr-2"
-            />
-            <Input
-              size="lg"
-              label="Ingrese la Url"
-            />
-          </div>
+        </div>
+        <div className="flex flex-row gap-2">
+          <img
+            src={`/logos/Facebook.webp`}
+            alt="Facebook Logo"
+            className="h-10 w-10 mr-2"
+          />
+          <Input
+            placeholder="https://www.facebook.com/ejemplo/"
+            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+          />
+        </div>
+        <div className="flex flex-row gap-2">
+          <img src={`/logos/X.webp`} alt="X Logo" className="h-10 w-10 mr-2" />
+          <Input
+            placeholder="https://www.twitter.com/ejemplo/"
+            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+          />
         </div>
       </div>
-
     </>
   );
-}
+};
+
 export default PrimerBloque;

@@ -17,11 +17,8 @@ const DatePicker = () => {
         <div>
             <Popover placement="bottom">
                 <PopoverHandler>
-                    <Input
-                        label="Seleccionar una Fecha"
-                        onChange={() => null}
-                         value={date ? format(date, "PPP", { locale: es }) : ""}
-                    />
+                    <Input label="Fecha de nacimiento" labelProps={{ className: "font-semibold" }} onChange={() => null}
+                         value={date ? format(date, "PPP", { locale: es }) : "" } />
                 </PopoverHandler>
                 <PopoverContent>
                     <DayPicker
