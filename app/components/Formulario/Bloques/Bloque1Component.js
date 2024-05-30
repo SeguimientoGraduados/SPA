@@ -3,7 +3,7 @@ import React from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
 
-const PrimerBloque = () => {
+const PrimerBloque = ({carreras}) => {
   return (
     <>
       <Typography
@@ -21,7 +21,7 @@ const PrimerBloque = () => {
 
         <DatePicker />
 
-        <TituloForm />
+        <TituloForm carreras={carreras}/>
 
         <Input label="Ciudad" labelProps={{ className: "font-semibold" }} />
 
