@@ -1,8 +1,8 @@
 import { Input, Typography, Textarea } from "@material-tailwind/react";
 import React from "react";
-import CheckboxHorizontal from "../../Utils/CheckboxHorizontal";
-import RadioHorizontal from "../../Utils/RadioHorizontal";
-import Tooltip from "../../Utils/Tooltip";
+import CheckboxHorizontal from '../../Utils/CheckboxHorizontal'
+import RadioHorizontal from '../../Utils/RadioHorizontal'
+import Tooltip from '../../Utils/TooltipVisibilidad'
 
 const SegundoBloque = () => {
   return (

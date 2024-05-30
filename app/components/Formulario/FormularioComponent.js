@@ -43,11 +43,15 @@ const Form = () => {
               </div>
             </form>
           </Card>
+          {currentPage === 3 &&
+            <div className="flex justify-center py-2">
+              <Button color="blue">Enviar Formulario</Button>
+            </div>}
           <Pagination
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          {currentPage === 3 && <Button>Finalizar</Button>}
+
         </div>
       </div>
     </>
