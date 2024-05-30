@@ -1,6 +1,7 @@
 import { Input, Typography, IconButton, Checkbox } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import CheckboxList from "../../Utils/CheckboxList";
 
 const TercerBloque = () => {
     const [formaciones, setFormaciones] = useState([0]);
@@ -37,24 +38,7 @@ const TercerBloque = () => {
                 <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
                     Interés/Predisposición a:
                 </Typography>
-                <div className="flex flex-row items-center gap-2">
-                    <Checkbox color="blue" />
-                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
-                        1. Comunidad /integrar red (Ecosistema)
-                    </Typography>
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                    <Checkbox color="blue" />
-                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
-                        2. Proponer iniciativas (Oferta)
-                    </Typography>
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                    <Checkbox color="blue" />
-                    <Typography variant="h7" color="blue-gray" className="font-normal text-center   ">
-                        3. Recibir consultas (Demanda)
-                    </Typography>
-                </div>
+                <CheckboxList direction={"col"} items={["1. Comunidad /integrar red (Ecosistema)", "2. Proponer iniciativas (Oferta)", "3. Recibir consultas (Demanda)"]} />
             </div>
         </>
     );
