@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Typography,
   Select,
   Option,
   Input,
@@ -8,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
 
-const TituloForm = () => {
+const TituloForm = ({ carreras }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
 
   const addTitle = () => {
@@ -27,6 +26,7 @@ const TituloForm = () => {
     setTitles(newTitles);
   };
 
+
   return (
     <div className="flex flex-col gap-4 items-center">
       {titles.map((item, index) => (
@@ -38,13 +38,11 @@ const TituloForm = () => {
               value={item.title}
               onChange={(e) => handleTitleChange(index, e.target.value)}
             >
-              <Option value="Ingeniería en Sistemas de Información">
-                Ingeniería en Sistemas de Información
-              </Option>
-              <Option value="Licenciatura en Ciencias de la Computación">
-                Licenciatura en Ciencias de la Computación
-              </Option>
-              <Option value="Abogacía">Abogacía</Option>
+              {carreras.map((carrera) => (
+                <Option key={carrera.id} value={carrera.nombre}>
+                  {carrera.nombre}
+                </Option >
+              ))}
             </Select>
 
             <Input

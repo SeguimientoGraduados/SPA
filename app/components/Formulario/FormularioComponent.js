@@ -5,7 +5,7 @@ import PrimerBloque from "./Bloques/Bloque1Component";
 import SegundoBloque from "./Bloques/Bloque2Component";
 import TercerBloque from "./Bloques/Bloque3Component";
 
-const Form = () => {
+const Form = ({ carreras }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (pageNumber) => {
@@ -15,7 +15,7 @@ const Form = () => {
   const renderInputsForPage = (page) => {
     switch (page) {
       case 1:
-        return <PrimerBloque />;
+        return <PrimerBloque carreras={carreras} />;
       case 2:
         return <SegundoBloque />;
       case 3:
