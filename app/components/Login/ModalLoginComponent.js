@@ -50,8 +50,12 @@ const ModalLogin = () => {
             onLogout={handleLogout}
           />
         ) : (
-          <Button variant="gradient" color="blue" onClick={handleOpen}>
-            Iniciar Sesión
+          <Button
+            onClick={handleOpen}
+            className="text-md"
+            variant="text"
+            color="white">
+            INICIAR SESIÓN
           </Button>
         )}
       </div>
@@ -67,31 +71,18 @@ const ModalLogin = () => {
             <Typography variant="h4" color="blue-gray">
               Iniciar Sesión
             </Typography>
-            <Typography
-              className="mb-3 font-normal"
-              variant="paragraph"
-              color="gray"
-            >
-              Ingrese su email y contraseña para iniciar sesión
-            </Typography>
-            <Typography className="-mb-2" variant="h6">
-              Email
-            </Typography>
             <Input
               label="Email"
               size="lg"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Typography className="-mb-2" variant="h6">
-              Contraseña
-            </Typography>
             <Input
               label="Contraseña"
               size="lg"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="-ml-2.5 -mt-3">
+            <div className="self-end mr-2.5 -mt-3">
               <Checkbox label="Recuérdame" />
             </div>
           </CardBody>
