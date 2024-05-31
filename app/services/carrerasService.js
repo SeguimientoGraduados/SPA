@@ -11,7 +11,7 @@ const obtenerTodasLasCarreras = async (headers = {}) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching ciudades data:', error);
+        console.error('Error fetching carreras data:', error);
         throw error;
     }
 };

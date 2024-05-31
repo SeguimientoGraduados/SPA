@@ -6,24 +6,26 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import SelectOption from "../Utils/SelectOption";
 
-const TituloForm = ({ carreras }) => {
+const TituloForm = ({ onChange, carreras }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
 
   const addTitle = () => {
     setTitles([...titles, { title: "", year: "" }]);
   };
 
-  const handleTitleChange = (index, value) => {
-    const newTitles = [...titles];
-    newTitles[index].title = value;
-    setTitles(newTitles);
-  };
+  const handleInternalChange = (e, index, field) => {
 
-  const handleYearChange = (index, value) => {
     const newTitles = [...titles];
-    newTitles[index].year = value;
+    newTitles[index][field] = e.target.value;
     setTitles(newTitles);
+
+    const formattedTitles = newTitles.map(item => ({
+      carrera_id: item.title,
+      anio_graduacion: item.year
+    }));
+    onChange({ target: { name: "carreras", value: formattedTitles } });
   };
 
 
@@ -32,24 +34,20 @@ const TituloForm = ({ carreras }) => {
       {titles.map((item, index) => (
         <div key={index}>
           <div className="flex flex-row gap-2">
-            <Select
-              label="Título"
-              labelProps={{ className: "font-semibold" }}
+
+            <SelectOption
+              select={"Título"}
+              handleChange={(e) => handleInternalChange(e, index, 'title')}
+              options={carreras}
+              name="carreras"
               value={item.title}
-              onChange={(e) => handleTitleChange(index, e.target.value)}
-            >
-              {carreras.map((carrera) => (
-                <Option key={carrera.id} value={carrera.nombre}>
-                  {carrera.nombre}
-                </Option >
-              ))}
-            </Select>
+            />
 
             <Input
               label="Año de Graduación"
-              labelProps={{ className: "font-semibold" }}
+              name="año_graduacion"
+              onChange={(e) => handleInternalChange(e, index, 'year')}
               value={item.year}
-              onChange={(e) => handleYearChange(index, e.target.value)}
             />
           </div>
         </div>

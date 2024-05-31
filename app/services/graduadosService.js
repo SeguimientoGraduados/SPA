@@ -16,4 +16,23 @@ const obtenerGraduados = async (headers = {}) => {
     }
 };
 
-export default obtenerGraduados;
+
+const registrarGraduado = async (formData) => {
+    console.log(formData);
+    try {
+        const response = await axios.post(`${API_URL}/graduados`, formData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.data.data; 
+    } catch (error) {
+        throw new Error('Error al iniciar sesión:', error);
+    }
+};
+
+export default { obtenerGraduados, registrarGraduado };

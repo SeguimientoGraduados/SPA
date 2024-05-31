@@ -10,21 +10,29 @@ import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
-const DatePicker = () => {
+const DatePicker = ({ label, onChange, name }) => {
     const [date, setDate] = React.useState(undefined);
+
+    const handleDateChange = (newDate) => {
+        setDate(newDate);
+        onChange({ target: { name, value: date ? format(date, "PPP", { locale: es }) : "" } });
+    };
 
     return (
         <div>
             <Popover placement="bottom">
                 <PopoverHandler>
-                    <Input label="Fecha de nacimiento" labelProps={{ className: "font-semibold" }} onChange={() => null}
-                         value={date ? format(date, "PPP", { locale: es }) : "" } />
+                    <Input
+                        label={label}
+                        defaultValue={date ? format(date, "PPP", { locale: es }) : ""}
+                        readOnly
+                    />
                 </PopoverHandler>
                 <PopoverContent>
                     <DayPicker
                         mode="single"
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={handleDateChange}
                         showOutsideDays
                         locale={es}
                         className="border-0"
