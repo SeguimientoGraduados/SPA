@@ -18,7 +18,7 @@ const TABLE_ROWS = [
   },
 ];
 
-const TablaSolicitudes = ({ solicitudes }) => {
+const TablaSolicitudes = ({ solicitudes , fetchData}) => {
   return (
     <Card className="w-full">
       <table className="w-full min-w-max table-auto text-center">
@@ -41,19 +41,19 @@ const TablaSolicitudes = ({ solicitudes }) => {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(({ nombre, dni, carrera, anio }, index) => {
+          {solicitudes.map((solicitud, index) => {
             const isLast = index === TABLE_ROWS.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
             return (
-              <tr key={nombre}>
+              <tr key={solicitud.id}>
                 <td className={classes}>
                   <Typography
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {nombre}
+                    {solicitud.nombre}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -62,7 +62,7 @@ const TablaSolicitudes = ({ solicitudes }) => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {dni}
+                    {solicitud.dni}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -71,7 +71,7 @@ const TablaSolicitudes = ({ solicitudes }) => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {carrera}
+                    {solicitud.carreras[0].nombre}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -80,11 +80,11 @@ const TablaSolicitudes = ({ solicitudes }) => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {anio}
+                    {solicitud.carreras[0].anio_graduacion}
                   </Typography>
                 </td>
                 <td className={classes}>
-                    <ModalSolicitudes />
+                    <ModalSolicitudes solicitud={solicitud} fetchData={fetchData}/>
                 </td>
               </tr>
             );

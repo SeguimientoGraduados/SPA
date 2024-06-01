@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-md px-32 py-4">
       <div className="flex justify-around items-center">
-        <Image className="h-auto" src={logoUns} alt="UNS" width={80} />
+        <Image className="h-auto w-auto" src={logoUns} alt="UNS" width={80}/>
         <Typography variant="small" className="basis-1/2 text-sm text-center">
           <span className="font-bold">Universidad Nacional del Sur</span> <br />
           Sede Rectorado: Avenida Colón 80 - Bahía Blanca - 8000FTN <br />

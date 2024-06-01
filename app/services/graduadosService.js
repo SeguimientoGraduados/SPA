@@ -35,4 +35,47 @@ const registrarGraduado = async (formData) => {
     }
 };
 
-export default { obtenerGraduados, registrarGraduado };
+const obtenerGraduadosPorValidar = async (headers = {}) => {
+    try {
+        const response = await axios.get(`${API_URL}/graduados/validar`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching graduados por validar data:', error);
+        throw error;
+    }
+};
+
+const aprobarSolicitudGraduado = async (id, headers = {}) => {
+    try {
+        const response = await axios.patch(`${API_URL}/graduados/validar/aprobar/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching graduados por validar data:', error);
+        throw error;
+    }
+};
+
+const rechazarSolicitudGraduado = async (id, headers = {}) => {
+    try {
+        const response = await axios.delete(`${API_URL}/graduados/validar/rechazar/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching graduados por validar data:', error);
+        throw error;
+    }
+};
+
+
+export default { obtenerGraduados, registrarGraduado, obtenerGraduadosPorValidar, aprobarSolicitudGraduado, rechazarSolicitudGraduado };

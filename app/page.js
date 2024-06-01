@@ -1,16 +1,16 @@
 'use client';
 import Mapa from "./components/Mapa";
-import obtenerGraduados from "./services/graduadosService";
+import graduadosService from "./services/graduadosService";
 import obtenerTodasLasCiudades from "./services/ciudadesService";
 import TablaGraduados from "./components/Graduados/TablaGraduadosComponent"
 import React, { useState , useEffect } from "react";
 
 const Home = () => {
+  const { obtenerGraduados } = graduadosService;
   const [graduados, setGraduados] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
         try {

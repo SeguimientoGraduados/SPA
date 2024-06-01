@@ -3,7 +3,7 @@ import Image from "next/image";
 import logoUns from "../../../public/logo.webp";
 import Link from "next/link";
 import ModalLogin from "../Login/ModalLoginComponent";
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@material-tailwind/react";
 
 const Header = () => {
@@ -13,7 +13,7 @@ const Header = () => {
       <div className="flex items-center">
         <Link href="/">
           <Image
-            className="h-auto"
+            className="h-auto w-auto"
             src={logoUns}
             alt="UNS"
             width={80}
@@ -21,7 +21,7 @@ const Header = () => {
           />
         </Link>
       </div>
-      <div className="grid grid-cols-3 items-center gap-3">
+      <div className="grid grid-cols-3 items-center">
         <Link href="/formulario" passHref>
           <Button
             className="text-md"
