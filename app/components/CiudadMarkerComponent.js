@@ -13,7 +13,7 @@ const CiudadMarker = ({ ciudad, selectedCity, setSelectedCity }) => {
         click: handleMarkerClick
       }}
     >
-      <Popup>{ciudad.nombre}</Popup>
+      <Popup>{ciudad.nombre} - {ciudad.cantidad_graduados} graduados</Popup>
     </Marker>
   );
 };
