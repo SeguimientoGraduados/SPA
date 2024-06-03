@@ -11,27 +11,32 @@ import {
 import graduadosService from "@/app/services/graduadosService";
 
 const ModalSolicitudes = ({ solicitud, fetchData }) => {
-  const { aprobarSolicitudGraduado, rechazarSolicitudGraduado } = graduadosService;
+  const { aprobarSolicitudGraduado, rechazarSolicitudGraduado } =
+    graduadosService;
   const [open, setOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   const handleOpen = () => setOpen((cur) => !cur);
+  const handleConfirmOpen = () => setConfirmOpen((cur) => !cur);
+
   const handleAprobar = async () => {
     try {
-      const resultado = await aprobarSolicitudGraduado(solicitud.id);
-      console.log(resultado);
+      await aprobarSolicitudGraduado(solicitud.id);
       fetchData();
       setOpen(false);
     } catch (error) {
-      console.error('Error al aprobar la solicitud:', error);
+      console.error("Error al aprobar la solicitud:", error);
     }
   };
+
   const handleRechazar = async () => {
     try {
-      const resultado = await rechazarSolicitudGraduado(solicitud.id);
-      console.log(resultado);
+      await rechazarSolicitudGraduado(solicitud.id);
       fetchData();
+      setConfirmOpen(false);
       setOpen(false);
     } catch (error) {
-      console.error('Error al aprobar la solicitud:', error);
+      console.error("Error al rechazar la solicitud:", error);
     }
   };
 
@@ -41,7 +46,7 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
         onClick={handleOpen}
         variant="small"
         color="blue"
-        className="font-medium"
+        className="font-semibold"
       >
         Evaluar
       </Button>
@@ -51,75 +56,121 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
+        onClose={handleOpen}
+        backdrop="static"
       >
         <Card className="mx-auto w-full max-w-[40rem]">
-          <CardBody className="flex flex-col gap-4">
-            <Typography variant="h4" color="blue-gray" className="text-center">
+          <CardBody className="flex flex-col gap-2">
+            <Typography
+              variant="h4"
+              color="blue-gray"
+              className="text-center font-semibold"
+            >
               Solicitud de alta
             </Typography>
-            <div className="grid grid-cols-2">
-              <Typography variant="small" className="font-light">
-                Nombre:{solicitud.nombre}
-              </Typography>
-              <Typography variant="small" className="font-light">
-                DNI:{solicitud.dni}
-              </Typography>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  Nombre:
+                </Typography>
+                <Typography variant="small">{solicitud.nombre}</Typography>
+              </div>
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  DNI:
+                </Typography>
+                <Typography variant="small">{solicitud.dni}</Typography>
+              </div>
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  Fecha de nacimiento:
+                </Typography>
+                <Typography variant="small">
+                  {solicitud.fecha_nacimiento}
+                </Typography>
+              </div>
             </div>
-            <Typography variant="small" className="font-light">
-              Fecha de nacimiento:{solicitud.fecha_nacimiento}
-            </Typography>
+
             {solicitud.carreras.map((carrera, index) => (
-              <div key={index} className="grid grid-cols-2">
-                <Typography variant="small" className="font-light">
-                  Carrera: {carrera.nombre}
-                </Typography>
-                <Typography variant="small" className="font-light">
-                  Año de graduacion: {carrera.anio_graduacion}
-                </Typography>
+              <div key={index} className="grid grid-cols-2 gap-8 content-between">
+                <div className="flex flex-col">
+                  <Typography variant="small" className="font-semibold">
+                    Carrera:
+                  </Typography>
+                  <Typography variant="small">{carrera.nombre}</Typography>
+                </div>
+                <div className="flex flex-col">
+                  <Typography variant="small" className="font-semibold">
+                    Año de graduacion:
+                  </Typography>
+                  <Typography variant="small">
+                    {carrera.anio_graduacion}
+                  </Typography>
+                </div>
               </div>
             ))}
             <Typography
               variant="h6"
               color="blue-gray"
-              className="font-medium text-center"
+              className="font-semibold text-center font-semibold"
             >
               Ocupacion
             </Typography>
-            <div className="grid grid-cols-3">
-              <Typography variant="small" className="font-light">
-                Trabajo:{solicitud.ocupacion_trabajo}
+            <div className="grid grid-cols-3 gap-2">
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  Trabajo:
+                </Typography>
+                <Typography variant="small">
+                  {solicitud.ocupacion_trabajo}
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  Empresa:
+                </Typography>
+                <Typography variant="small">
+                  {solicitud.ocupacion_empresa}
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <Typography variant="small" className="font-semibold">
+                  Sector:
+                </Typography>
+                <Typography variant="small">
+                  {solicitud.ocupacion_sector}
+                </Typography>
+              </div>
+            </div>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className="text-center font-semibold"
+            >
+              Experiencia
+            </Typography>
+            <div className="flex flex-col">
+              <Typography variant="small" className="font-semibold">
+                Años de experiencia:
               </Typography>
-              <Typography variant="small" className="font-light">
-                Empresa:{solicitud.ocupacion_empresa}
-              </Typography>
-              <Typography variant="small" className="font-light">
-                Sector:{solicitud.ocupacion_sector}
+              <Typography variant="small">
+                {solicitud.experiencia_anios}
               </Typography>
             </div>
             <Typography
               variant="h6"
               color="blue-gray"
-              className="font-medium text-center"
-            >
-              Experiencia
-            </Typography>
-            <Typography variant="small" className="font-light">
-              Años de experiencia:{solicitud.experiencia_anios}
-            </Typography>
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="font-medium text-center"
+              className="text-center font-semibold"
             >
               Habilidades/competencias
             </Typography>
-            <Typography variant="small" className="font-light">
+            <Typography variant="small">
               {solicitud.habilidades_competencias}
             </Typography>
             <Typography
               variant="h6"
               color="blue-gray"
-              className="font-medium text-center"
+              className="text-center font-semibold"
             >
               Intereses
             </Typography>
@@ -148,7 +199,7 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
             <Button
               variant="gradient"
               color="red"
-              onClick={handleRechazar}
+              onClick={handleConfirmOpen}
               fullWidth
             >
               Rechazar
@@ -160,6 +211,34 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
               fullWidth
             >
               Aprobar
+            </Button>
+          </CardFooter>
+        </Card>
+      </Dialog>
+
+      <Dialog
+        open={confirmOpen}
+        handler={handleConfirmOpen}
+        className="bg-transparent shadow-none"
+        onClose={handleConfirmOpen}
+        backdrop="static"
+      >
+        <Card className="mx-auto w-full max-w-[20rem]">
+          <CardBody className="flex flex-col gap-4 text-center">
+            <Typography variant="h5" color="blue-gray">
+              ¿Está seguro de que desea rechazar la solicitud?
+            </Typography>
+          </CardBody>
+          <CardFooter className="flex flex-row gap-4 justify-center">
+            <Button variant="gradient" color="red" onClick={handleRechazar}>
+              Sí
+            </Button>
+            <Button
+              variant="gradient"
+              color="blue-gray"
+              onClick={handleConfirmOpen}
+            >
+              No
             </Button>
           </CardFooter>
         </Card>
