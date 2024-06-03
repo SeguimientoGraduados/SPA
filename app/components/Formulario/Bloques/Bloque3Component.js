@@ -9,63 +9,46 @@ const TercerBloque = ({ handleChange }) => {
     const addFormacion = () => {
         setFormaciones([...formaciones, { formacion: '' }]);
     };
-    const handleChangeFormacion = (e, index, fieldName) => {
+    const handleChangeFormacion = (e, index) => {
+        const { value } = e.target;
         const updatedFormaciones = [...formaciones];
-        updatedFormaciones[index][fieldName] = e.target.value;
-        const formacion = obtenerFormaciones();
+        updatedFormaciones[index].formacion = value;
+
+        const formacion = updatedFormaciones.map(formacion => formacion.formacion).filter(Boolean);
         handleChange({ target: { name: "formacion", value: formacion } });
     };
-    const obtenerFormaciones = () => {
-        return formaciones.map(formacion => formacion.formacion).filter(Boolean);
-    };
+
 
     const [opcionesInteres, setOpcionesInteres] = useState([]);
-    const [interes_comunidad, setInteresComunidad] = useState(false);
-    const [interes_oferta, setInteresOferta] = useState(false);
-    const [interes_demanda, setInteresDemanda] = useState(false);
+    const [intereses, setIntereses] = useState({
+        comunidad: false,
+        oferta: false,
+        demanda: false
+    });
 
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_comunidad", value: interes_comunidad }
-        });
-    }, [interes_comunidad]);
+        handleChange({ target: { name: "interes_comunidad", value: intereses.comunidad } });
+    }, [intereses.comunidad]);
 
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_oferta", value: interes_oferta }
-        });
-    }, [interes_oferta]);
+        handleChange({ target: { name: "interes_oferta", value: intereses.oferta } });
+    }, [intereses.oferta]);
 
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_demanda", value: interes_demanda }
-        });
-    }, [interes_demanda]);
+        handleChange({ target: { name: "interes_demanda", value: intereses.demanda } });
+    }, [intereses.demanda]);
 
     const handleChangeInteres = (event) => {
-
         const { value } = event.target;
         setOpcionesInteres(value);
 
-        let comunidad = false;
-        let oferta = false;
-        let demanda = false;
+        const nuevosIntereses = {
+            comunidad: value.includes("1. comunidad /integrar red (ecosistema)"),
+            oferta: value.includes("2. proponer iniciativas (oferta)"),
+            demanda: value.includes("3. recibir consultas (demanda)")
+        };
 
-        value.forEach(opcion => {
-            if (opcion.includes("1. comunidad /integrar red (ecosistema)")) {
-                comunidad = true;
-            }
-            if (opcion.includes("2. proponer iniciativas (oferta)")) {
-                oferta = true;
-            }
-            if (opcion.includes("3. recibir consultas (demanda)")) {
-                demanda = true;
-            }
-        });
-
-        setInteresComunidad(comunidad);
-        setInteresOferta(oferta);
-        setInteresDemanda(demanda);
+        setIntereses(nuevosIntereses);
     };
 
     return (

@@ -1,51 +1,41 @@
 import { Input, Typography, Textarea } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CheckboxList from '../../Utils/CheckboxList'
 import RadioHorizontal from '../../Utils/RadioHorizontal'
 import TooltipInfo from '../../Utils/TooltipInfo'
 import SelectOption from '../../Utils/SelectOption'
 
 const SegundoBloque = ({ handleChange }) => {
-  //TODO: ESTOS VALUES EN REALIDAD VAN A VENIR CON LO QUE NECESITE PONERSE EN LA BASE DE DATOS 
+
   const opcionesOcupacion = [
-    { value: "1", label: "Relación de dependencia" },
-    { value: "2", label: "Autónomo" },
+    { value: "rel_dependencia", label: "Relación de dependencia" },
+    { value: "autonomo", label: "Autónomo" },
   ];
   const opcionesExperiencia = [
-    { value: "1", label: "Menos de 2 años" },
-    { value: "2", label: "Entre 2 y 5 años" },
-    { value: "3", label: "Entre 5 y 10 años" },
-    { value: "4", label: "Más de 10 años" },
+    { value: "menos_2", label: "Menos de 2 años" },
+    { value: "de_2_a_5", label: "Entre 2 y 5 años" },
+    { value: "de_5_a_10", label: "Entre 5 y 10 años" },
+    { value: "mas_10", label: "Más de 10 años" },
   ];
-  
+
   const [opcionesSector, setOpcionesSector] = useState([]);
-  useEffect(() => {
-    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
-  }, [opcionesSector]);
+
   const handleChangeSector = (event) => {
     const { value } = event.target;
     setOpcionesSector(value);
+    handleChange({ target: { name: "ocupacion_sector", value } });
   };
+
 
   const handleChangeOcupacion = (event) => {
     const { value } = event.target;
-    const mapping = {
-      '1': 'rel_dependencia',
-      '2': 'autonomo'
-    };
-    const ocupacion_trabajo = mapping[value];
+    const ocupacion_trabajo = value;
     handleChange({ target: { name: "ocupacion_trabajo", value: ocupacion_trabajo } });
   };
 
   const handleChangeAnios = (event) => {
     const { value } = event.target;
-    const mapping = {
-      '1': 'menos_2',
-      '2': 'de_2_a_5',
-      '3': 'de_5_a_10',
-      '4': 'mas_10'
-    };
-    const experiencia_anios = mapping[value];
+    const experiencia_anios = value;
     handleChange({ target: { name: "experiencia_anios", value: experiencia_anios } });
   };
 

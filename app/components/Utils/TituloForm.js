@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  Select,
-  Option,
   Input,
   IconButton,
 } from "@material-tailwind/react";
