@@ -12,17 +12,25 @@ import {
   Dialog,
   CardBody,
   CardFooter,
+  Alert,
 } from "@material-tailwind/react";
 
 const ModalLogin = () => {
-  const {loginAPI, logoutAPI}  = authService;
+  const { loginAPI, registerAPI, logoutAPI } = authService;
   const [open, setOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState("");
 
   const { authState, login, logout } = useContext(AuthContext);
 
-  const handleOpen = () => setOpen((cur) => !cur);
+  const handleOpen = () => {
+    setOpen((cur) => !cur);
+    setError("");
+  };
 
   const handleLogin = async () => {
     try {
@@ -31,6 +39,21 @@ const ModalLogin = () => {
       setOpen(false);
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+    }
+  };
+
+  const handleRegister = async () => {
+    if (password !== repeatPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+    try {
+      const data = await registerAPI(name, email, password);
+      login(data.user, data.token);
+      setOpen(false);
+    } catch (error) {
+      console.error("Error al registrarse:", error);
+      setError("Error al registrarse");
     }
   };
 
@@ -57,7 +80,8 @@ const ModalLogin = () => {
             onClick={handleOpen}
             className="text-md"
             variant="text"
-            color="white">
+            color="white"
+          >
             INICIAR SESIÓN
           </Button>
         )}
@@ -72,8 +96,15 @@ const ModalLogin = () => {
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4">
             <Typography variant="h4" color="blue-gray">
-              Iniciar Sesión
+              {isLogin ? "Iniciar Sesión" : "Registrarse"}
             </Typography>
+            {!isLogin && (
+              <Input
+                label="Nombre"
+                size="lg"
+                onChange={(e) => setName(e.target.value)}
+              />
+            )}
             <Input
               label="Email"
               size="lg"
@@ -85,25 +116,44 @@ const ModalLogin = () => {
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="self-end mr-2.5 -mt-3">
-              <Checkbox label="Recuérdame" />
-            </div>
+            {!isLogin && (
+              <Input
+                label="Repetir Contraseña"
+                size="lg"
+                type="password"
+                onChange={(e) => setRepeatPassword(e.target.value)}
+              />
+            )}
+            {error && (
+              <Alert color="red" className="mt-4">
+                {error}
+              </Alert>
+            )}
+            {isLogin && (
+              <div className="self-end mr-2.5 -mt-3">
+                <Checkbox label="Recuérdame" />
+              </div>
+            )}
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleLogin} fullWidth>
-              Iniciar Sesión
+            <Button
+              variant="gradient"
+              onClick={isLogin ? handleLogin : handleRegister}
+              fullWidth
+            >
+              {isLogin ? "Iniciar Sesión" : "Registrarse"}
             </Button>
             <Typography variant="small" className="mt-4 flex justify-center">
-              No tenes cuenta?
+              {isLogin ? "No tienes cuenta?" : "Ya tienes cuenta?"}
               <Typography
                 as="a"
-                href="#signup"
+                href="#toggle"
                 variant="small"
                 color="blue-gray"
                 className="ml-1 font-bold"
-                onClick={handleOpen}
+                onClick={() => setIsLogin(!isLogin)}
               >
-                Registrarse
+                {isLogin ? "Registrarse" : "Iniciar Sesión"}
               </Typography>
             </Typography>
           </CardFooter>

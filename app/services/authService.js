@@ -3,6 +3,28 @@ import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const registerAPI = async (name, email, password) => {
+    try {
+        console.log(name,email,password)
+        const response = await axios.post(`${API_URL}/register`, {
+            name: name,
+            email: email,
+            password: password
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.data.data;
+    } catch (error) {
+        throw new Error('Error al registrarse:', error);
+    }
+}
+
 const loginAPI = async (email, password) => {
     try {
         const response = await axios.post(`${API_URL}/login`, {
@@ -17,7 +39,7 @@ const loginAPI = async (email, password) => {
         if (response.status !== 200) {
             throw new Error('Error en la solicitud');
         }
-        return response.data.data; 
+        return response.data.data;
     } catch (error) {
         throw new Error('Error al iniciar sesión:', error);
     }
@@ -27,8 +49,8 @@ const logoutAPI = async () => {
     try {
         const token = Cookies.get("token");
         if (!token) throw new Error("No se encontro el token.");
-        
-        const response = await axios.post(`${API_URL}/logout`,{}, {
+
+        const response = await axios.post(`${API_URL}/logout`, {}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -43,4 +65,4 @@ const logoutAPI = async () => {
     }
 };
 
-export default {loginAPI, logoutAPI};
+export default { registerAPI, loginAPI, logoutAPI };
