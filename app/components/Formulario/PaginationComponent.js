@@ -16,7 +16,7 @@ const PaginationComponent = ({ currentPage, onPageChange }) => {
   };
 
   return (
-    <div className="flex flex-row justify-center py-2 gap-4">
+    <div className="flex flex-row justify-center py-3 gap-4">
       <Button
         variant="text"
         className="flex items-center gap-2 rounded-full"

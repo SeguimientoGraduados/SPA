@@ -80,23 +80,23 @@ const Form = ({ carreras, ciudades }) => {
         </Typography>
         <hr className="my-2 border-t-2 border-blue-800" />
         <div className="flex flex-col justify-center">
-          <Card onSubmit={handleSubmit} color="transparent" shadow={false} className="items-center">
-            <form className="mt-8 mb-2 ">
+          <form className="mt-8 mb-2 " onSubmit={handleSubmit}>
+            <Card color="transparent" shadow={false} className="items-center">
+
               <div className="mb-1 flex flex-col gap-6">
                 {renderInputsForPage(currentPage)}
               </div>
-              <Button type="submit" color="blue">Enviar Formulario</Button>
-            </form>
-          </Card>
-          {currentPage === 3 &&
-            <div className="flex justify-center py-2">
-              <Button color="blue">Enviar Formulario</Button>
-            </div>}
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
 
+            </Card>
+            {currentPage === 3 &&
+              <div className="flex justify-center py-2">
+                <Button type="submit" color="blue">Enviar Formulario</Button>
+              </div>}
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </form>
         </div>
       </div>
     </>

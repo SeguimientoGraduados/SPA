@@ -18,7 +18,6 @@ const obtenerGraduados = async (headers = {}) => {
 
 
 const registrarGraduado = async (formData) => {
-    console.log(formData);
     try {
         const response = await axios.post(`${API_URL}/graduados`, formData, {
             headers: {
