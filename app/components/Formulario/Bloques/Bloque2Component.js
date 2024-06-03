@@ -1,5 +1,5 @@
 import { Input, Typography, Textarea } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CheckboxList from '../../Utils/CheckboxList'
 import RadioHorizontal from '../../Utils/RadioHorizontal'
 import TooltipInfo from '../../Utils/TooltipInfo'
@@ -17,12 +17,14 @@ const SegundoBloque = ({ handleChange }) => {
     { value: "3", label: "Entre 5 y 10 años" },
     { value: "4", label: "Más de 10 años" },
   ];
-
+  
   const [opcionesSector, setOpcionesSector] = useState([]);
+  useEffect(() => {
+    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
+  }, [opcionesSector]);
   const handleChangeSector = (event) => {
     const { value } = event.target;
     setOpcionesSector(value);
-    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
   };
 
   const handleChangeOcupacion = (event) => {

@@ -24,7 +24,7 @@ const Form = ({ carreras, ciudades }) => {
       case 2:
         return <SegundoBloque handleChange={handleChange} />;
       case 3:
-        return <TercerBloque />;
+        return <TercerBloque handleChange={handleChange} />;
       default:
         return null;
     }
@@ -45,7 +45,10 @@ const Form = ({ carreras, ciudades }) => {
     habilidades_competencias: '',
     formacion: [],
     rrss: [],
-    cv: ''
+    cv: '',
+    interes_comunidad: false,
+    interes_oferta: false,
+    interes_demanda: false,
   });
 
   const handleChange = (e) => {

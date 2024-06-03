@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import {
   Checkbox,
@@ -5,8 +6,9 @@ import {
   ListItem,
   ListItemPrefix,
 } from "@material-tailwind/react";
+import { normalizeText } from "../../utils/utils";
 
-const CheckboxList = ({ direction, items, handleChange, name, opcionesSeleccionadas  }) => {
+const CheckboxList = ({ direction, items, handleChange, name, opcionesSeleccionadas }) => {
 
   const handleSelectChange = (event) => {
     const valorNormalizado = normalizeText(event.target.value);
@@ -19,16 +21,7 @@ const CheckboxList = ({ direction, items, handleChange, name, opcionesSelecciona
     } else {
       opcionSeleccionadaActualizada = opcionSeleccionadaActualizada.filter(item => item !== valorNormalizado);
     }
-    console.log(opcionSeleccionadaActualizada);
     handleChange({ target: { name, value: opcionSeleccionadaActualizada } });
-  };
-
-  const normalizeText = (text) => {
-    return text
-      .replace("Sector ", "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
   };
 
   return (
