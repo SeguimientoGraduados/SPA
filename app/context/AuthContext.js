@@ -1,29 +1,39 @@
-'use client'
-import React, { createContext, useState, useEffect } from 'react';
+"use client";
+import React, { createContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authState, setAuthState] = useState({
-        isAuthenticated: false,
-        user: null
-    });
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    user: null,
+  });
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user'));
+  useEffect(() => {
+    const token = Cookies.get("token");
+    let user = null;
 
-        if (token && user) {
-            setAuthState({
-                isAuthenticated: true,
-                user: user
-            });
-        }
-    }, []);
+    try {
+      const userCookie = Cookies.get("user");
+      if (userCookie) {
+        user = JSON.parse(userCookie);
+      }
+    } catch (error) {
+      console.error("Failed to parse user cookie:", error);
+    }
 
-    return (
-        <AuthContext.Provider value={{ authState, setAuthState }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    if (token && user) {
+      setAuthState({
+        isAuthenticated: true,
+        user: user,
+      });
+    }
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

@@ -3,6 +3,7 @@ import { toTitleCase } from "../../utils/utils";
 import login from "../../services/loginService";
 import { AuthContext } from "../../context/AuthContext";
 import Dropdown from "../Utils/Dropdown";
+import Cookies from "js-cookie";
 import {
   Card,
   Input,
@@ -19,16 +20,15 @@ const ModalLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setAuthState } = useContext(AuthContext);
-  const { authState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleLogin = async () => {
     try {
       const data = await login(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      Cookies.set('token', data.token, {expires: 1, secure: true, sameSite: 'Strict', httpOnly: true})
+      Cookies.set('user', JSON.stringify(data.user), {expires: 1, secure: true, sameSite: 'Strict', httpOnly: true})
       setAuthState({ isAuthenticated: true, user: data.user });
       setOpen(false);
     } catch (error) {
@@ -36,8 +36,8 @@ const ModalLogin = () => {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    Cookies.remove('token');
+    Cookies.remove('user');
     setAuthState({ isAuthenticated: false, user: null });
   };
 
