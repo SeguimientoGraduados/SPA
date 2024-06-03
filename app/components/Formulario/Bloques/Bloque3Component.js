@@ -38,7 +38,9 @@ const TercerBloque = () => {
                 <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
                     Interés/Predisposición a:
                 </Typography>
-                <CheckboxList direction={"col"} items={["1. Comunidad /integrar red (Ecosistema)", "2. Proponer iniciativas (Oferta)", "3. Recibir consultas (Demanda)"]} />
+                <CheckboxList 
+                direction={"col"} 
+                items={["1. Comunidad /integrar red (Ecosistema)", "2. Proponer iniciativas (Oferta)", "3. Recibir consultas (Demanda)"]} />
             </div>
         </>
     );

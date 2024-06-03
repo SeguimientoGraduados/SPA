@@ -1,22 +1,52 @@
-import { Input, Typography, Textarea} from "@material-tailwind/react";
-import React from "react";
+import { Input, Typography, Textarea } from "@material-tailwind/react";
+import React, { useState } from "react";
 import CheckboxList from '../../Utils/CheckboxList'
 import RadioHorizontal from '../../Utils/RadioHorizontal'
 import TooltipInfo from '../../Utils/TooltipInfo'
 import SelectOption from '../../Utils/SelectOption'
 
-const SegundoBloque = () => {
+const SegundoBloque = ({ handleChange }) => {
   //TODO: ESTOS VALUES EN REALIDAD VAN A VENIR CON LO QUE NECESITE PONERSE EN LA BASE DE DATOS 
-  const optionsOcupacion = [
+  const opcionesOcupacion = [
     { value: "1", label: "Relación de dependencia" },
     { value: "2", label: "Autónomo" },
   ];
-  const optionsExperiencia = [
+  const opcionesExperiencia = [
     { value: "1", label: "Menos de 2 años" },
     { value: "2", label: "Entre 2 y 5 años" },
     { value: "3", label: "Entre 5 y 10 años" },
     { value: "4", label: "Más de 10 años" },
   ];
+
+  const [opcionesSector, setOpcionesSector] = useState([]);
+  const handleChangeSector = (event) => {
+    const { value } = event.target;
+    setOpcionesSector(value);
+    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
+  };
+
+  const handleChangeOcupacion = (event) => {
+    const { value } = event.target;
+    const mapping = {
+      '1': 'rel_dependencia',
+      '2': 'autonomo'
+    };
+    const ocupacion_trabajo = mapping[value];
+    handleChange({ target: { name: "ocupacion_trabajo", value: ocupacion_trabajo } });
+  };
+
+  const handleChangeAnios = (event) => {
+    const { value } = event.target;
+    const mapping = {
+      '1': 'menos_2',
+      '2': 'de_2_a_5',
+      '3': 'de_5_a_10',
+      '4': 'mas_10'
+    };
+    const experiencia_anios = mapping[value];
+    handleChange({ target: { name: "experiencia_anios", value: experiencia_anios } });
+  };
+
 
   return (
     <>
@@ -30,17 +60,34 @@ const SegundoBloque = () => {
 
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
-          <SelectOption select={"Ocupacion actual:"} options={optionsOcupacion}/>
-          <Input label="Nombre de la Empresa"/>
+          <SelectOption
+            select={"Ocupacion actual"}
+            handleChange={handleChangeOcupacion}
+            options={opcionesOcupacion}
+            name="ocupacion_trabajo"
+          />
+          <Input
+            label="Nombre de la Empresa"
+            name="ocupacion_empresa"
+            onChange={handleChange}
+          />
         </div>
-        <CheckboxList direction={"row"} items={["Sector Privado", "Sector Público"]} />
+        <CheckboxList
+          handleChange={handleChangeSector}
+          direction={"row"}
+          items={["Sector Privado", "Sector Público"]}
+          name="ocupacion_sector"
+          opcionesSeleccionadas={opcionesSector}
+        />
         <Textarea
           variant="outlined"
           label="Información Adicional"
+          name="ocupacion_informacion_adicional"
+          onChange={handleChange}
         />
 
         <div className="flex items-center flex-row">
-          <TooltipInfo label={"Privacidad de las respuestas"}/>
+          <TooltipInfo label={"Privacidad de las respuestas"} />
           <RadioHorizontal />
         </div>
 
@@ -48,17 +95,24 @@ const SegundoBloque = () => {
           Experiencia Laboral
         </Typography>
 
-        <SelectOption select={"Años de Experiencia:"} options={optionsExperiencia}/>
+        <SelectOption
+          select={"Años de Experiencia:"}
+          handleChange={handleChangeAnios}
+          options={opcionesExperiencia}
+          name="experiencia_anios"
+        />
         <Typography className="font-normal text-center" variant="paragraph" color="blue-gray">
           Habilidades/Competencias:
         </Typography>
         <Textarea
           variant="outlined"
           label="Descripcion"
+          name="habilidades_competencias"
+          onChange={handleChange}
         />
 
         <div className="flex items-center flex-row justify-between">
-          <TooltipInfo label={"Privacidad de las respuestas"}/>
+          <TooltipInfo label={"Privacidad de las respuestas"} />
           <RadioHorizontal />
         </div>
       </div>
