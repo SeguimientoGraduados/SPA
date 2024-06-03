@@ -31,8 +31,28 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const login = (user, token) => {
+    Cookies.set("token", token, {
+      expires: 1,
+      secure: true,
+      sameSite: "Strict",
+    });
+    Cookies.set("user", user, {
+      expires: 1,
+      secure: true,
+      sameSite: "Strict",
+    });
+    setAuthState({ isAuthenticated: true, user: user });
+  };
+
+  const logout = () => {
+    Cookies.remove("token");
+    Cookies.remove("user");
+    setAuthState({ isAuthenticated: false, user: null });
+  };
+
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContext.Provider value={{ authState, setAuthState, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

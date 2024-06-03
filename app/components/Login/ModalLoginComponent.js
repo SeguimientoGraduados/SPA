@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { toTitleCase } from "../../utils/utils";
-import login from "../../services/loginService";
+import authService from "../../services/authService";
 import { AuthContext } from "../../context/AuthContext";
 import Dropdown from "../Utils/Dropdown";
-import Cookies from "js-cookie";
 import {
   Card,
   Input,
@@ -16,29 +15,33 @@ import {
 } from "@material-tailwind/react";
 
 const ModalLogin = () => {
+  const {loginAPI, logoutAPI}  = authService;
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { authState, setAuthState } = useContext(AuthContext);
+  const { authState, login, logout } = useContext(AuthContext);
 
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleLogin = async () => {
     try {
-      const data = await login(email, password);
-      Cookies.set('token', data.token, {expires: 1, secure: true, sameSite: 'Strict', httpOnly: true})
-      Cookies.set('user', JSON.stringify(data.user), {expires: 1, secure: true, sameSite: 'Strict', httpOnly: true})
-      setAuthState({ isAuthenticated: true, user: data.user });
+      const data = await loginAPI(email, password);
+      login(data.user, data.token);
       setOpen(false);
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     }
   };
-  const handleLogout = () => {
-    Cookies.remove('token');
-    Cookies.remove('user');
-    setAuthState({ isAuthenticated: false, user: null });
+
+  const handleLogout = async () => {
+    try {
+      const data = await logoutAPI();
+      logout();
+      setOpen(false);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   return (
