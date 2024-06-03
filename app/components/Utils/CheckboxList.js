@@ -27,7 +27,7 @@ const CheckboxList = ({ direction, items, handleChange, name, opcionesSelecciona
   return (
     <List className={`flex flex-${direction}`}>
       {items.map((item, index) => (
-        <ListItem key={index}>
+        <ListItem key={index} className="justify-center">
           <ListItemPrefix>
             <Checkbox
               onChange={handleSelectChange}

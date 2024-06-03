@@ -1,5 +1,4 @@
 import { Card, Button, Typography } from "@material-tailwind/react";
-import Pagination from "./PaginationComponent";
 import React, { useState } from "react";
 import PrimerBloque from "./Bloques/Bloque1Component";
 import SegundoBloque from "./Bloques/Bloque2Component";
@@ -8,27 +7,7 @@ import graduadosService from "../../services/graduadosService";
 
 const Form = ({ carreras, ciudades }) => {
   const { registrarGraduado } = graduadosService;
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderInputsForPage = (page) => {
-    switch (page) {
-      case 1:
-        return <PrimerBloque
-          carreras={carreras}
-          ciudades={ciudades}
-          handleChange={handleChange} />;
-      case 2:
-        return <SegundoBloque handleChange={handleChange} />;
-      case 3:
-        return <TercerBloque handleChange={handleChange} />;
-      default:
-        return null;
-    }
-  };
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -80,27 +59,23 @@ const Form = ({ carreras, ciudades }) => {
         </Typography>
         <hr className="my-2 border-t-2 border-blue-800" />
         <div className="flex flex-col justify-center">
-          <form className="mt-8 mb-2 " onSubmit={handleSubmit}>
+          <form className="mt-8 mb-2" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
-
               <div className="mb-1 flex flex-col gap-6">
-                {renderInputsForPage(currentPage)}
+                <PrimerBloque carreras={carreras} ciudades={ciudades} handleChange={handleChange} />
+                <SegundoBloque handleChange={handleChange} />
+                <TercerBloque handleChange={handleChange} />
               </div>
-
             </Card>
-            {currentPage === 3 &&
-              <div className="flex justify-center py-2">
-                <Button type="submit" color="blue">Enviar Formulario</Button>
-              </div>}
-            <Pagination
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+            <div className="flex justify-center py-2">
+              <Button type="submit" color="blue">Enviar Formulario</Button>
+            </div>
           </form>
         </div>
       </div>
     </>
   );
+
 };
 
 export default Form;

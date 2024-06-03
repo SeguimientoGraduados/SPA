@@ -93,8 +93,8 @@ const SegundoBloque = ({ handleChange }) => {
           options={opcionesExperiencia}
           name="experiencia_anios"
         />
-        <Typography className="font-normal text-center" variant="paragraph" color="blue-gray">
-          Habilidades/Competencias:
+        <Typography className="font-normal text-center" variant="h5" color="blue-gray">
+          Habilidades/Competencias
         </Typography>
         <Textarea
           variant="outlined"

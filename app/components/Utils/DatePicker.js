@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Input,
     Popover,
@@ -9,13 +9,45 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
+import {toTitleCase} from "../../utils/utils"
+
+const YearDropdown = ({ selectedYear, onChange }) => {
+    const currentYear = new Date().getFullYear();
+    const startYear = 1940;
+    const years = Array.from(new Array(currentYear - startYear + 1), (_, index) => currentYear - index);
+
+    return (
+        <select
+            className="border border-gray-300 rounded-md p-1"
+            value={selectedYear}
+            onChange={(e) => onChange(Number(e.target.value))}
+        >
+            {years.map((year) => (
+                <option key={year} value={year}>
+                    {year}
+                </option>
+            ))}
+        </select>
+    );
+};
 
 const DatePicker = ({ label, onChange, name }) => {
-    const [date, setDate] = React.useState(undefined);
+    const [date, setDate] = useState(undefined);
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [month, setMonth] = useState(new Date());
 
     const handleDateChange = (newDate) => {
         setDate(newDate);
-        onChange({ target: { name, value: date ? format(date, "PPP", { locale: es }) : "" } });
+        onChange({ target: { name, value: newDate ? format(newDate, "PPP", { locale: es }) : "" } });
+    };
+
+    const handleYearChange = (year) => {
+        setSelectedYear(year);
+        setMonth(new Date(year, month.getMonth()));
+    };
+
+    const handleMonthChange = (newMonth) => {
+        setMonth(newMonth);
     };
 
     return (
@@ -24,21 +56,26 @@ const DatePicker = ({ label, onChange, name }) => {
                 <PopoverHandler>
                     <Input
                         label={label}
-                        defaultValue={date ? format(date, "PPP", { locale: es }) : ""}
+                        value={date ? format(date, "PPP", { locale: es }) : ""}
                         readOnly
                     />
                 </PopoverHandler>
                 <PopoverContent>
+                    <div className="p-2">
+                        <YearDropdown selectedYear={selectedYear} onChange={handleYearChange} />
+                    </div>
                     <DayPicker
                         mode="single"
                         selected={date}
                         onSelect={handleDateChange}
                         showOutsideDays
                         locale={es}
+                        month={month}
+                        onMonthChange={handleMonthChange}
                         className="border-0"
                         classNames={{
                             caption: "flex justify-center py-2 mb-4 relative items-center",
-                            caption_label: "text-sm font-medium text-gray-900",
+                            caption_label: "text-sm font-semibold text-gray-900",
                             nav: "flex items-center",
                             nav_button:
                                 "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
@@ -72,5 +109,6 @@ const DatePicker = ({ label, onChange, name }) => {
             </Popover>
         </div>
     );
-}
+};
+
 export default DatePicker;
