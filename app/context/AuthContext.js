@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       secure: true,
       sameSite: "Strict",
     });
-    Cookies.set("user", user, {
+    Cookies.set("user", JSON.stringify(user), {
       expires: 1,
       secure: true,
       sameSite: "Strict",

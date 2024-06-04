@@ -3,10 +3,13 @@ import Image from "next/image";
 import logoUns from "../../../public/logo.webp";
 import Link from "next/link";
 import ModalLogin from "../Login/ModalLoginComponent";
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "@material-tailwind/react";
+import { AuthContext } from "@/app/context/AuthContext";
 
 const Header = () => {
+  const { authState } = useContext(AuthContext);
+  const { isAuthenticated, user } = authState;
 
   return (
     <header className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-md flex flex-row justify-between px-40 py-3">
@@ -21,23 +24,21 @@ const Header = () => {
           />
         </Link>
       </div>
-      <div className="grid grid-cols-3 items-center">
-        <Link href="/formulario" passHref>
-          <Button
-            className="text-md"
-            variant="text"
-            color="white">
-            GRADUADOS
-          </Button>
-        </Link>
-        <Link href="/solicitudes" passHref>
-          <Button
-            className="text-md"
-            variant="text"
-            color="white">
-            SOLICITUDES
-          </Button>
-        </Link>
+      <div className="flex flex-row items-center">
+        {isAuthenticated && (
+          <Link href="/formulario" passHref>
+            <Button className="text-md" variant="text" color="white">
+              SUMATE AL MAPA
+            </Button>
+          </Link>
+        )}
+        {isAuthenticated && user?.rol === "admin" && (
+          <Link href="/solicitudes" passHref>
+            <Button className="text-md" variant="text" color="white">
+              SOLICITUDES
+            </Button>
+          </Link>
+        )}
         <ModalLogin />
       </div>
     </header>

@@ -12,7 +12,6 @@ const Solicitudes = () => {
     try {
       const dataGraduadosPorValidar = await obtenerGraduadosPorValidar();
       setGraduadosPorValidar(dataGraduadosPorValidar);
-      console.log(dataGraduadosPorValidar)
     } catch (error) {
       console.log(error)
     } finally {
