@@ -4,7 +4,7 @@ import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
 import SelectOption from '../../Utils/SelectOption'
 
-const PrimerBloque = ({handleChange, carreras, ciudades }) => {
+const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
 
   const opcionesCiudades = ciudades.map(ciudades => ({
     value: ciudades.id.toString(),
@@ -48,18 +48,33 @@ const PrimerBloque = ({handleChange, carreras, ciudades }) => {
           label="Nombre"
           name="nombre"
           onChange={handleChange}
+          required
+          onInvalid={(e) =>
+            e.currentTarget.setCustomValidity('Campo obligatorio')
+          }
+          onInput={(e) => e.currentTarget.setCustomValidity('')}
         />
 
         <Input
           label="DNI"
           name="dni"
           onChange={handleChange}
+          required
+          onInvalid={(e) =>
+            e.currentTarget.setCustomValidity('Campo obligatorio')
+          }
+          onInput={(e) => e.currentTarget.setCustomValidity('')}
         />
 
         <DatePicker
           label={"Fecha de nacimiento"}
           name="fecha_nacimiento"
           onChange={handleChange}
+          required
+          onInvalid={(e) =>
+            e.currentTarget.setCustomValidity('Campo obligatorio')
+          }
+          onInput={(e) => e.currentTarget.setCustomValidity('')}
         />
 
         <TituloForm
@@ -73,6 +88,7 @@ const PrimerBloque = ({handleChange, carreras, ciudades }) => {
           handleChange={handleChange}
           options={opcionesCiudades}
           name="ciudad_id"
+          required
         />
         <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
           Informacion de Contacto
