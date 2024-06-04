@@ -1,9 +1,10 @@
-import { Card, Button, Typography } from "@material-tailwind/react";
+import { Card, Button, Typography, Alert } from "@material-tailwind/react";
 import React, { useState } from "react";
 import PrimerBloque from "./Bloques/Bloque1Component";
 import SegundoBloque from "./Bloques/Bloque2Component";
 import TercerBloque from "./Bloques/Bloque3Component";
 import graduadosService from "../../services/graduadosService";
+import AlertaObligatorio from "../Utils/AlertObligatorio";
 
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
@@ -36,11 +37,42 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     });
   };
 
+  const [alertaVisible, setAlertaVisible] = useState(false);
+  const [campoObligatorio, setCampoObligatorio] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.fecha_nacimiento) {
+      setAlertaVisible(true);
+      setCampoObligatorio('fecha_nacimiento');
+      return;
+    }
+
+    if (formData.carreras[0].carrera_id === "") {
+      setAlertaVisible(true);
+      setCampoObligatorio('carreras');
+      return;
+    }
+
+    //TODO: chequear para cada input de carrera que se agregue
+    // formData.carreras.forEach((carrera) => {
+    //   console.log(carrera.carrera_id)
+    //   if (!carrera.carrera_id === '') {
+    //     setAlertaVisible(true);
+    //     setCampoObligatorio('carreras');
+    //     return;
+    //   }
+    // });
+
+    if (!formData.ciudad_id) {
+      setAlertaVisible(true);
+      setCampoObligatorio('ciudad');
+      return;
+    }
+
     try {
       const data = await registrarGraduado(formData);
-      console.log("Formulario enviado con éxito:", data);
+      setAlertaVisible(false);
+      console.log('Formulario enviado con éxito:', data);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }

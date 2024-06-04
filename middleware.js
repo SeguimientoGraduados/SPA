@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 export function middleware(request) {
   const token = request.cookies.get("token");
   const user = request.cookies.get("user");
+  let userData;
   if (user){
-    const userData = JSON.parse(user.value);
+    userData = JSON.parse(user.value);
   }
 
   const protectedRoutes = ["/solicitudes", "/formulario"];

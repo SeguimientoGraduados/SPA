@@ -39,6 +39,11 @@ const TituloForm = ({ onChange, carreras }) => {
             name="año_graduacion"
             onChange={(e) => handleInternalChange(e, index, "year")}
             value={item.year}
+            required
+            onInvalid={(e) =>
+              e.currentTarget.setCustomValidity('Campo obligatorio')
+            }
+            onInput={(e) => e.currentTarget.setCustomValidity('')}
           />
         </div>
       ))}

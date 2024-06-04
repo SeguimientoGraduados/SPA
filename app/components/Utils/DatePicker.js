@@ -57,7 +57,8 @@ const DatePicker = ({ label, onChange, name }) => {
                     <Input
                         label={label}
                         value={date ? format(date, "PPP", { locale: es }) : ""}
-                        readOnly
+                        required
+                        readOnly                      
                     />
                 </PopoverHandler>
                 <PopoverContent>
@@ -66,6 +67,7 @@ const DatePicker = ({ label, onChange, name }) => {
                     </div>
                     <DayPicker
                         mode="single"
+                        required
                         selected={date}
                         onSelect={handleDateChange}
                         showOutsideDays

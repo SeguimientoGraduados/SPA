@@ -5,7 +5,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const registerAPI = async (name, email, password) => {
     try {
-        console.log(name,email,password)
         const response = await axios.post(`${API_URL}/register`, {
             name: name,
             email: email,
@@ -16,7 +15,7 @@ const registerAPI = async (name, email, password) => {
             }
         });
 
-        if (response.status !== 200) {
+        if (response.status !== 201) {
             throw new Error('Error en la solicitud');
         }
         return response.data.data;

@@ -39,6 +39,7 @@ const ModalLogin = () => {
       setOpen(false);
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      setError("Error al iniciar sesión");
     }
   };
 
@@ -62,6 +63,9 @@ const ModalLogin = () => {
       const data = await logoutAPI();
       logout();
       setOpen(false);
+      if (window.location.pathname !== '/') {
+        window.location.href = '/';
+      }
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -147,7 +151,7 @@ const ModalLogin = () => {
               {isLogin ? "No tienes cuenta?" : "Ya tienes cuenta?"}
               <Typography
                 as="a"
-                href="#toggle"
+                href="#"
                 variant="small"
                 color="blue-gray"
                 className="ml-1 font-bold"
