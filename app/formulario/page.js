@@ -1,47 +1,30 @@
-'use client';
-import Form from "../components/Formulario/FormularioComponent"
-import React, { useState, useEffect } from 'react';
-import obtenerTodasLasCarreras from '../services/carrerasService';
-import obtenerTodasLasCiudades from "../services/ciudadesService"
+"use client";
+import Form from "../components/Formulario/FormularioComponent";
+import React, { useState, useEffect } from "react";
+import obtenerTodasLasCarreras from "../services/carrerasService";
+import obtenerTodasLasCiudades from "../services/ciudadesService";
 
 const Formulario = () => {
-
   const [carreras, setCarreras] = useState([]);
-  useEffect(() => {
-    const fetchCarreras = async () => {
-      try {
-        const data = await obtenerTodasLasCarreras();
-        setCarreras(data);
-      } catch (error) {
-        console.error('Error fetching carreras:', error);
-      }
-    };
-
-    fetchCarreras();
-  }, []);
-
   const [ciudades, setCiudades] = useState([]);
   useEffect(() => {
-    const fetchCiudades = async () => {
+    const fetchData = async () => {
       try {
-        const data = await obtenerTodasLasCiudades();
-        setCiudades(data);
+        const dataCarreras = await obtenerTodasLasCarreras();
+        setCarreras(dataCarreras);
+        const dataCiudades = await obtenerTodasLasCiudades();
+        setCiudades(dataCiudades);
       } catch (error) {
-        console.error('Error fetching ciudades:', error);
+        console.error("Error fetching carreras:", error);
       }
     };
 
-    fetchCiudades();
+    fetchData();
   }, []);
-
-
 
   return (
     <section className="flex flex-col items-center justify-between py-4 bg-gray-200">
-      <Form
-        carreras={carreras}
-        ciudades={ciudades}
-      />
+      <Form carreras={carreras} ciudades={ciudades} />
     </section>
   );
 };

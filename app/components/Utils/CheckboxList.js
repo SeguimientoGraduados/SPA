@@ -27,7 +27,7 @@ const CheckboxList = ({ direction, items, handleChange, name, opcionesSelecciona
   return (
     <List className={`flex flex-${direction}`}>
       {items.map((item, index) => (
-        <ListItem key={index} className="justify-center">
+        <ListItem key={index} className="justify-center p-0">
           <ListItemPrefix>
             <Checkbox
               onChange={handleSelectChange}
@@ -36,7 +36,7 @@ const CheckboxList = ({ direction, items, handleChange, name, opcionesSelecciona
               ripple={false}
               label={item}
               checked={opcionesSeleccionadas.includes(normalizeText(item))}
-              className="h-8 w-8 rounded-full hover:scale-105 hover:before:opacity-0"
+              className="h-4 w-4 rounded-full hover:scale-105 hover:before:opacity-0"
             />
           </ListItemPrefix>
         </ListItem>

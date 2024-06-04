@@ -59,9 +59,9 @@ const Form = ({ carreras, ciudades }) => {
         </Typography>
         <hr className="my-2 border-t-2 border-blue-800" />
         <div className="flex flex-col justify-center">
-          <form className="mt-8 mb-2" onSubmit={handleSubmit}>
+          <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
-              <div className="mb-1 flex flex-col gap-6">
+              <div className="flex flex-col gap-3">
                 <PrimerBloque carreras={carreras} ciudades={ciudades} handleChange={handleChange} />
                 <SegundoBloque handleChange={handleChange} />
                 <TercerBloque handleChange={handleChange} />
