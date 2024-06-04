@@ -5,13 +5,8 @@ import RadioHorizontal from "../../Utils/RadioHorizontal";
 import TooltipInfo from "../../Utils/TooltipInfo";
 import SelectOption from "../../Utils/SelectOption";
 
-const SegundoBloque = ({
-  opcionesOcupacion,
-  opcionesSectorProp,
-  opcionesExperiencia,
-  handleChange,
-}) => {
-  const [opcionesSector, setOpcionesSector] = useState(opcionesSectorProp);
+const SegundoBloque = ({  opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, handleChange, }) => {
+  const [opcionesSector, setOpcionesSector] = useState([]);
   const handleChangeSector = (event) => {
     const { value } = event.target;
     setOpcionesSector(value);
@@ -62,9 +57,9 @@ const SegundoBloque = ({
           <CheckboxList
             handleChange={handleChangeSector}
             direction={"row"}
-            items={opcionesSector}
+            items={opcionesSectorProp}
             name="ocupacion_sector"
-            opcionesSeleccionadas={[]}
+            opcionesSeleccionadas={opcionesSector}
           />
         </div>
 
