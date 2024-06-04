@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthProvider>
           <Header />
-          <main>{children}</main>
+          <main className="bg-white">{children}</main>
           <Footer />
         </AuthProvider>
       </body>

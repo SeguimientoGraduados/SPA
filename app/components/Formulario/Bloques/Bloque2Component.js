@@ -1,44 +1,38 @@
 import { Input, Typography, Textarea } from "@material-tailwind/react";
 import React, { useState } from "react";
-import CheckboxList from '../../Utils/CheckboxList'
-import RadioHorizontal from '../../Utils/RadioHorizontal'
-import TooltipInfo from '../../Utils/TooltipInfo'
-import SelectOption from '../../Utils/SelectOption'
+import CheckboxList from "../../Utils/CheckboxList";
+import RadioHorizontal from "../../Utils/RadioHorizontal";
+import TooltipInfo from "../../Utils/TooltipInfo";
+import SelectOption from "../../Utils/SelectOption";
 
-const SegundoBloque = ({ handleChange }) => {
-
-  const opcionesOcupacion = [
-    { value: "rel_dependencia", label: "Relación de dependencia" },
-    { value: "autonomo", label: "Autónomo" },
-  ];
-  const opcionesExperiencia = [
-    { value: "menos_2", label: "Menos de 2 años" },
-    { value: "de_2_a_5", label: "Entre 2 y 5 años" },
-    { value: "de_5_a_10", label: "Entre 5 y 10 años" },
-    { value: "mas_10", label: "Más de 10 años" },
-  ];
-
-  const [opcionesSector, setOpcionesSector] = useState([]);
-
+const SegundoBloque = ({
+  opcionesOcupacion,
+  opcionesSectorProp,
+  opcionesExperiencia,
+  handleChange,
+}) => {
+  const [opcionesSector, setOpcionesSector] = useState(opcionesSectorProp);
   const handleChangeSector = (event) => {
     const { value } = event.target;
     setOpcionesSector(value);
     handleChange({ target: { name: "ocupacion_sector", value } });
   };
 
-
   const handleChangeOcupacion = (event) => {
     const { value } = event.target;
     const ocupacion_trabajo = value;
-    handleChange({ target: { name: "ocupacion_trabajo", value: ocupacion_trabajo } });
+    handleChange({
+      target: { name: "ocupacion_trabajo", value: ocupacion_trabajo },
+    });
   };
 
   const handleChangeAnios = (event) => {
     const { value } = event.target;
     const experiencia_anios = value;
-    handleChange({ target: { name: "experiencia_anios", value: experiencia_anios } });
+    handleChange({
+      target: { name: "experiencia_anios", value: experiencia_anios },
+    });
   };
-
 
   return (
     <>
@@ -64,13 +58,16 @@ const SegundoBloque = ({ handleChange }) => {
             onChange={handleChange}
           />
         </div>
-        <CheckboxList
-          handleChange={handleChangeSector}
-          direction={"row"}
-          items={["Sector Privado", "Sector Público"]}
-          name="ocupacion_sector"
-          opcionesSeleccionadas={opcionesSector}
-        />
+        <div className="flex justify-center">
+          <CheckboxList
+            handleChange={handleChangeSector}
+            direction={"row"}
+            items={opcionesSector}
+            name="ocupacion_sector"
+            opcionesSeleccionadas={[]}
+          />
+        </div>
+
         <Textarea
           variant="outlined"
           label="Información Adicional"
@@ -83,7 +80,11 @@ const SegundoBloque = ({ handleChange }) => {
           <RadioHorizontal />
         </div>
 
-        <Typography variant="h5" color="blue-gray" className="font-normal text-center">
+        <Typography
+          variant="h5"
+          color="blue-gray"
+          className="font-normal text-center"
+        >
           Experiencia Laboral
         </Typography>
 
@@ -93,7 +94,11 @@ const SegundoBloque = ({ handleChange }) => {
           options={opcionesExperiencia}
           name="experiencia_anios"
         />
-        <Typography className="font-normal text-center" variant="h5" color="blue-gray">
+        <Typography
+          className="font-normal text-center"
+          variant="h5"
+          color="blue-gray"
+        >
           Habilidades/Competencias
         </Typography>
         <Textarea

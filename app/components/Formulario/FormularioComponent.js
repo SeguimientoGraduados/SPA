@@ -5,26 +5,24 @@ import SegundoBloque from "./Bloques/Bloque2Component";
 import TercerBloque from "./Bloques/Bloque3Component";
 import graduadosService from "../../services/graduadosService";
 
-const Form = ({ carreras, ciudades }) => {
+const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
-
-
   const [formData, setFormData] = useState({
-    nombre: '',
-    dni: '',
-    fecha_nacimiento: '',
-    ciudad_id: '',
-    contacto: '',
+    nombre: "",
+    dni: "",
+    fecha_nacimiento: "",
+    ciudad_id: "",
+    contacto: "",
     carreras: [],
-    ocupacion_trabajo: '',
-    ocupacion_empresa: '',
-    ocupacion_sector: '',
-    ocupacion_informacion_adicional: '',
-    experiencia_anios: '',
-    habilidades_competencias: '',
+    ocupacion_trabajo: "",
+    ocupacion_empresa: "",
+    ocupacion_sector: "",
+    ocupacion_informacion_adicional: "",
+    experiencia_anios: "",
+    habilidades_competencias: "",
     formacion: [],
     rrss: [],
-    cv: '',
+    cv: "",
     interes_comunidad: false,
     interes_oferta: false,
     interes_demanda: false,
@@ -34,7 +32,7 @@ const Form = ({ carreras, ciudades }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -42,9 +40,9 @@ const Form = ({ carreras, ciudades }) => {
     e.preventDefault();
     try {
       const data = await registrarGraduado(formData);
-      console.log('Formulario enviado con éxito:', data);
+      console.log("Formulario enviado con éxito:", data);
     } catch (error) {
-      console.error('Error al enviar el formulario:', error);
+      console.error("Error al enviar el formulario:", error);
     }
   };
 
@@ -62,20 +60,34 @@ const Form = ({ carreras, ciudades }) => {
           <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
               <div className="flex flex-col gap-3">
-                <PrimerBloque carreras={carreras} ciudades={ciudades} handleChange={handleChange} />
-                <SegundoBloque handleChange={handleChange} />
-                <TercerBloque handleChange={handleChange} />
+                <PrimerBloque
+                  carreras={carreras}
+                  ciudades={ciudades}
+                  enumerados={enumerados}
+                  handleChange={handleChange}
+                />
+                <SegundoBloque
+                  opcionesOcupacion={enumerados.ocupacion_trabajo}
+                  opcionesExperiencia={enumerados.exp_anios}
+                  opcionesSectorProp={enumerados.ocupacion_sector}
+                  handleChange={handleChange}
+                />
+                <TercerBloque
+                  enumerados={enumerados}
+                  handleChange={handleChange}
+                />
               </div>
             </Card>
             <div className="flex justify-center py-2">
-              <Button type="submit" color="blue">Enviar Formulario</Button>
+              <Button type="submit" color="blue">
+                Enviar Formulario
+              </Button>
             </div>
           </form>
         </div>
       </div>
     </>
   );
-
 };
 
 export default Form;

@@ -1,7 +1,6 @@
 import { Select, Option } from "@material-tailwind/react";
 
 const SelectOption = ({ className, select, options, handleChange, name }) => {
-
   const handleSelectChange = (value) => {
     handleChange({ target: { name, value } });
   };

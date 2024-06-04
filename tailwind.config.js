@@ -9,6 +9,11 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      height: {
+        '70vh': '70vh',
+        '85vh': '85vh',
+        '90vh': '90vh',
+      },
       fontFamily: {
         sans: ['Nunito', 'sans-serif'],
       },
