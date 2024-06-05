@@ -105,12 +105,13 @@ const PrimerBloque = ({ handleChange, carreras }) => {
         <Input
           label="Ciudad"
           name="ciudad"
-          onChange={handleChangeCiudad}
+          onBlur={handleChangeCiudad}
           required
           onInvalid={(e) =>
             e.currentTarget.setCustomValidity("Campo obligatorio")
           }
           onInput={(e) => e.currentTarget.setCustomValidity("")}
+          error={Boolean(error)}
         />
 
         <Typography
