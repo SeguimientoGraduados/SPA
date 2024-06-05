@@ -2,36 +2,43 @@ import { Input, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
-import SelectOption from '../../Utils/SelectOption'
+import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
 
-const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
-
-  const opcionesCiudades = ciudades.map(ciudades => ({
-    value: ciudades.id.toString(),
-    label: ciudades.nombre
-  }));
-
-  const opcionesCarreras = carreras.map(carrera => ({
+const PrimerBloque = ({ handleChange, carreras }) => {
+  const opcionesCarreras = carreras.map((carrera) => ({
     value: carrera.id.toString(),
-    label: carrera.nombre
+    label: carrera.nombre,
   }));
 
   const [rrssData, setRrssData] = useState({
     linkedin: "",
     facebook: "",
-    twitter: ""
+    twitter: "",
+  });
+
+  const [ciudad, setCiudad] = useState({
+    nombre: "",
+    latitud: "",
+    longitud: "",
   });
 
   const handleInternalChange = (e, rrssName) => {
     const newRrssData = { ...rrssData, [rrssName]: e.target.value };
     setRrssData(newRrssData);
 
-    const formattedRrss = Object.keys(newRrssData).map(key => ({
+    const formattedRrss = Object.keys(newRrssData).map((key) => ({
       rrss: key,
-      url: newRrssData[key]
-    }))
+      url: newRrssData[key],
+    }));
     handleChange({ target: { name: "rrss", value: formattedRrss } });
   };
+
+  const handleChangeCiudad = (e) => {
+    const { value } = e.target;
+    const ciudad = obtenerCoordenadasCiudad(value);
+    //VALIDAR CAMPO CON if (value !== ciudad.name) => Ciudad invalida
+    setCiudad(ciudad.name, ciudad.lat, ciudad.lon)
+  }
 
   return (
     <>
@@ -50,9 +57,9 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
           onChange={handleChange}
           required
           onInvalid={(e) =>
-            e.currentTarget.setCustomValidity('Campo obligatorio')
+            e.currentTarget.setCustomValidity("Campo obligatorio")
           }
-          onInput={(e) => e.currentTarget.setCustomValidity('')}
+          onInput={(e) => e.currentTarget.setCustomValidity("")}
         />
 
         <Input
@@ -61,9 +68,9 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
           onChange={handleChange}
           required
           onInvalid={(e) =>
-            e.currentTarget.setCustomValidity('Campo obligatorio')
+            e.currentTarget.setCustomValidity("Campo obligatorio")
           }
-          onInput={(e) => e.currentTarget.setCustomValidity('')}
+          onInput={(e) => e.currentTarget.setCustomValidity("")}
         />
 
         <DatePicker
@@ -72,9 +79,9 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
           onChange={handleChange}
           required
           onInvalid={(e) =>
-            e.currentTarget.setCustomValidity('Campo obligatorio')
+            e.currentTarget.setCustomValidity("Campo obligatorio")
           }
-          onInput={(e) => e.currentTarget.setCustomValidity('')}
+          onInput={(e) => e.currentTarget.setCustomValidity("")}
         />
 
         <TituloForm
@@ -83,14 +90,22 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
           name="carreras"
         />
 
-        <SelectOption
-          select={"Ciudad"}
-          handleChange={handleChange}
-          options={opcionesCiudades}
-          name="ciudad_id"
+        <Input
+          label="Ciudad"
+          name="ciudad"
+          onBlur={handleChangeCiudad}
           required
+          onInvalid={(e) =>
+            e.currentTarget.setCustomValidity("Campo obligatorio")
+          }
+          onInput={(e) => e.currentTarget.setCustomValidity("")}
         />
-        <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
+
+        <Typography
+          variant="h5"
+          color="blue-gray"
+          className="font-normal text-center mt-2"
+        >
           Informacion de Contacto
         </Typography>
 
@@ -121,7 +136,7 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
             placeholder="https://www.linkedin.com/in/ejemplo/"
             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
             value={rrssData.linkedin}
-            onChange={(e) => handleInternalChange(e, 'linkedin')}
+            onChange={(e) => handleInternalChange(e, "linkedin")}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -138,7 +153,7 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
             placeholder="https://www.facebook.com/ejemplo/"
             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
             value={rrssData.facebook}
-            onChange={(e) => handleInternalChange(e, 'facebook')}
+            onChange={(e) => handleInternalChange(e, "facebook")}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -151,7 +166,7 @@ const PrimerBloque = ({ handleChange, carreras, ciudades }) => {
             placeholder="https://www.twitter.com/ejemplo/"
             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
             value={rrssData.twitter}
-            onChange={(e) => handleInternalChange(e, 'twitter')}
+            onChange={(e) => handleInternalChange(e, "twitter")}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
