@@ -33,12 +33,24 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     handleChange({ target: { name: "rrss", value: formattedRrss } });
   };
 
-  const handleChangeCiudad = (e) => {
+  const [error, setError] = useState(null);
+  const handleChangeCiudad = async (e) => {
     const { value } = e.target;
-    const ciudad = obtenerCoordenadasCiudad(value);
-    //VALIDAR CAMPO CON if (value !== ciudad.name) => Ciudad invalida
-    setCiudad(ciudad.name, ciudad.lat, ciudad.lon)
-  }
+    try {
+      const ciudadAPI = await obtenerCoordenadasCiudad(value);
+
+      setCiudad({
+        nombre: ciudadAPI.name,
+        latitud: ciudadAPI.lat,
+        longitud: ciudadAPI.lon
+      });
+
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+      console.log(error.message)
+    }
+  };
 
   return (
     <>
@@ -93,7 +105,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
         <Input
           label="Ciudad"
           name="ciudad"
-          onBlur={handleChangeCiudad}
+          onChange={handleChangeCiudad}
           required
           onInvalid={(e) =>
             e.currentTarget.setCustomValidity("Campo obligatorio")

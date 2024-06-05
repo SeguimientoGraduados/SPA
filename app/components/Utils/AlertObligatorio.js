@@ -24,9 +24,6 @@ const alertasObligatorio = {
     carreras: {
         mensaje: 'Debe completar ambos campos del título.',
     },
-    ciudad: {
-        mensaje: 'Debe ingresar la ciudad.',
-    },
 };
 
 const AlertaObligatorio = ({ input }) => {

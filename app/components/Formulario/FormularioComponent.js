@@ -47,26 +47,12 @@ const Form = ({ carreras, ciudades, enumerados }) => {
       return;
     }
 
-    if (formData.carreras[0].carrera_id === "") {
-      setAlertaVisible(true);
-      setCampoObligatorio('carreras');
-      return;
-    }
-
-    //TODO: chequear para cada input de carrera que se agregue
-    // formData.carreras.forEach((carrera) => {
-    //   console.log(carrera.carrera_id)
-    //   if (!carrera.carrera_id === '') {
-    //     setAlertaVisible(true);
-    //     setCampoObligatorio('carreras');
-    //     return;
-    //   }
-    // });
-
-    if (!formData.ciudad_id) {
-      setAlertaVisible(true);
-      setCampoObligatorio('ciudad');
-      return;
+    for (const carrera of formData.carreras) {
+      if (carrera.carrera_id === '') {
+        setAlertaVisible(true);
+        setCampoObligatorio('carreras');
+        return;
+      }
     }
 
     try {
@@ -108,6 +94,9 @@ const Form = ({ carreras, ciudades, enumerados }) => {
                   enumerados={enumerados}
                   handleChange={handleChange}
                 />
+                {alertaVisible && campoObligatorio && (
+                  <AlertaObligatorio input={campoObligatorio} />
+                )}
               </div>
             </Card>
             <div className="flex justify-center py-2">
