@@ -40,7 +40,11 @@ const loginAPI = async (email, password) => {
         }
         return response.data.data;
     } catch (error) {
-        throw new Error('Error al iniciar sesión:', error);
+        if (error.response) {
+            throw error;
+        } else {
+            throw new Error('Error de red o servidor no disponible');
+        }
     }
 };
 

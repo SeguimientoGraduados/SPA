@@ -59,7 +59,21 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
         onClose={handleOpen}
         backdrop="static"
       >
-        <Card className="mx-auto w-full max-w-[40rem]">
+        <Card className="relative mx-auto w-full max-w-[40rem]">
+          <button
+            data-ripple-dark="true"
+            data-dialog-close="true"
+            className="absolute top-2 right-2 h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            type="button"
+            onClick={handleOpen}
+          >
+            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" className="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </span>
+          </button>
+
           <CardBody className="flex flex-col gap-2">
             <Typography
               variant="h4"
@@ -244,6 +258,7 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
         </Card>
       </Dialog>
     </>
+
   );
 };
 
