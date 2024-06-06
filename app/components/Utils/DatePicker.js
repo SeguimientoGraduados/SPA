@@ -9,7 +9,6 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
-import {toTitleCase} from "../../utils/utils"
 
 const YearDropdown = ({ selectedYear, onChange }) => {
     const currentYear = new Date().getFullYear();

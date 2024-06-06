@@ -6,10 +6,15 @@ import TooltipInfo from "../../Utils/TooltipInfo";
 import SelectOption from "../../Utils/SelectOption";
 
 const SegundoBloque = ({  opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, handleChange, }) => {
+
+
+  //TODO: Arreglar para que solo devuelva un String
   const [opcionesSector, setOpcionesSector] = useState([]);
   const handleChangeSector = (event) => {
     const { value } = event.target;
+    
     setOpcionesSector(value);
+    console.log(value)
     handleChange({ target: { name: "ocupacion_sector", value } });
   };
 

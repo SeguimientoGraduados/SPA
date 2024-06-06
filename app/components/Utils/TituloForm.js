@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, IconButton } from "@material-tailwind/react";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { AddIcon } from "./Icons";
 import SelectOption from "../Utils/SelectOption";
 
 const TituloForm = ({ onChange, carreras }) => {
@@ -48,7 +48,7 @@ const TituloForm = ({ onChange, carreras }) => {
         </div>
       ))}
       <IconButton variant="outlined" onClick={addTitle}>
-        <PlusIcon className="h-5 w-5" />
+        <AddIcon />
       </IconButton>
     </div>
   );

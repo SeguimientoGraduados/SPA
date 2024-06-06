@@ -12,7 +12,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     nombre: "",
     dni: "",
     fecha_nacimiento: "",
-    ciudad_id: "",
+    ciudad: [],
     contacto: "",
     carreras: [],
     ocupacion_trabajo: "",

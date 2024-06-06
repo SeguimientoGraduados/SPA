@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconButton, Select, Option } from "@material-tailwind/react";
+import { AddIcon } from '../Utils/Icons';
 
 const BotonFiltros = () => {
     const [mostrarSelects, setMostrarSelects] = useState(false);
@@ -10,11 +11,11 @@ const BotonFiltros = () => {
 
     return (
         <div style={{ position: "absolute", top: 10, left: 10, zIndex: 1000 }}>
+
             <IconButton className="mt-2 ml-2" id="boton" color="white" onClick={handleButtonClicked}>
-                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 14 10">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                </svg>
+                <AddIcon />
             </IconButton>
+
 
             {mostrarSelects && (
                 <div className="w-48 mt-2 ml-2">
