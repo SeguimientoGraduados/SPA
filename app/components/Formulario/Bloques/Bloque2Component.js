@@ -5,17 +5,16 @@ import RadioHorizontal from "../../Utils/RadioHorizontal";
 import TooltipInfo from "../../Utils/TooltipInfo";
 import SelectOption from "../../Utils/SelectOption";
 
-const SegundoBloque = ({  opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, handleChange, }) => {
+const SegundoBloque = ({ opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, handleChange, }) => {
 
-
-  //TODO: Arreglar para que solo devuelva un String
   const [opcionesSector, setOpcionesSector] = useState([]);
   const handleChangeSector = (event) => {
     const { value } = event.target;
+    const sector = value[0]; 
+
+    setOpcionesSector(sector);
     
-    setOpcionesSector(value);
-    console.log(value)
-    handleChange({ target: { name: "ocupacion_sector", value } });
+    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
   };
 
   const handleChangeOcupacion = (event) => {
@@ -65,6 +64,7 @@ const SegundoBloque = ({  opcionesOcupacion, opcionesSectorProp, opcionesExperie
             items={opcionesSectorProp}
             name="ocupacion_sector"
             opcionesSeleccionadas={opcionesSector}
+            seleccionUnica={true}
           />
         </div>
 

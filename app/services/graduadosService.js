@@ -16,24 +16,41 @@ const obtenerGraduados = async (headers = {}) => {
     throw error;
   }
 };
-
 const registrarGraduado = async (formData) => {
   try {
     const token = Cookies.get("token");
-    if (!token) throw new Error("No se encontro el token.");
+    if (!token) throw new Error("No se encontró el token.");
+
+    console.log(formData);
+
     const response = await axios.post(`${API_URL}/graduados`, formData, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`        
+        'Authorization': `Bearer ${token}`
       },
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error("Error en la solicitud");
     }
+
     return response.data.data;
   } catch (error) {
-    throw new Error("Error fetching para registrar graduado:", error);
+    if (error.response) {
+      // La solicitud fue hecha y el servidor respondió con un código de estado
+      // que cae fuera del rango de 2xx
+      console.error('Error en la respuesta del servidor:', error.response.data);
+      console.error('Código de estado:', error.response.status);
+      console.error('Encabezados:', error.response.headers);
+    } else if (error.request) {
+      // La solicitud fue hecha pero no se recibió respuesta
+      console.error('No se recibió respuesta del servidor:', error.request);
+    } else {
+      // Algo sucedió al configurar la solicitud que desencadenó un error
+      console.error('Error al configurar la solicitud:', error.message);
+    }
+    throw new Error("Error registrando al graduado");
+
   }
 };
 
@@ -45,7 +62,7 @@ const obtenerGraduadosPorValidar = async (headers = {}) => {
     const response = await axios.get(`${API_URL}/graduados/validar`, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`        
+        'Authorization': `Bearer ${token}`
       },
     });
     return response.data;
@@ -65,7 +82,7 @@ const aprobarSolicitudGraduado = async (id, headers = {}) => {
       {
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`        
+          'Authorization': `Bearer ${token}`
         },
       }
     );
@@ -86,7 +103,7 @@ const rechazarSolicitudGraduado = async (id, headers = {}) => {
       {
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`        
+          'Authorization': `Bearer ${token}`
         },
       }
     );
@@ -105,7 +122,7 @@ const obtenerEnumerados = async (headers = {}) => {
     const response = await axios.get(`${API_URL}/graduados/enumerados`, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`        
+        'Authorization': `Bearer ${token}`
       },
     });
     return response.data;

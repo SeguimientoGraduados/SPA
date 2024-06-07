@@ -1,5 +1,5 @@
 import { Input, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
@@ -17,7 +17,6 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     twitter: "",
   });
 
-  const [ciudad, setCiudad] = useState([]);
 
   const handleInternalChange = (e, rrssName) => {
     const newRrssData = { ...rrssData, [rrssName]: e.target.value };
@@ -30,21 +29,21 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     handleChange({ target: { name: "rrss", value: formattedRrss } });
   };
 
+  const [ciudad, setCiudad] = useState([]);
   const [error, setError] = useState(null);
+
   const handleChangeCiudad = async (e) => {
     const { value } = e.target;
     try {
       const ciudadAPI = await obtenerCoordenadasCiudad(value);
-
       const nuevaCiudad = {
         nombre: ciudadAPI.name,
-        latitud: ciudadAPI.lat,
-        longitud: ciudadAPI.lon
+        latitud: parseFloat(ciudadAPI.lat),
+        longitud: parseFloat(ciudadAPI.lon)
       };
-
       setCiudad([nuevaCiudad]);
-
       setError(null);
+      
       console.log({ target: { name: "ciudad", value: ciudad } })
       handleChange({ target: { name: "ciudad", value: ciudad } });
     } catch (error) {
