@@ -1,7 +1,7 @@
 import { Input, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import DatePicker from "../../Utils/DatePicker";
-import TituloForm from "../../Utils/TituloForm";
+import TituloForm from "../TituloForm";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
 import { conversorFecha } from "../../Utils/ConversorFecha";
 import ContactoComponent from "../ContactoComponent";
@@ -127,7 +127,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
           error={Boolean(error)}
         />
 
-        <ContactoComponent />
+        <ContactoComponent handleChange={handleInternalChange} />
       </div>
     </>
   );

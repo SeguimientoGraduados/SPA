@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import CiudadMarker from '../CiudadMarkerComponent';
+import CiudadMarker from './CiudadMarkerComponent';
 import BotonFiltros from './BotonFiltros';
 
 const Mapa = ({ graduadosPorCiudad, selectedCity, setSelectedCity }) => {

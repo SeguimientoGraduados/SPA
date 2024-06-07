@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Input, Typography, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-const ContactoComponent = () => {
+const ContactoComponent = ({ handleChange }) => {
   const [showFacebook, setShowFacebook] = useState(false);
   const [showTwitter, setShowTwitter] = useState(false);
 
@@ -28,13 +28,18 @@ const ContactoComponent = () => {
         Informacion de Contacto
       </Typography>
       <div className="grid gap-2 my-6">
-        <Input label="Linkedin" placeholder="LinkedIn profile link" />
+        <Input
+          label="Linkedin"
+          placeholder="https://www.linkedin.com/in/ejemplo/"
+          onChange={(e) => handleChange(e, "linkedin")}
+        />
 
         {showFacebook && (
           <div className="flex flex-row items-center gap-3">
             <Input
               label="Facebook"
-              placeholder="Facebook profile link"
+              placeholder="https://www.facebook.com/ejemplo/"
+              onChange={(e) => handleChange(e, "facebook")}
             />
             <IconButton
               variant="outline"
@@ -51,7 +56,8 @@ const ContactoComponent = () => {
           <div className="flex flex-row items-center gap-3">
             <Input
               label="Twitter"
-              placeholder="Twitter profile link"
+              placeholder="https://www.twitter.com/ejemplo/"
+              onChange={(e) => handleChange(e, "twitter")}
             />
             <IconButton
               variant="outline"
@@ -66,13 +72,21 @@ const ContactoComponent = () => {
 
         <div className="flex flex-row gap-6 justify-center">
           {!showFacebook && (
-            <IconButton variant="outline" onClick={handleMostrarFacebook} size="lg">
+            <IconButton
+              variant="outline"
+              onClick={handleMostrarFacebook}
+              size="lg"
+            >
               <FontAwesomeIcon icon={faFacebook} />
             </IconButton>
           )}
 
           {!showTwitter && (
-            <IconButton variant="outline" onClick={handleMostrarTwitter} size="lg">
+            <IconButton
+              variant="outline"
+              onClick={handleMostrarTwitter}
+              size="lg"
+            >
               <FontAwesomeIcon icon={faXTwitter} />
             </IconButton>
           )}
