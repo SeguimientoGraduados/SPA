@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
+import ContactoComponent from "../ContactoComponent";
 
 const PrimerBloque = ({ handleChange, carreras }) => {
   const opcionesCarreras = carreras.map((carrera) => ({
@@ -114,77 +115,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
           error={Boolean(error)}
         />
 
-        <Typography
-          variant="h5"
-          color="blue-gray"
-          className="font-normal text-center mt-2"
-        >
-          Informacion de Contacto
-        </Typography>
-
-        <div className="flex flex-row gap-2">
-          <img
-            src={`/logos/gmail.svg`}
-            alt="Gmail Logo"
-            className="h-8 w-10 mr-2"
-          />
-          <Input
-            placeholder="ejemplo@mail.com"
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            name="contacto"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <img
-            src={`/logos/Linkedin.webp`}
-            alt="Linkedin Logo"
-            className="h-10 w-10 mr-2"
-          />
-          <Input
-            placeholder="https://www.linkedin.com/in/ejemplo/"
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-            value={rrssData.linkedin}
-            onChange={(e) => handleInternalChange(e, "linkedin")}
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <img
-            src={`/logos/Facebook.webp`}
-            alt="Facebook Logo"
-            className="h-10 w-10 mr-2"
-          />
-          <Input
-            placeholder="https://www.facebook.com/ejemplo/"
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-            value={rrssData.facebook}
-            onChange={(e) => handleInternalChange(e, "facebook")}
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <img src={`/logos/X.webp`} alt="X Logo" className="h-10 w-10 mr-2" />
-          <Input
-            placeholder="https://www.twitter.com/ejemplo/"
-            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-            value={rrssData.twitter}
-            onChange={(e) => handleInternalChange(e, "twitter")}
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
+        <ContactoComponent />
       </div>
     </>
   );

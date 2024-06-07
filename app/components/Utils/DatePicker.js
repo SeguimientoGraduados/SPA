@@ -8,8 +8,8 @@ import {
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
-import {toTitleCase} from "../../utils/utils"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 const YearDropdown = ({ selectedYear, onChange }) => {
     const currentYear = new Date().getFullYear();
@@ -100,10 +100,10 @@ const DatePicker = ({ label, onChange, name }) => {
                         }}
                         components={{
                             IconLeft: ({ ...props }) => (
-                                <ChevronLeftIcon {...props} className="h-4 w-4 stroke-2" />
+                                <FontAwesomeIcon {...props} icon={faChevronLeft} />
                             ),
                             IconRight: ({ ...props }) => (
-                                <ChevronRightIcon {...props} className="h-4 w-4 stroke-2" />
+                                <FontAwesomeIcon {...props} icon={faChevronRight} />
                             ),
                         }}
                     />
