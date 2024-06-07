@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../../Utils/TituloForm";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
+import { conversorFecha } from "../../Utils/ConversorFecha";
 import ContactoComponent from "../ContactoComponent";
 
 const PrimerBloque = ({ handleChange, carreras }) => {
@@ -17,11 +18,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     twitter: "",
   });
 
-  const [ciudad, setCiudad] = useState({
-    nombre: "",
-    latitud: "",
-    longitud: "",
-  });
+  const [ciudad, setCiudad] = useState([]);
 
   const handleInternalChange = (e, rrssName) => {
     const newRrssData = { ...rrssData, [rrssName]: e.target.value };
@@ -40,18 +37,33 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     try {
       const ciudadAPI = await obtenerCoordenadasCiudad(value);
 
-      setCiudad({
+      const nuevaCiudad = {
         nombre: ciudadAPI.name,
         latitud: ciudadAPI.lat,
         longitud: ciudadAPI.lon
-      });
+      };
+
+      setCiudad([nuevaCiudad]);
 
       setError(null);
+      console.log({ target: { name: "ciudad", value: ciudad } })
+      handleChange({ target: { name: "ciudad", value: ciudad } });
     } catch (error) {
       setError(error.message);
       console.log(error.message)
     }
   };
+
+  const handleChangeFecha = (e) => {
+    const { value } = e.target;
+    const fechaFormateada = conversorFecha(value);
+
+    console.log(fechaFormateada);
+
+    handleChange({ target: { name: "fecha_nacimiento", value: fechaFormateada } });
+  };
+
+
 
   return (
     <>
@@ -89,7 +101,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
         <DatePicker
           label={"Fecha de nacimiento"}
           name="fecha_nacimiento"
-          onChange={handleChange}
+          onChange={handleChangeFecha}
           required
           onInvalid={(e) =>
             e.currentTarget.setCustomValidity("Campo obligatorio")

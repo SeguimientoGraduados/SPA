@@ -21,7 +21,6 @@ const registrarGraduado = async (formData) => {
   try {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontro el token.");
-
     const response = await axios.post(`${API_URL}/graduados`, formData, {
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +33,7 @@ const registrarGraduado = async (formData) => {
     }
     return response.data.data;
   } catch (error) {
-    throw new Error("Error al iniciar sesión:", error);
+    throw new Error("Error fetching para registrar graduado:", error);
   }
 };
 
