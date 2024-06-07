@@ -2,10 +2,10 @@ import {
   Input,
   Typography,
   IconButton,
-  Checkbox,
 } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import CheckboxList from "../../Utils/CheckboxList";
 
 const TercerBloque = ({ handleChange }) => {
@@ -96,7 +96,7 @@ const TercerBloque = ({ handleChange }) => {
         ))}
         <div className="flex flex-col items-center">
           <IconButton variant="outlined" onClick={addFormacion}>
-            <PlusIcon className="h-5 w-5" />
+            <FontAwesomeIcon icon={faPlus} />
           </IconButton>
         </div>
 

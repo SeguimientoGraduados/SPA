@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, IconButton } from "@material-tailwind/react";
-import { AddIcon } from "./Icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import SelectOption from "../Utils/SelectOption";
 
 const TituloForm = ({ onChange, carreras }) => {
@@ -30,7 +31,7 @@ const TituloForm = ({ onChange, carreras }) => {
             select={"Título"}
             handleChange={(e) => handleInternalChange(e, index, "title")}
             options={carreras}
-            name="carreras"
+            name="carreras" 
             value={item.title}
           />
 
@@ -48,7 +49,7 @@ const TituloForm = ({ onChange, carreras }) => {
         </div>
       ))}
       <IconButton variant="outlined" onClick={addTitle}>
-        <AddIcon />
+        <FontAwesomeIcon icon={faPlus} />
       </IconButton>
     </div>
   );
