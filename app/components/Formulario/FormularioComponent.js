@@ -9,26 +9,26 @@ import AlertaObligatorio from "../Utils/AlertObligatorio";
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
   const [formData, setFormData] = useState({
-    nombre: "",
-    dni: "",
-    fecha_nacimiento: "",
-    ciudad: [],
-    contacto: "",
-    carreras: [],
-    ocupacion_trabajo: "",
-    ocupacion_empresa: "",
-    ocupacion_sector: "",
-    ocupacion_informacion_adicional: "",
-    experiencia_anios: "",
-    habilidades_competencias: "",
-    formacion: [],
-    rrss: [],
-    cv: "",
-    interes_comunidad: false,
-    interes_oferta: false,
-    interes_demanda: false,
+    "nombre": "",
+    "dni": "",
+    "fecha_nacimiento": "",
+    "ciudad": [],
+    "contacto": "",
+    "carreras": [],
+    "ocupacion_trabajo": "",
+    "ocupacion_empresa": "",
+    "ocupacion_sector": "",
+    "ocupacion_informacion_adicional": "",
+    "experiencia_anios": "",
+    "experiencia_informacion_adicional": "apoyo", // Hay que borrar este campo de la bd creo
+    "habilidades_competencias": "",
+    "formacion": [],
+    "rrss": [],
+    "cv": "",
+    "interes_comunidad": false,
+    "interes_oferta": false,
+    "interes_demanda": false,
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
