@@ -42,7 +42,7 @@ const ContactoComponent = ({ handleChange }) => {
               onChange={(e) => handleChange(e, "facebook")}
             />
             <IconButton
-              variant="outline"
+              variant="outlined"
               onClick={handleMostrarFacebook}
               color="red"
               size="sm"
@@ -60,7 +60,7 @@ const ContactoComponent = ({ handleChange }) => {
               onChange={(e) => handleChange(e, "twitter")}
             />
             <IconButton
-              variant="outline"
+              variant="outlined"
               onClick={handleMostrarTwitter}
               color="red"
               size="sm"
@@ -73,8 +73,9 @@ const ContactoComponent = ({ handleChange }) => {
         <div className="flex flex-row gap-6 justify-center">
           {!showFacebook && (
             <IconButton
-              variant="outline"
               onClick={handleMostrarFacebook}
+              color="blue"
+              variant="outlined"
               size="lg"
             >
               <FontAwesomeIcon icon={faFacebook} />
@@ -83,7 +84,8 @@ const ContactoComponent = ({ handleChange }) => {
 
           {!showTwitter && (
             <IconButton
-              variant="outline"
+              color="blue"
+              variant="outlined"
               onClick={handleMostrarTwitter}
               size="lg"
             >

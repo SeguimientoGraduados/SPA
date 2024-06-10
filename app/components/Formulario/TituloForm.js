@@ -48,7 +48,7 @@ const TituloForm = ({ onChange, carreras }) => {
           />
         </div>
       ))}
-      <IconButton variant="outlined" onClick={addTitle}>
+      <IconButton variant="outlined" color="blue" onClick={addTitle}>
         <FontAwesomeIcon icon={faPlus} />
       </IconButton>
     </div>

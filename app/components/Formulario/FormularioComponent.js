@@ -1,4 +1,4 @@
-import { Card, Button, Typography, Alert } from "@material-tailwind/react";
+import { Card, Button, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import PrimerBloque from "./Bloques/Bloque1Component";
 import SegundoBloque from "./Bloques/Bloque2Component";
@@ -91,7 +91,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
                   handleChange={handleChange}
                 />
                 <TercerBloque
-                  enumerados={enumerados}
+                  opcionesFormacion={enumerados.nivel_formacion}
                   handleChange={handleChange}
                 />
                 {alertaVisible && campoObligatorio && (

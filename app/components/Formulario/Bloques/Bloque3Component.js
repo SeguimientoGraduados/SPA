@@ -1,29 +1,10 @@
-import {
-  Input,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Input, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import CheckboxList from "../../Utils/CheckboxList";
+import FormacionComponent from "../FormacionComponent";
 
-const TercerBloque = ({ handleChange }) => {
+const TercerBloque = ({ handleChange, opcionesFormacion }) => {
   const [formaciones, setFormaciones] = useState([{ formacion: "" }]);
-  const addFormacion = () => {
-    setFormaciones([...formaciones, { formacion: "" }]);
-  };
-  const handleChangeFormacion = (e, index) => {
-    const { value } = e.target;
-    const updatedFormaciones = [...formaciones];
-    updatedFormaciones[index].formacion = value;
-
-    const formacion = updatedFormaciones
-      .map((formacion) => formacion.formacion)
-      .filter(Boolean);
-    handleChange({ target: { name: "formacion", value: formacion } });
-  };
-
   const [opcionesInteres, setOpcionesInteres] = useState([]);
   const [intereses, setIntereses] = useState({
     comunidad: false,
@@ -31,23 +12,21 @@ const TercerBloque = ({ handleChange }) => {
     demanda: false,
   });
 
-  useEffect(() => {
-    handleChange({
-      target: { name: "interes_comunidad", value: intereses.comunidad },
-    });
-  }, [intereses.comunidad]);
+  const addFormacion = () =>
+    setFormaciones([...formaciones, { formacion: "" }]);
 
-  useEffect(() => {
-    handleChange({
-      target: { name: "interes_oferta", value: intereses.oferta },
-    });
-  }, [intereses.oferta]);
+  const handleChangeFormacion = (e, index) => {
+    const { value } = e.target;
+    const updatedFormaciones = formaciones.map((formacion, i) =>
+      i === index ? { ...formacion, formacion: value } : formacion
+    );
+    setFormaciones(updatedFormaciones);
 
-  useEffect(() => {
-    handleChange({
-      target: { name: "interes_demanda", value: intereses.demanda },
-    });
-  }, [intereses.demanda]);
+    const formacionValues = updatedFormaciones
+      .map((f) => f.formacion)
+      .filter(Boolean);
+    handleChange({ target: { name: "formacion", value: formacionValues } });
+  };
 
   const handleChangeInteres = (event) => {
     const { value } = event.target;
@@ -58,9 +37,20 @@ const TercerBloque = ({ handleChange }) => {
       oferta: value.includes("2. proponer iniciativas (oferta)"),
       demanda: value.includes("3. recibir consultas (demanda)"),
     };
-
     setIntereses(nuevosIntereses);
   };
+
+  useEffect(() => {
+    handleChange({
+      target: { name: "interes_comunidad", value: intereses.comunidad },
+    });
+    handleChange({
+      target: { name: "interes_oferta", value: intereses.oferta },
+    });
+    handleChange({
+      target: { name: "interes_demanda", value: intereses.demanda },
+    });
+  }, [intereses]);
 
   return (
     <>
@@ -76,29 +66,12 @@ const TercerBloque = ({ handleChange }) => {
         <Input
           label="CV"
           placeholder="https://drive.google.com/CV_Ejemplo"
-          labelProps={{
-            className: "font-semibold",
-          }}
+          labelProps={{ className: "font-semibold" }}
           name="cv"
           onChange={handleChange}
         />
 
-        {formaciones.map((formacion, index) => (
-          <div key={index}>
-            <Input
-              label="Educación/Formación"
-              labelProps={{ className: "font-semibold" }}
-              name="formacion"
-              onChange={(e) => handleChangeFormacion(e, index, "formacion")}
-              value={formacion.formacion}
-            />
-          </div>
-        ))}
-        <div className="flex flex-col items-center">
-          <IconButton variant="outlined" onClick={addFormacion}>
-            <FontAwesomeIcon icon={faPlus} />
-          </IconButton>
-        </div>
+        <FormacionComponent opcionesFormacion={opcionesFormacion} />
 
         <div className="mx-auto">
           <Typography
@@ -123,4 +96,5 @@ const TercerBloque = ({ handleChange }) => {
     </>
   );
 };
+
 export default TercerBloque;
