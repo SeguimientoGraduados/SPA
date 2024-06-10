@@ -1,5 +1,3 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
-
 export function AlertIcon() {
   return (
     <svg
@@ -14,11 +12,5 @@ export function AlertIcon() {
         clipRule="evenodd"
       />
     </svg>
-  );
-}
-
-export function AddIcon() {
-  return (
-    <PlusIcon className="h-5 w-5" />
   );
 }

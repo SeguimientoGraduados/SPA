@@ -1,10 +1,11 @@
-import { Card, Button, Typography, Alert } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { Card, Button, Typography } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 import PrimerBloque from "./Bloques/Bloque1Component";
 import SegundoBloque from "./Bloques/Bloque2Component";
 import TercerBloque from "./Bloques/Bloque3Component";
 import graduadosService from "../../services/graduadosService";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
+import Cookies from 'js-cookie';
 
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
@@ -20,7 +21,6 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     "ocupacion_sector": "",
     "ocupacion_informacion_adicional": "",
     "experiencia_anios": "",
-    "experiencia_informacion_adicional": "apoyo", // Hay que borrar este campo de la bd creo
     "habilidades_competencias": "",
     "formacion": [],
     "rrss": [],
@@ -29,6 +29,19 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     "interes_oferta": false,
     "interes_demanda": false,
   });
+
+  useEffect(() => {
+    const userCookie = Cookies.get('user');
+    if (userCookie) {
+      const decodedUser = decodeURIComponent(userCookie);
+      const user = JSON.parse(decodedUser);
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        contacto: user.email
+      }));
+    }
+  }, [])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

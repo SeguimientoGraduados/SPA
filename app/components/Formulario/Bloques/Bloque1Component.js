@@ -1,5 +1,5 @@
 import { Input, Typography } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DatePicker from "../../Utils/DatePicker";
 import TituloForm from "../TituloForm";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
@@ -19,7 +19,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
   });
 
 
-  const handleInternalChange = (e, rrssName) => {
+  const handleChangeRRSS = (e, rrssName) => {
     const newRrssData = { ...rrssData, [rrssName]: e.target.value };
     setRrssData(newRrssData);
 
@@ -126,7 +126,7 @@ const PrimerBloque = ({ handleChange, carreras }) => {
           error={Boolean(error)}
         />
 
-        <ContactoComponent handleChange={handleInternalChange} />
+        <ContactoComponent handleChange={handleChangeRRSS} />
       </div>
     </>
   );
