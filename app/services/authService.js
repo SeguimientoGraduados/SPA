@@ -38,6 +38,7 @@ const loginAPI = async (email, password) => {
         if (response.status !== 200) {
             throw new Error('Error en la solicitud');
         }
+
         return response.data.data;
     } catch (error) {
         if (error.response) {

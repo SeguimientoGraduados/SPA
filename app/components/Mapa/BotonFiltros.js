@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IconButton, Select, Option } from "@material-tailwind/react";
-import { AddIcon } from '../Utils/Icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const BotonFiltros = () => {
     const [mostrarSelects, setMostrarSelects] = useState(false);
@@ -13,7 +14,7 @@ const BotonFiltros = () => {
         <div style={{ position: "absolute", top: 10, left: 10, zIndex: 1000 }}>
 
             <IconButton className="mt-2 ml-2" id="boton" color="white" onClick={handleButtonClicked}>
-                <AddIcon />
+                <FontAwesomeIcon icon={faPlus} />
             </IconButton>
 
 

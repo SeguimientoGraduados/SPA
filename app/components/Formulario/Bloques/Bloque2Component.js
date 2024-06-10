@@ -10,11 +10,10 @@ const SegundoBloque = ({ opcionesOcupacion, opcionesSectorProp, opcionesExperien
   const [opcionesSector, setOpcionesSector] = useState([]);
   const handleChangeSector = (event) => {
     const { value } = event.target;
-    const sector = value[0]; 
-
+    const sector = value[0];
     setOpcionesSector(sector);
-    
-    handleChange({ target: { name: "ocupacion_sector", value: opcionesSector } });
+
+    handleChange({ target: { name: "ocupacion_sector", value: sector } });
   };
 
   const handleChangeOcupacion = (event) => {

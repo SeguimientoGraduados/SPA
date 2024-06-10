@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 const CiudadMarker = ({ ciudad, selectedCity, setSelectedCity }) => {
-   const handleMarkerClick = () => {
-    setSelectedCity(ciudad); 
+  const handleMarkerClick = () => {
+    setSelectedCity(ciudad);
   };
 
   return (
@@ -13,7 +13,10 @@ const CiudadMarker = ({ ciudad, selectedCity, setSelectedCity }) => {
         click: handleMarkerClick
       }}
     >
-      <Popup>{ciudad.nombre} - {ciudad.cantidad_graduados} graduados</Popup>
+      <Popup>
+        {ciudad.nombre} - {ciudad.cantidad_graduados}
+        {ciudad.cantidad_graduados === 1 ? ' graduado' : ' graduados'}
+      </Popup>
     </Marker>
   );
 };
