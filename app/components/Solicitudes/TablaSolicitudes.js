@@ -3,21 +3,6 @@ import ModalSolicitudes from "./ModalSolicitudes";
 
 const TABLE_HEAD = ["Nombre", "DNI", "Carrera", "Año de graduación", ""];
 
-const TABLE_ROWS = [
-  {
-    nombre: "Michael Scott",
-    dni: "12345667",
-    carrera: "Ingenieria en Papel",
-    anio: "2020",
-  },
-  {
-    nombre: "Dwigth Schrute",
-    dni: "12343210",
-    carrera: "Ingenieria en Remolachas",
-    anio: "2021",
-  },
-];
-
 const TablaSolicitudes = ({ solicitudes , fetchData}) => {
   return (
     <Card className="w-full">
