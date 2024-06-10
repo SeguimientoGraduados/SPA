@@ -23,14 +23,15 @@ const PrimerBloque = ({ handleChange, carreras }) => {
     const newRrssData = { ...rrssData, [rrssName]: e.target.value };
     setRrssData(newRrssData);
 
-    const formattedRrss = Object.keys(newRrssData).map((key) => ({
-      rrss: key,
-      url: newRrssData[key],
-    }));
+    const formattedRrss = Object.keys(newRrssData)
+      .filter((key) => newRrssData[key] !== "")
+      .map((key) => ({
+        rrss: key,
+        url: newRrssData[key],
+      }));
     handleChange({ target: { name: "rrss", value: formattedRrss } });
   };
 
-  const [ciudad, setCiudad] = useState([]);
   const [error, setError] = useState(null);
 
   const handleChangeCiudad = async (e) => {
@@ -42,11 +43,10 @@ const PrimerBloque = ({ handleChange, carreras }) => {
         latitud: parseFloat(ciudadAPI.lat),
         longitud: parseFloat(ciudadAPI.lon)
       };
-      setCiudad([nuevaCiudad]);
       setError(null);
-      
-      console.log({ target: { name: "ciudad", value: ciudad } })
-      handleChange({ target: { name: "ciudad", value: ciudad } });
+
+      console.log({ target: { name: "ciudad", value: nuevaCiudad } })
+      handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
     } catch (error) {
       setError(error.message);
       console.log(error.message)
@@ -56,8 +56,6 @@ const PrimerBloque = ({ handleChange, carreras }) => {
   const handleChangeFecha = (e) => {
     const { value } = e.target;
     const fechaFormateada = conversorFecha(value);
-
-    console.log(fechaFormateada);
 
     handleChange({ target: { name: "fecha_nacimiento", value: fechaFormateada } });
   };
