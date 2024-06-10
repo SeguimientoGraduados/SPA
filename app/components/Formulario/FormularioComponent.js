@@ -71,7 +71,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     try {
       const data = await registrarGraduado(formData);
       setAlertaVisible(false);
-      console.log('Formulario enviado con éxito:', data);
+      console.log('Formulario enviado con éxito');
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -94,7 +94,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
                 <PrimerBloque
                   carreras={carreras}
                   ciudades={ciudades}
-                  enumerados={enumerados}
+                  opcionesRrss={enumerados.rrss}
                   handleChange={handleChange}
                 />
                 <SegundoBloque

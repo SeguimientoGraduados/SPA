@@ -6,7 +6,7 @@ import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
 import { conversorFecha } from "../../Utils/ConversorFecha";
 import ContactoComponent from "../ContactoComponent";
 
-const PrimerBloque = ({ handleChange, carreras }) => {
+const PrimerBloque = ({ handleChange, carreras, opcionesRrss }) => {
   const opcionesCarreras = carreras.map((carrera) => ({
     value: carrera.id.toString(),
     label: carrera.nombre,
@@ -45,7 +45,6 @@ const PrimerBloque = ({ handleChange, carreras }) => {
       };
       setError(null);
 
-      console.log({ target: { name: "ciudad", value: nuevaCiudad } })
       handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
     } catch (error) {
       setError(error.message);
@@ -124,7 +123,10 @@ const PrimerBloque = ({ handleChange, carreras }) => {
           error={Boolean(error)}
         />
 
-        <ContactoComponent handleChange={handleChangeRRSS} />
+        <ContactoComponent
+          handleChange={handleChangeRRSS}
+          opcionesRrss={opcionesRrss}
+        />
       </div>
     </>
   );

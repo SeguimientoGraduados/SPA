@@ -31,7 +31,7 @@ const TituloForm = ({ onChange, carreras }) => {
             select={"Título"}
             handleChange={(e) => handleInternalChange(e, index, "title")}
             options={carreras}
-            name="carreras" 
+            name="carreras"
             value={item.title}
           />
 
@@ -48,7 +48,12 @@ const TituloForm = ({ onChange, carreras }) => {
           />
         </div>
       ))}
-      <IconButton variant="outlined" color="blue" onClick={addTitle}>
+      <IconButton
+        className="rounded-full"
+        onClick={addTitle}
+        variant="outlined"
+        color="blue"
+      >
         <FontAwesomeIcon icon={faPlus} />
       </IconButton>
     </div>

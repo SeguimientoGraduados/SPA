@@ -4,29 +4,12 @@ import CheckboxList from "../../Utils/CheckboxList";
 import FormacionComponent from "../FormacionComponent";
 
 const TercerBloque = ({ handleChange, opcionesFormacion }) => {
-  const [formaciones, setFormaciones] = useState([{ formacion: "" }]);
   const [opcionesInteres, setOpcionesInteres] = useState([]);
   const [intereses, setIntereses] = useState({
     comunidad: false,
     oferta: false,
     demanda: false,
   });
-
-  const addFormacion = () =>
-    setFormaciones([...formaciones, { formacion: "" }]);
-
-  const handleChangeFormacion = (e, index) => {
-    const { value } = e.target;
-    const updatedFormaciones = formaciones.map((formacion, i) =>
-      i === index ? { ...formacion, formacion: value } : formacion
-    );
-    setFormaciones(updatedFormaciones);
-
-    const formacionValues = updatedFormaciones
-      .map((f) => f.formacion)
-      .filter(Boolean);
-    handleChange({ target: { name: "formacion", value: formacionValues } });
-  };
 
   const handleChangeInteres = (event) => {
     const { value } = event.target;
@@ -71,7 +54,10 @@ const TercerBloque = ({ handleChange, opcionesFormacion }) => {
           onChange={handleChange}
         />
 
-        <FormacionComponent opcionesFormacion={opcionesFormacion} />
+        <FormacionComponent
+          sendChange={handleChange}
+          opcionesFormacion={opcionesFormacion}
+        />
 
         <div className="mx-auto">
           <Typography

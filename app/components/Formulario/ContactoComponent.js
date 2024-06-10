@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-const ContactoComponent = ({ handleChange }) => {
+const ContactoComponent = ({ handleChange, opcionesRrss }) => {
   const [showFacebook, setShowFacebook] = useState(false);
   const [showTwitter, setShowTwitter] = useState(false);
 
@@ -16,6 +16,11 @@ const ContactoComponent = ({ handleChange }) => {
 
   const handleMostrarTwitter = () => {
     setShowTwitter((cur) => !cur);
+  };
+
+  const getLabel = (value) => {
+    const option = opcionesRrss.find(opt => opt.value === value);
+    return option ? option.label : '';
   };
 
   return (
@@ -29,7 +34,7 @@ const ContactoComponent = ({ handleChange }) => {
       </Typography>
       <div className="grid gap-2 my-6">
         <Input
-          label="Linkedin"
+          label={getLabel('linkedin')}
           placeholder="https://www.linkedin.com/in/ejemplo/"
           onChange={(e) => handleChange(e, "linkedin")}
         />
@@ -37,13 +42,14 @@ const ContactoComponent = ({ handleChange }) => {
         {showFacebook && (
           <div className="flex flex-row items-center gap-3">
             <Input
-              label="Facebook"
+              label={getLabel('facebook')}
               placeholder="https://www.facebook.com/ejemplo/"
               onChange={(e) => handleChange(e, "facebook")}
             />
             <IconButton
-              variant="outlined"
+              className="rounded-full"
               onClick={handleMostrarFacebook}
+              variant="outlined"
               color="red"
               size="sm"
             >
@@ -55,13 +61,14 @@ const ContactoComponent = ({ handleChange }) => {
         {showTwitter && (
           <div className="flex flex-row items-center gap-3">
             <Input
-              label="Twitter"
+              label={getLabel('twitter')}
               placeholder="https://www.twitter.com/ejemplo/"
               onChange={(e) => handleChange(e, "twitter")}
             />
             <IconButton
-              variant="outlined"
+              className="rounded-full"
               onClick={handleMostrarTwitter}
+              variant="outlined"
               color="red"
               size="sm"
             >
@@ -73,6 +80,7 @@ const ContactoComponent = ({ handleChange }) => {
         <div className="flex flex-row gap-6 justify-center">
           {!showFacebook && (
             <IconButton
+              className="rounded-full"
               onClick={handleMostrarFacebook}
               color="blue"
               variant="outlined"
@@ -84,9 +92,10 @@ const ContactoComponent = ({ handleChange }) => {
 
           {!showTwitter && (
             <IconButton
-              color="blue"
-              variant="outlined"
+              className="rounded-full"
               onClick={handleMostrarTwitter}
+              color="blue"
+              variant="outlined"             
               size="lg"
             >
               <FontAwesomeIcon icon={faXTwitter} />
