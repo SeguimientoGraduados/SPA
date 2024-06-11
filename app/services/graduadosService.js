@@ -21,8 +21,6 @@ const registrarGraduado = async (formData) => {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontró el token.");
 
-    console.log(formData);
-
     const response = await axios.post(`${API_URL}/graduados`, formData, {
       headers: {
         "Content-Type": "application/json",

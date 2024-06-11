@@ -6,6 +6,7 @@ import TercerBloque from "./Bloques/Bloque3Component";
 import graduadosService from "../../services/graduadosService";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
 import Cookies from 'js-cookie';
+import ModalFormulario from "./ModalFormularioComponent";
 
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
@@ -52,6 +53,9 @@ const Form = ({ carreras, ciudades, enumerados }) => {
 
   const [alertaVisible, setAlertaVisible] = useState(false);
   const [campoObligatorio, setCampoObligatorio] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [registroExitoso, setRegistroExitoso] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fecha_nacimiento) {
@@ -69,10 +73,14 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     }
 
     try {
-      const data = await registrarGraduado(formData);
+      await registrarGraduado(formData);
       setAlertaVisible(false);
+      setRegistroExitoso(true);
+      setModalVisible(true);
       console.log('Formulario enviado con éxito');
     } catch (error) {
+      setRegistroExitoso(false);
+      setModalVisible(true);
       console.error("Error al enviar el formulario:", error);
     }
   };
@@ -118,6 +126,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
               </Button>
             </div>
           </form>
+          <ModalFormulario open={modalVisible} handleOpen={setModalVisible} registroExitoso={registroExitoso} />
         </div>
       </div>
     </>

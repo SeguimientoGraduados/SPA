@@ -14,16 +14,24 @@ const FormacionComponent = ({ sendChange, opcionesFormacion }) => {
   };
 
   const handleInternalChange = (e, index, field) => {
+    const { value } = e.target;
     const newformaciones = [...formaciones];
-    newformaciones[index][field] = e.target.value;
-    setFormaciones(newformaciones);
-    sendChange({ target: { name: "formacion", value: formaciones } });
+    newformaciones[index][field] = value;
+
+    const allFieldsFilled = Object.values(newformaciones[index]).every(val => val !== "");
+    if (allFieldsFilled) {
+      setFormaciones(newformaciones);
+      console.log({ target: { name: "formacion", value: newformaciones } })
+      sendChange({ target: { name: "formacion", value: newformaciones } });
+    }
   };
 
   const removeFormacion = (index) => {
-    const newformaciones = formaciones.filter((_, i) => i !== index);
-    setFormaciones(newformaciones);
+    const newFormaciones = formaciones.filter((_, i) => i !== index);
+    setFormaciones(newFormaciones);
+    sendChange({ target: { name: "formacion", value: [] } });
   };
+
 
   return (
     <>

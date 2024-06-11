@@ -23,17 +23,24 @@ const TercerBloque = ({ handleChange, opcionesFormacion }) => {
     setIntereses(nuevosIntereses);
   };
 
+  //TODO: tuve que volver a ponerlo separado porque sino no actualizaba bien
   useEffect(() => {
     handleChange({
       target: { name: "interes_comunidad", value: intereses.comunidad },
     });
+  }, [intereses.comunidad]);
+
+  useEffect(() => {
     handleChange({
       target: { name: "interes_oferta", value: intereses.oferta },
     });
+  }, [intereses.oferta]);
+
+  useEffect(() => {
     handleChange({
       target: { name: "interes_demanda", value: intereses.demanda },
     });
-  }, [intereses]);
+  }, [intereses.demanda]);
 
   return (
     <>
