@@ -1,5 +1,6 @@
 "use client";
-import { Card, Typography, Button } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
+import ContactoPopover from "./ContactoPopoverComponent";
 
 const TABLE_HEAD = [
   "Nombre",
@@ -99,15 +100,7 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
                   </Typography>
                 </td>
                 <td>
-                  <Typography
-                    variant="small"
-                    as="a"
-                    href="#"
-                    color="blue-gray"
-                    className="font-normal hover:underline hover:underline-offset-2"
-                  >
-                    Ver información
-                  </Typography>
+                  <ContactoPopover graduado={graduado} />
                 </td>
               </tr>
             ))
