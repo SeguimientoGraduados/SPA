@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/Header/HeaderComponent";
 import Footer from "./components/Footer/FooterComponent";
 import { AuthProvider } from '../app/context/AuthContext';
+import './globals.css'; 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +16,11 @@ export default function RootLayout({ children }) {
             rel="stylesheet"
           />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-200`}>
         <AuthProvider>
           <Header />
-          <main className="bg-white">{children}</main>
-          <Footer />
+          <main className="flex-grow bg-gray-200">{children}</main>
+          <Footer className="mb-0" />
         </AuthProvider>
       </body>
     </html>
