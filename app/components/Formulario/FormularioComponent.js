@@ -1,15 +1,14 @@
 import { Card, Button, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import PrimerBloque from "./Bloques/Bloque1Component";
-import SegundoBloque from "./Bloques/Bloque2Component";
-import TercerBloque from "./Bloques/Bloque3Component";
 import graduadosService from "../../services/graduadosService";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
 import Cookies from 'js-cookie';
 import ModalFormulario from "./ModalFormularioComponent";
+import Bloques from "./BloquesComponent";
 
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
+
   const [formData, setFormData] = useState({
     "nombre": "",
     "dni": "",
@@ -49,6 +48,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
       ...formData,
       [name]: value,
     });
+
   };
 
   const [alertaVisible, setAlertaVisible] = useState(false);
@@ -99,22 +99,18 @@ const Form = ({ carreras, ciudades, enumerados }) => {
           <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
               <div className="flex flex-col gap-3">
-                <PrimerBloque
+
+                <Bloques
                   carreras={carreras}
                   ciudades={ciudades}
                   opcionesRrss={enumerados.rrss}
-                  handleChange={handleChange}
-                />
-                <SegundoBloque
                   opcionesOcupacion={enumerados.ocupacion_trabajo}
                   opcionesExperiencia={enumerados.exp_anios}
                   opcionesSectorProp={enumerados.ocupacion_sector}
-                  handleChange={handleChange}
-                />
-                <TercerBloque
                   opcionesFormacion={enumerados.nivel_formacion}
                   handleChange={handleChange}
                 />
+
                 {alertaVisible && campoObligatorio && (
                   <AlertaObligatorio input={campoObligatorio} />
                 )}

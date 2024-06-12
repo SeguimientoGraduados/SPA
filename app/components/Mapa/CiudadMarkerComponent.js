@@ -6,8 +6,6 @@ const CiudadMarker = ({ ciudad, selectedCity, setSelectedCity }) => {
     setSelectedCity(ciudad);
   };
 
-  console.log(ciudad)
-
   return (
     <Marker
       position={[ciudad.latitud, ciudad.longitud]}
