@@ -27,8 +27,7 @@ const TablaSolicitudes = ({ solicitudes , fetchData}) => {
         </thead>
         <tbody>
           {solicitudes.map((solicitud, index) => {
-            const isLast = index === TABLE_ROWS.length - 1;
-            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+            const classes = "p-4 border-b border-blue-gray-50";
 
             return (
               <tr key={solicitud.id}>

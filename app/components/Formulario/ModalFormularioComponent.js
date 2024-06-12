@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
     Button,
     Dialog,
@@ -8,7 +9,11 @@ import {
 } from "@material-tailwind/react";
 
 const ModalFormulario = ({ open, handleOpen, registroExitoso }) => {
-
+    const router = useRouter();
+    const handleAceptar = () => {
+        handleOpen(false);
+        router.push('/');
+    };
     return (
         <>
             <Dialog size="xs" open={open} handler={handleOpen}>
@@ -48,7 +53,7 @@ const ModalFormulario = ({ open, handleOpen, registroExitoso }) => {
                     </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
-                    <Button color="blue" variant="gradient" onClick={() => handleOpen(false)}>
+                    <Button color="blue" variant="gradient" onClick={handleAceptar}>
                         Aceptar
                     </Button>
                 </DialogFooter>

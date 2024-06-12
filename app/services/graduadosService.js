@@ -1,11 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL + "/graduados";
 
 const obtenerGraduados = async (headers = {}) => {
   try {
-    const response = await axios.get(`${API_URL}/graduados`, {
+    const response = await axios.get(`${API_URL}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -21,10 +21,10 @@ const registrarGraduado = async (formData) => {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontró el token.");
 
-    const response = await axios.post(`${API_URL}/graduados`, formData, {
+    const response = await axios.post(`${API_URL}`, formData, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -35,16 +35,15 @@ const registrarGraduado = async (formData) => {
     return response.data.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error en la respuesta del servidor:', error.response.data);
-      console.error('Código de estado:', error.response.status);
-      console.error('Encabezados:', error.response.headers);
+      console.error("Error en la respuesta del servidor:", error.response.data);
+      console.error("Código de estado:", error.response.status);
+      console.error("Encabezados:", error.response.headers);
     } else if (error.request) {
-      console.error('No se recibió respuesta del servidor:', error.request);
+      console.error("No se recibió respuesta del servidor:", error.request);
     } else {
-      console.error('Error al configurar la solicitud:', error.message);
+      console.error("Error al configurar la solicitud:", error.message);
     }
     throw new Error("Error registrando al graduado");
-
   }
 };
 
@@ -53,10 +52,10 @@ const obtenerGraduadosPorValidar = async (headers = {}) => {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontro el token.");
 
-    const response = await axios.get(`${API_URL}/graduados/validar`, {
+    const response = await axios.get(`${API_URL}/validar`, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -72,17 +71,18 @@ const aprobarSolicitudGraduado = async (id, headers = {}) => {
     if (!token) throw new Error("No se encontro el token.");
 
     const response = await axios.patch(
-      `${API_URL}/graduados/validar/aprobar/${id}`,
+      `${API_URL}/validar/aprobar/${id}`,
+      {},
       {
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching graduados por validar data:", error);
+    console.error("Error:", error);
     throw error;
   }
 };
@@ -92,18 +92,15 @@ const rechazarSolicitudGraduado = async (id, headers = {}) => {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontro el token.");
 
-    const response = await axios.delete(
-      `${API_URL}/graduados/validar/rechazar/${id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`
-        },
-      }
-    );
+    const response = await axios.delete(`${API_URL}/validar/rechazar/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
-    console.error("Error fetching graduados por validar data:", error);
+    console.error("Error:", error);
     throw error;
   }
 };
@@ -113,10 +110,10 @@ const obtenerEnumerados = async (headers = {}) => {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontro el token.");
 
-    const response = await axios.get(`${API_URL}/graduados/enumerados`, {
+    const response = await axios.get(`${API_URL}/enumerados`, {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -132,5 +129,5 @@ export default {
   obtenerGraduadosPorValidar,
   aprobarSolicitudGraduado,
   rechazarSolicitudGraduado,
-  obtenerEnumerados
+  obtenerEnumerados,
 };
