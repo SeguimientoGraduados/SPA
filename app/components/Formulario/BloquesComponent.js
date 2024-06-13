@@ -53,6 +53,7 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                 rrss: key,
                 url: newRrssData[key],
             }));
+        handleValidation({ currentTarget: { name: "rrss", value: formattedRrss } });
         handleChange({ target: { name: "rrss", value: formattedRrss } });
     };
 
@@ -60,7 +61,7 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
     const handleChangeFecha = (e) => {
         const { value } = e.target;
         const fechaFormateada = conversorFecha(value);
-
+        handleValidation({ currentTarget: { name: "fecha_nacimiento", value: fechaFormateada } })
         handleChange({ target: { name: "fecha_nacimiento", value: fechaFormateada } });
     };
 
@@ -128,12 +129,79 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
         });
     }, [intereses.demanda]);
 
-    function handleValidation(e) {
+    function handleRequired(e) {
+
         if (e.type === "invalid") {
             e.currentTarget.setCustomValidity("Campo obligatorio");
         } else if (e.type === "input") {
             e.currentTarget.setCustomValidity("");
         }
+    }
+
+    const [errors, setErrors] = useState({});
+    function handleValidation(e) {
+        const name = e.currentTarget.name;
+        const value = e.currentTarget.value;
+        console.log(name, value)
+
+        let errorObj = { ...errors };
+        switch (name) {
+            case 'nombre':
+                if (value.trim().length < 3) {
+                    errorObj.nombre = 'El nombre debe tener al menos 3 caracteres';
+                } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
+                    errorObj.nombre = 'El nombre no puede contener números o simbolos';
+                } else {
+                    errorObj.nombre = '';
+                }
+                break;
+            case 'dni':
+                const dniRegex = /^\d+$/;
+                errorObj.dni = !dniRegex.test(value) ? 'Ingrese solo números' : '';
+                break;
+            case 'fecha_nacimiento':
+                const year = parseInt(value.split('-')[0], 10);
+                errorObj.fecha_nacimiento = year >= 2005 ? 'El año debe ser menor que 2005' : '';
+                break;
+            //TODO: Borrar los errores cuando se ocultan los inputs
+            case 'rrss':
+                if (value != "") {
+                    value.forEach(({ rrss, url }) => {
+                        const urlRegexes = {
+                            linkedin: /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/,
+                            facebook: /^(https?:\/\/)?(www\.)?facebook\.com\/.*$/,
+                            twitter: /^(https?:\/\/)?(www\.)?twitter\.com\/.*$/
+                        };
+                        if (!urlRegexes[rrss].test(url)) {
+                            errorObj[rrss] = `Ingrese una URL válida de ${rrss}`;
+                        } else {
+                            errorObj[rrss] = '';
+                        }
+
+                    });
+                } else {
+                    errorObj.linkedin = '';
+                    errorObj.facebook = '';
+                    errorObj.twitter = '';
+                }
+                break;
+            case 'cv':
+                if (value != "") {
+                    const urlCVRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                    if (!urlCVRegex.test(value)) {
+                        errorObj.cv = 'Ingrese una URL válida';
+                    } else {
+                        errorObj.cv = '';
+                    }
+                } else {
+                    errorObj.cv = '';
+                }
+                break;
+            default:
+                break;
+        }
+
+        setErrors(errorObj);
     }
 
     return (
@@ -153,25 +221,33 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     name="nombre"
                     onChange={handleChange}
                     required
-                    onInvalid={handleValidation}
-                    onInput={handleValidation}
+                    onInvalid={handleRequired}
+                    onInput={handleRequired}
+                    onBlur={handleValidation}
+                    error={errors.nombre}
                 />
+                {errors.nombre && <span>{errors.nombre}</span>}
 
                 <Input
                     label="DNI"
                     name="dni"
                     onChange={handleChange}
                     required
-                    onInvalid={handleValidation}
-                    onInput={handleValidation}
+                    onInput={handleRequired}
+                    onInvalid={handleRequired}
+                    onBlur={handleValidation}
+                    error={errors.dni}
                 />
+                {errors.dni && <span>{errors.dni}</span>}
 
                 <DatePicker
                     label={"Fecha de nacimiento"}
                     name="fecha_nacimiento"
                     onChange={handleChangeFecha}
+                    onInput={handleRequired}
                     required
                 />
+                {errors.fecha_nacimiento && <span>{errors.fecha_nacimiento}</span>}
 
                 <TituloForm
                     onChange={handleChange}
@@ -193,6 +269,9 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     handleChange={handleChangeRRSS}
                     opcionesRrss={opcionesRrss}
                 />
+                {errors.linkedin && <span>{errors.linkedin}</span>}
+                {errors.facebook && <span>{errors.facebook}</span>}
+                {errors.twitter && <span>{errors.twitter}</span>}
             </div>
 
             {/* Bloque 2 */}
@@ -291,7 +370,9 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     labelProps={{ className: "font-semibold" }}
                     name="cv"
                     onChange={handleChange}
+                    onBlur={handleValidation}
                 />
+                {errors.cv && <span>{errors.cv}</span>}
 
                 <FormacionComponent
                     sendChange={handleChange}

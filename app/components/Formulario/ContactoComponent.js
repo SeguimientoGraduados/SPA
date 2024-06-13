@@ -36,7 +36,7 @@ const ContactoComponent = ({ handleChange, opcionesRrss }) => {
         <Input
           label={getLabel('linkedin')}
           placeholder="https://www.linkedin.com/in/ejemplo/"
-          onChange={(e) => handleChange(e, "linkedin")}
+          onBlur={(e) => handleChange(e, "linkedin")}
         />
 
         {showFacebook && (
@@ -44,7 +44,7 @@ const ContactoComponent = ({ handleChange, opcionesRrss }) => {
             <Input
               label={getLabel('facebook')}
               placeholder="https://www.facebook.com/ejemplo/"
-              onChange={(e) => handleChange(e, "facebook")}
+              onBlur={(e) => handleChange(e, "facebook")}
             />
             <IconButton
               className="rounded-full"
@@ -63,7 +63,7 @@ const ContactoComponent = ({ handleChange, opcionesRrss }) => {
             <Input
               label={getLabel('twitter')}
               placeholder="https://www.twitter.com/ejemplo/"
-              onChange={(e) => handleChange(e, "twitter")}
+              onBlur={(e) => handleChange(e, "twitter")}
             />
             <IconButton
               className="rounded-full"
@@ -95,9 +95,10 @@ const ContactoComponent = ({ handleChange, opcionesRrss }) => {
               className="rounded-full"
               onClick={handleMostrarTwitter}
               color="blue"
-              variant="outlined"             
+              variant="outlined"
               size="lg"
             >
+              
               <FontAwesomeIcon icon={faXTwitter} />
             </IconButton>
           )}
