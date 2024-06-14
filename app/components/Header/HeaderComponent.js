@@ -2,7 +2,7 @@
 import Image from "next/image";
 import logoUns from "../../../public/logo.webp";
 import Link from "next/link";
-import ModalLogin from "../Login/ModalLoginComponent";
+import ModalLogin from "./ModalLoginComponent";
 import React, { useContext } from "react";
 import { Button } from "@material-tailwind/react";
 import { AuthContext } from "@/app/context/AuthContext";
