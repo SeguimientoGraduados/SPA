@@ -31,7 +31,7 @@ const YearDropdown = ({ selectedYear, onChange }) => {
     );
 };
 
-const DatePicker = ({ label, onChange, name }) => {
+const DatePicker = ({ label, onChange, name, error }) => {
     const [date, setDate] = useState(undefined);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date());
@@ -57,6 +57,7 @@ const DatePicker = ({ label, onChange, name }) => {
                     <Input
                         label={label}
                         value={date ? format(date, "PPP", { locale: es }) : ""}
+                        error={error}
                         required
                         readOnly                      
                     />

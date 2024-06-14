@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import SelectOption from "../Utils/SelectOption";
 
-const TituloForm = ({ onChange, carreras }) => {
+const TituloForm = ({ onChange, carreras, error }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
 
   const addTitle = () => {
@@ -34,18 +34,21 @@ const TituloForm = ({ onChange, carreras }) => {
             name="carreras"
             value={item.title}
           />
-
-          <Input
-            label="Año de Graduación"
-            name="año_graduacion"
-            onChange={(e) => handleInternalChange(e, index, "year")}
-            value={item.year}
-            required
-            onInvalid={(e) =>
-              e.currentTarget.setCustomValidity('Campo obligatorio')
-            }
-            onInput={(e) => e.currentTarget.setCustomValidity('')}
-          />
+          <div>
+            <Input
+              label="Año de Graduación"
+              name="año_graduacion"
+              onChange={(e) => handleInternalChange(e, index, "year")}
+              value={item.year}
+              required={index === 0}
+              onInvalid={(e) =>
+                index === 0 && e.currentTarget.setCustomValidity('Campo obligatorio')
+              }
+              onInput={(e) => e.currentTarget.setCustomValidity('')}
+              error={index === 0 ? error : ''}
+            />
+            {index === 0 && error && <span className="text-xs text-red-600 -mt-2">{error}</span>}
+          </div>
         </div>
       ))}
       <IconButton

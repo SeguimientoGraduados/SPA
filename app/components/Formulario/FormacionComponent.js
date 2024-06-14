@@ -21,7 +21,6 @@ const FormacionComponent = ({ sendChange, opcionesFormacion }) => {
     const allFieldsFilled = Object.values(newformaciones[index]).every(val => val !== "");
     if (allFieldsFilled) {
       setFormaciones(newformaciones);
-      console.log({ target: { name: "formacion", value: newformaciones } })
       sendChange({ target: { name: "formacion", value: newformaciones } });
     }
   };

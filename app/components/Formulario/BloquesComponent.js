@@ -10,6 +10,7 @@ import ContactoComponent from "./ContactoComponent";
 import React, { useState, useEffect } from "react";
 import CheckboxList from "../Utils/CheckboxList";
 import FormacionComponent from "./FormacionComponent";
+import { ValidacionComponent } from "./ValidacionComponent";
 
 
 const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, opcionesFormacion }) => {
@@ -27,14 +28,14 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
             const nuevaCiudad = {
                 nombre: ciudadAPI.name,
                 latitud: parseFloat(ciudadAPI.lat),
-                longitud: parseFloat(ciudadAPI.lon)
+                longitud: parseFloat(ciudadAPI.lon),
+                pais: ciudadAPI.address.country
             };
             setError(null);
 
             handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
         } catch (error) {
             setError(error.message);
-            console.log(error.message)
         }
     };
 
@@ -64,6 +65,13 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
         handleValidation({ currentTarget: { name: "fecha_nacimiento", value: fechaFormateada } })
         handleChange({ target: { name: "fecha_nacimiento", value: fechaFormateada } });
     };
+
+    const handleChangeTitulo = (e) => {
+        const { value } = e.target;
+        const anio_graduacion = value[0].anio_graduacion;
+        handleValidation({ currentTarget: { name: "anio_graduacion", value: anio_graduacion } })
+        handleChange(e);
+    }
 
     //Bloque 2
     const [opcionesSector, setOpcionesSector] = useState([]);
@@ -142,66 +150,10 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
     function handleValidation(e) {
         const name = e.currentTarget.name;
         const value = e.currentTarget.value;
-        console.log(name, value)
 
-        let errorObj = { ...errors };
-        switch (name) {
-            case 'nombre':
-                if (value.trim().length < 3) {
-                    errorObj.nombre = 'El nombre debe tener al menos 3 caracteres';
-                } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
-                    errorObj.nombre = 'El nombre no puede contener números o simbolos';
-                } else {
-                    errorObj.nombre = '';
-                }
-                break;
-            case 'dni':
-                const dniRegex = /^\d+$/;
-                errorObj.dni = !dniRegex.test(value) ? 'Ingrese solo números' : '';
-                break;
-            case 'fecha_nacimiento':
-                const year = parseInt(value.split('-')[0], 10);
-                errorObj.fecha_nacimiento = year >= 2005 ? 'El año debe ser menor que 2005' : '';
-                break;
-            //TODO: Borrar los errores cuando se ocultan los inputs
-            case 'rrss':
-                if (value != "") {
-                    value.forEach(({ rrss, url }) => {
-                        const urlRegexes = {
-                            linkedin: /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/,
-                            facebook: /^(https?:\/\/)?(www\.)?facebook\.com\/.*$/,
-                            twitter: /^(https?:\/\/)?(www\.)?twitter\.com\/.*$/
-                        };
-                        if (!urlRegexes[rrss].test(url)) {
-                            errorObj[rrss] = `Ingrese una URL válida de ${rrss}`;
-                        } else {
-                            errorObj[rrss] = '';
-                        }
+        const updatedErrors = ValidacionComponent(name, value, errors);
+        setErrors(updatedErrors);
 
-                    });
-                } else {
-                    errorObj.linkedin = '';
-                    errorObj.facebook = '';
-                    errorObj.twitter = '';
-                }
-                break;
-            case 'cv':
-                if (value != "") {
-                    const urlCVRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-                    if (!urlCVRegex.test(value)) {
-                        errorObj.cv = 'Ingrese una URL válida';
-                    } else {
-                        errorObj.cv = '';
-                    }
-                } else {
-                    errorObj.cv = '';
-                }
-                break;
-            default:
-                break;
-        }
-
-        setErrors(errorObj);
     }
 
     return (
@@ -217,7 +169,7 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
 
             <div className="flex flex-col gap-4">
                 <Input
-                    label="Nombre"
+                    label="Nombre completo"
                     name="nombre"
                     onChange={handleChange}
                     required
@@ -226,7 +178,7 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     onBlur={handleValidation}
                     error={errors.nombre}
                 />
-                {errors.nombre && <span>{errors.nombre}</span>}
+                {errors.nombre && <span className="text-xs text-red-600 -mt-2">{errors.nombre}</span>}
 
                 <Input
                     label="DNI"
@@ -238,22 +190,25 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     onBlur={handleValidation}
                     error={errors.dni}
                 />
-                {errors.dni && <span>{errors.dni}</span>}
+                {errors.dni && <span className="text-xs text-red-600 -mt-2">{errors.dni}</span>}
 
                 <DatePicker
                     label={"Fecha de nacimiento"}
                     name="fecha_nacimiento"
                     onChange={handleChangeFecha}
                     onInput={handleRequired}
+                    error={errors.fecha_nacimiento}
                     required
                 />
-                {errors.fecha_nacimiento && <span>{errors.fecha_nacimiento}</span>}
+                {errors.fecha_nacimiento && <span className="text-xs text-red-600 -mt-2">{errors.fecha_nacimiento}</span>}
 
                 <TituloForm
-                    onChange={handleChange}
+                    onChange={handleChangeTitulo}
                     carreras={opcionesCarreras}
                     name="carreras"
+                    error={errors.anio_graduacion}
                 />
+
 
                 <Input
                     label="Ciudad"
@@ -264,14 +219,13 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     onInput={handleValidation}
                     error={Boolean(error)}
                 />
+                {errors && <span className="text-xs text-red-600 -mt-2">{error}</span>}
 
                 <ContactoComponent
                     handleChange={handleChangeRRSS}
                     opcionesRrss={opcionesRrss}
+                    error={errors.rrss}
                 />
-                {errors.linkedin && <span>{errors.linkedin}</span>}
-                {errors.facebook && <span>{errors.facebook}</span>}
-                {errors.twitter && <span>{errors.twitter}</span>}
             </div>
 
             {/* Bloque 2 */}
@@ -371,8 +325,9 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     name="cv"
                     onChange={handleChange}
                     onBlur={handleValidation}
+                    error={errors.cv}
                 />
-                {errors.cv && <span>{errors.cv}</span>}
+                {errors.cv && <span className="text-xs text-red-600 -mt-2">{errors.cv}</span>}
 
                 <FormacionComponent
                     sendChange={handleChange}
