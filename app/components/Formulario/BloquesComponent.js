@@ -27,7 +27,8 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
             const nuevaCiudad = {
                 nombre: ciudadAPI.name,
                 latitud: parseFloat(ciudadAPI.lat),
-                longitud: parseFloat(ciudadAPI.lon)
+                longitud: parseFloat(ciudadAPI.lon),
+                pais: ciudadAPI.address.country
             };
             setError(null);
 
@@ -217,7 +218,7 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
 
             <div className="flex flex-col gap-4">
                 <Input
-                    label="Nombre"
+                    label="Nombre completo"
                     name="nombre"
                     onChange={handleChange}
                     required
