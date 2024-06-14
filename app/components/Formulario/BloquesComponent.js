@@ -15,12 +15,34 @@ import { ValidacionComponent } from "./ValidacionComponent";
 
 const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opcionesSectorProp, opcionesExperiencia, opcionesFormacion }) => {
 
-    // Bloque 1
     const opcionesCarreras = carreras.map((carrera) => ({
         value: carrera.id.toString(),
         label: carrera.nombre,
     }));
+
     const [error, setError] = useState(null);
+    const [rrssData, setRrssData] = useState({
+        linkedin: "",
+        facebook: "",
+        twitter: "",
+    });
+
+    const [opcionesSector, setOpcionesSector] = useState([]);
+    const [opcionesInteres, setOpcionesInteres] = useState([]);
+    const [intereses, setIntereses] = useState({
+        comunidad: false,
+        oferta: false,
+        demanda: false,
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleValidation = (e) => {
+        const { name, value } = e.currentTarget;
+        const updatedErrors = ValidacionComponent(name, value, errors);
+        setErrors(updatedErrors);
+    };
+
     const handleChangeCiudad = async (e) => {
         const { value } = e.target;
         try {
@@ -32,18 +54,12 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                 pais: ciudadAPI.address.country
             };
             setError(null);
-
             handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
         } catch (error) {
             setError(error.message);
         }
     };
 
-    const [rrssData, setRrssData] = useState({
-        linkedin: "",
-        facebook: "",
-        twitter: "",
-    });
     const handleChangeRRSS = (e, rrssName) => {
         const newRrssData = { ...rrssData, [rrssName]: e.target.value };
         setRrssData(newRrssData);
@@ -58,56 +74,39 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
         handleChange({ target: { name: "rrss", value: formattedRrss } });
     };
 
-
     const handleChangeFecha = (e) => {
         const { value } = e.target;
         const fechaFormateada = conversorFecha(value);
-        handleValidation({ currentTarget: { name: "fecha_nacimiento", value: fechaFormateada } })
+        handleValidation({ currentTarget: { name: "fecha_nacimiento", value: fechaFormateada } });
         handleChange({ target: { name: "fecha_nacimiento", value: fechaFormateada } });
     };
 
     const handleChangeTitulo = (e) => {
         const { value } = e.target;
         const anio_graduacion = value[0].anio_graduacion;
-        handleValidation({ currentTarget: { name: "anio_graduacion", value: anio_graduacion } })
+        handleValidation({ currentTarget: { name: "anio_graduacion", value: anio_graduacion } });
         handleChange(e);
-    }
+    };
 
-    //Bloque 2
-    const [opcionesSector, setOpcionesSector] = useState([]);
-    const handleChangeSector = (event) => {
-        const { value } = event.target;
+    const handleChangeSector = (e) => {
+        const { value } = e.target;
         const sector = value[0];
         setOpcionesSector(sector);
-
         handleChange({ target: { name: "ocupacion_sector", value: sector } });
     };
 
-    const handleChangeOcupacion = (event) => {
-        const { value } = event.target;
-        const ocupacion_trabajo = value;
-        handleChange({
-            target: { name: "ocupacion_trabajo", value: ocupacion_trabajo },
-        });
+    const handleChangeOcupacion = (e) => {
+        const { value } = e.target;
+        handleChange({ target: { name: "ocupacion_trabajo", value } });
     };
 
-    const handleChangeAnios = (event) => {
-        const { value } = event.target;
-        const experiencia_anios = value;
-        handleChange({
-            target: { name: "experiencia_anios", value: experiencia_anios },
-        });
+    const handleChangeAnios = (e) => {
+        const { value } = e.target;
+        handleChange({ target: { name: "experiencia_anios", value } });
     };
 
-    //Bloque 3
-    const [opcionesInteres, setOpcionesInteres] = useState([]);
-    const [intereses, setIntereses] = useState({
-        comunidad: false,
-        oferta: false,
-        demanda: false,
-    });
-    const handleChangeInteres = (event) => {
-        const { value } = event.target;
+    const handleChangeInteres = (e) => {
+        const { value } = e.target;
         setOpcionesInteres(value);
 
         const nuevosIntereses = {
@@ -118,44 +117,25 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
         setIntereses(nuevosIntereses);
     };
 
-    //TODO: tuve que volver a ponerlo separado porque sino no actualizaba bien
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_comunidad", value: intereses.comunidad },
-        });
+        handleChange({ target: { name: "interes_comunidad", value: intereses.comunidad } });
     }, [intereses.comunidad]);
 
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_oferta", value: intereses.oferta },
-        });
+        handleChange({ target: { name: "interes_oferta", value: intereses.oferta } });
     }, [intereses.oferta]);
 
     useEffect(() => {
-        handleChange({
-            target: { name: "interes_demanda", value: intereses.demanda },
-        });
+        handleChange({ target: { name: "interes_demanda", value: intereses.demanda } });
     }, [intereses.demanda]);
 
-    function handleRequired(e) {
-
+    const handleRequired = (e) => {
         if (e.type === "invalid") {
             e.currentTarget.setCustomValidity("Campo obligatorio");
         } else if (e.type === "input") {
             e.currentTarget.setCustomValidity("");
         }
-    }
-
-    const [errors, setErrors] = useState({});
-    function handleValidation(e) {
-        const name = e.currentTarget.name;
-        const value = e.currentTarget.value;
-
-        const updatedErrors = ValidacionComponent(name, value, errors);
-        setErrors(updatedErrors);
-
-    }
-
+    };
     return (
         <>
             {/* Bloque 1 */}
@@ -208,7 +188,6 @@ const Bloques = ({ handleChange, carreras, opcionesRrss, opcionesOcupacion, opci
                     name="carreras"
                     error={errors.anio_graduacion}
                 />
-
 
                 <Input
                     label="Ciudad"
