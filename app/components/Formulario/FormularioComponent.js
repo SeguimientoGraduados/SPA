@@ -2,7 +2,7 @@ import { Card, Button, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import graduadosService from "../../services/graduadosService";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import ModalFormulario from "./ModalFormularioComponent";
 import Bloques from "./BloquesComponent";
 
@@ -10,49 +10,60 @@ const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;
 
   const [formData, setFormData] = useState({
-    "nombre": "",
-    "dni": "",
-    "fecha_nacimiento": "",
-    "ciudad": [],
-    "contacto": "",
-    "carreras": [],
-    "ocupacion_trabajo": "",
-    "ocupacion_empresa": "",
-    "ocupacion_sector": "",
-    "ocupacion_informacion_adicional": "",
-    "experiencia_anios": "",
-    "habilidades_competencias": "",
-    "formacion": [],
-    "rrss": [],
-    "cv": "",
-    "interes_comunidad": false,
-    "interes_oferta": false,
-    "interes_demanda": false,
+    nombre: "",
+    dni: "",
+    fecha_nacimiento: "",
+    ciudad: [],
+    contacto: "",
+    carreras: [],
+    ocupacion_trabajo: "",
+    ocupacion_empresa: "",
+    ocupacion_sector: "",
+    ocupacion_informacion_adicional: "",
+    experiencia_anios: "",
+    habilidades_competencias: "",
+    formacion: [],
+    rrss: [],
+    cv: "",
+    interes_comunidad: false,
+    interes_oferta: false,
+    interes_demanda: false,
   });
 
   useEffect(() => {
-    const userCookie = Cookies.get('user');
+    const userCookie = Cookies.get("user");
     if (userCookie) {
       const decodedUser = decodeURIComponent(userCookie);
       const user = JSON.parse(decodedUser);
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        contacto: user.email
-      }));
+      if (user.rol != "admin") {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          contacto: user.email,
+        }));
+      }
     }
-  }, [])
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
 
+    if (name === "intereses") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        interes_comunidad: value.comunidad,
+        interes_oferta: value.oferta,
+        interes_demanda: value.demanda,
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const [alertaVisible, setAlertaVisible] = useState(false);
-  const [campoObligatorio, setCampoObligatorio] = useState('');
+  const [campoObligatorio, setCampoObligatorio] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [registroExitoso, setRegistroExitoso] = useState(false);
 
@@ -60,14 +71,14 @@ const Form = ({ carreras, ciudades, enumerados }) => {
     e.preventDefault();
     if (!formData.fecha_nacimiento) {
       setAlertaVisible(true);
-      setCampoObligatorio('fecha_nacimiento');
+      setCampoObligatorio("fecha_nacimiento");
       return;
     }
 
     for (const carrera of formData.carreras) {
-      if (carrera.carrera_id === '') {
+      if (carrera.carrera_id === "") {
         setAlertaVisible(true);
-        setCampoObligatorio('carreras');
+        setCampoObligatorio("carreras");
         return;
       }
     }
@@ -77,7 +88,7 @@ const Form = ({ carreras, ciudades, enumerados }) => {
       setAlertaVisible(false);
       setRegistroExitoso(true);
       setModalVisible(true);
-      console.log('Formulario enviado con éxito');
+      console.log("Formulario enviado con éxito");
     } catch (error) {
       setRegistroExitoso(false);
       setModalVisible(true);
@@ -99,8 +110,8 @@ const Form = ({ carreras, ciudades, enumerados }) => {
           <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
               <div className="flex flex-col gap-3">
-
                 <Bloques
+                  correo={formData.contacto}
                   carreras={carreras}
                   ciudades={ciudades}
                   opcionesRrss={enumerados.rrss}
@@ -122,7 +133,11 @@ const Form = ({ carreras, ciudades, enumerados }) => {
               </Button>
             </div>
           </form>
-          <ModalFormulario open={modalVisible} handleOpen={setModalVisible} registroExitoso={registroExitoso} />
+          <ModalFormulario
+            open={modalVisible}
+            handleOpen={setModalVisible}
+            registroExitoso={registroExitoso}
+          />
         </div>
       </div>
     </>
