@@ -16,7 +16,7 @@ const TituloForm = ({ onChange, carreras, error }) => {
     newTitles[index][field] = e.target.value;
     setTitles(newTitles);
 
-    const formattedTitles = newTitles.map((item) => ({
+    const formattedTitles = newTitles.filter(item => item.title !== "" && item.year !== "").map(item => ({
       carrera_id: item.title,
       anio_graduacion: item.year,
     }));
