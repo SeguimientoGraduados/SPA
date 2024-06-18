@@ -124,16 +124,16 @@ const obtenerEnumerados = async (headers = {}) => {
   }
 };
 
-const obtenerPaisesParaFiltrar = async (headers = {}) => {
+const obtenerValoresParaFiltrar = async (headers = {}) => {
   try {
-    const response = await axios.get(`${API_URL}/paises`, {
+    const response = await axios.get(`${API_URL}/filtros`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching paises data:", error);
+    console.error("Error fetching filtros data:", error);
     throw error;
   }
 };
@@ -145,5 +145,5 @@ export default {
   aprobarSolicitudGraduado,
   rechazarSolicitudGraduado,
   obtenerEnumerados,
-  obtenerPaisesParaFiltrar
+  obtenerValoresParaFiltrar
 };
