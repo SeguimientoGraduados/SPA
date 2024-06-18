@@ -1,8 +1,6 @@
 export const ValidacionComponent = (name, value, errors) => {
   let errorObj = { ...errors };
 
-  console.log(name,value,errors)
-
   const validateNombre = (value) => {
     if (
       !/^[A-Za-zÁÉÍÓÚáéíóúñÑ]+ [A-Za-zÁÉÍÓÚáéíóúñÑ]+$/.test(value.trim()) &&
@@ -42,6 +40,7 @@ export const ValidacionComponent = (name, value, errors) => {
   };
 
   const validateAnioGraduacion = (value) => {
+  
     const graduationYear = parseInt(value, 10);
     const currentYear = new Date().getFullYear();
     if (

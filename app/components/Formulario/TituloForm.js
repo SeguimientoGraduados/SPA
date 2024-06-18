@@ -1,54 +1,98 @@
 import React, { useState } from "react";
 import { Input, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import SelectOption from "../Utils/SelectOption";
+import { ValidacionComponent } from "./ValidacionComponent";
 
-const TituloForm = ({ onChange, carreras, error }) => {
+const TituloForm = ({ onChange, carreras }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
+  const [errors, setErrors] = useState([]);
 
-  const addTitle = () => {
-    setTitles([...titles, { title: "", year: "" }]);
-  };
-
-  const handleInternalChange = (e, index, field) => {
-    const newTitles = [...titles];
-    newTitles[index][field] = e.target.value;
+  const updateTitles = (newTitles) => {
     setTitles(newTitles);
 
-    const formattedTitles = newTitles.map((item) => ({
+    const formattedTitles = newTitles.filter(item => item.title && item.year).map(item => ({
       carrera_id: item.title,
       anio_graduacion: item.year,
     }));
+
     onChange({ target: { name: "carreras", value: formattedTitles } });
   };
 
+  const addTitle = () => {
+    updateTitles([...titles, { title: "", year: "" }]);
+  };
+
+  const removeTitle = (index) => {
+    const newTitles = titles.filter((_, i) => i !== index);
+    const newErrors = errors.filter((_, i) => i !== index);
+    setErrors(newErrors);
+    updateTitles(newTitles);
+  };
+
+  const handleInternalChange = (e, index, field) => {
+    const newTitles = titles.map((item, i) => i === index ? { ...item, [field]: e.target.value } : item);
+    updateTitles(newTitles);
+  };
+
+  const handleBlur = (index) => {
+    const name = "anio_graduacion";
+    const value = titles[index].year;
+
+    const updatedErrors = titles.map((_, i) => i === index ? ValidacionComponent(name, value, errors) : errors[i]);
+    setErrors(updatedErrors);
+  };
+
+
   return (
-    <div className="flex flex-col gap-4 items-center">
+    <div className="flex flex-col gap-4 items-center w-full">
       {titles.map((item, index) => (
-        <div key={index} className="grid grid-cols-2 gap-2 w-full">
+        <div key={index} className="flex flex-row items-center gap-3 w-full">
           <SelectOption
             select={"Título"}
             handleChange={(e) => handleInternalChange(e, index, "title")}
             options={carreras}
             name="carreras"
             value={item.title}
+            className="flex-grow"
           />
-          <div>
-            <Input
-              label="Año de Graduación"
-              name="año_graduacion"
-              onChange={(e) => handleInternalChange(e, index, "year")}
-              value={item.year}
-              required={index === 0}
-              onInvalid={(e) =>
-                index === 0 && e.currentTarget.setCustomValidity('Campo obligatorio')
-              }
-              onInput={(e) => e.currentTarget.setCustomValidity('')}
-              error={index === 0 ? error : ''}
-            />
-            {index === 0 && error && <span className="text-xs text-red-600 -mt-2">{error}</span>}
+          <div className="flex-grow">
+            <div className="relative">
+              <Input
+                label="Año de Graduación"
+                labelProps={{ className: "mt-3" }}
+                name="año_graduacion"
+                onChange={(e) => handleInternalChange(e, index, "year")}
+                onBlur={() => handleBlur(index)}
+                value={item.year}
+                required={index === 0}
+                onInvalid={(e) =>
+                  index === 0 && e.currentTarget.setCustomValidity('Campo obligatorio')
+                }
+                onInput={(e) => e.currentTarget.setCustomValidity('')}
+                error={(errors[index] != null) ? errors[index].anio_graduacion : ''}
+                className="mt-3"
+              />
+              {errors[index] && errors[index].anio_graduacion && (
+                <span className="mt-4 text-xs text-red-600 absolute left-0">
+                  {errors[index].anio_graduacion}
+                </span>
+              )}
+            </div>
+            <div className="min-h-[20px]"></div>
           </div>
+
+
+          <IconButton
+            className="rounded-full"
+            onClick={() => removeTitle(index)}
+            variant="outlined"
+            color="red"
+            size="sm"
+          >
+            <FontAwesomeIcon icon={faMinus} />
+          </IconButton>
         </div>
       ))}
       <IconButton

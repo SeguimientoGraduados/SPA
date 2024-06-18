@@ -92,15 +92,6 @@ const Bloques = ({
     });
   };
 
-  const handleChangeTitulo = (e) => {
-    const { value } = e.target;
-    const anio_graduacion = value[0].anio_graduacion;
-    handleValidation({
-      currentTarget: { name: "anio_graduacion", value: anio_graduacion },
-    });
-    handleChange(e);
-  };
-
   const handleChangeSector = (e) => {
     const { value } = e.target;
     const sector = value[0];
@@ -212,10 +203,9 @@ const Bloques = ({
         )}
 
         <TituloForm
-          onChange={handleChangeTitulo}
+          onChange={handleChange}
           carreras={opcionesCarreras}
           name="carreras"
-          error={errors.anio_graduacion}
         />
 
         <Input
