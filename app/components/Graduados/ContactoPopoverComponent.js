@@ -25,7 +25,7 @@ const ContactoPopover = ({ graduado }) => {
 
   return (
     <Popover>
-      <PopoverHandler asChild>
+      <PopoverHandler>
         <Button
           variant="outlined"
           color="blue"
@@ -44,8 +44,9 @@ const ContactoPopover = ({ graduado }) => {
             {tieneRedesSociales && (
               <div>
                 <div className="flex flex-row gap-4 justify-center mt-1">
-                  {graduado.rrss.map((item) => (
+                  {graduado.rrss.map((item, index) => (
                     <a
+                      key={index}
                       href={ensureProtocol(item.url)}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -70,7 +71,7 @@ const ContactoPopover = ({ graduado }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button asChild variant="text" size="small">
+                <Button variant="text" size="small">
                   Ver CV
                 </Button>
               </a>

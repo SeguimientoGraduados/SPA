@@ -4,9 +4,13 @@ import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import CiudadMarker from './CiudadMarkerComponent';
-import BotonFiltros from './BotonFiltros';
+import Filtros from './Filtros';
 
-const Mapa = ({ graduadosPorCiudad, selectedCity, setSelectedCity }) => {
+const Mapa = ({ graduadosPorCiudad, selectedCity, setSelectedCity, onFiltrosChange }) => {
+  const handleFiltrosChange = async (params) => {
+    onFiltrosChange(params)
+  }
+
   return (
     <MapContainer className="z-30" center={[-38.71830000, -62.26600000]} zoom={3} scrollWheelZoom={false} style={{ height: '450px', width: '100%' }} zoomControl={false}>
       <TileLayer
@@ -23,7 +27,7 @@ const Mapa = ({ graduadosPorCiudad, selectedCity, setSelectedCity }) => {
         />
       ))}
       <ZoomControl position="bottomright" zoomInText="+" zoomOutText="-" />
-      <BotonFiltros className="boton-filtros-left" />
+      <Filtros onFiltrosChange={handleFiltrosChange}/>
     </MapContainer>
 
   );

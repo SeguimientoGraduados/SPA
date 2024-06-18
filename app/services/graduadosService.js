@@ -3,9 +3,10 @@ import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + "/graduados";
 
-const obtenerGraduados = async (headers = {}) => {
+const obtenerGraduados = async (params ={}, headers = {}) => {
   try {
-    const response = await axios.get(`${API_URL}`, {
+    const query = new URLSearchParams(params).toString();
+    const response = await axios.get(`${API_URL}?${query}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -123,6 +124,20 @@ const obtenerEnumerados = async (headers = {}) => {
   }
 };
 
+const obtenerPaisesParaFiltrar = async (headers = {}) => {
+  try {
+    const response = await axios.get(`${API_URL}/paises`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching paises data:", error);
+    throw error;
+  }
+};
+
 export default {
   obtenerGraduados,
   registrarGraduado,
@@ -130,4 +145,5 @@ export default {
   aprobarSolicitudGraduado,
   rechazarSolicitudGraduado,
   obtenerEnumerados,
+  obtenerPaisesParaFiltrar
 };

@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import CheckboxList from "../Utils/CheckboxList";
 import FormacionComponent from "./FormacionComponent";
 import { ValidacionComponent } from "./ValidacionComponent";
+import InteresesComponent from "./InteresesComponent";
 
 const Bloques = ({
   correo,
@@ -30,7 +31,6 @@ const Bloques = ({
   });
 
   const [opcionesSector, setOpcionesSector] = useState([]);
-  const [opcionesInteres, setOpcionesInteres] = useState([]);
   const [intereses, setIntereses] = useState({
     comunidad: false,
     oferta: false,
@@ -111,17 +111,9 @@ const Bloques = ({
 
   const handleChangeInteres = (e) => {
     const { value } = e.target;
-    setOpcionesInteres(value);
-
-    const nuevosIntereses = {
-      comunidad: value.includes("1. comunidad /integrar red (ecosistema)"),
-      oferta: value.includes("2. proponer iniciativas (oferta)"),
-      demanda: value.includes("3. recibir consultas (demanda)"),
-    };
-    setIntereses(nuevosIntereses);
-
+    setIntereses(value);
     handleChange({
-      target: { name: "intereses", value: nuevosIntereses },
+      target: { name: "intereses", value: value },
     });
   };
 
@@ -333,27 +325,17 @@ const Bloques = ({
           sendChange={handleChange}
           opcionesFormacion={opcionesFormacion}
         />
-
-        <div className="mx-auto">
-          <Typography
-            variant="h5"
-            color="blue-gray"
-            className="font-normal mt-2"
-          >
-            Interés/Predisposición a:
-          </Typography>
-          <CheckboxList
-            handleChange={handleChangeInteres}
-            direction={"col"}
-            items={[
-              "1. Comunidad /integrar red (Ecosistema)",
-              "2. Proponer iniciativas (Oferta)",
-              "3. Recibir consultas (Demanda)",
-            ]}
-            opcionesSeleccionadas={opcionesInteres}
-          />
-        </div>
       </div>
+
+      <Typography
+        className="font-normal text-center"
+        variant="h5"
+        color="blue-gray"
+      >
+        Interés/Predisposición a:
+      </Typography>
+
+      <InteresesComponent sendChange={handleChangeInteres}/>
     </>
   );
 };

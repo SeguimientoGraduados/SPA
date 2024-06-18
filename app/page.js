@@ -23,6 +23,15 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const handleCambioFiltros = async (params) => {
+    try {
+      const response = await obtenerGraduados(params);
+      setGraduados(response);
+    } catch (error) {
+      console.error("Error al obtener graduados por ciudad:", error);
+    }
+  };
+
   if (graduados === null) {
     return <DefaultSkeleton />;
   }
@@ -33,6 +42,7 @@ const Home = () => {
         graduadosPorCiudad={graduados}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        onFiltrosChange={handleCambioFiltros}
       />
       <TablaGraduados graduadosPorCiudad={graduados} />
     </section>
