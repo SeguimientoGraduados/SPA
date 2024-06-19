@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + "/graduados";
 
-const obtenerGraduados = async (params ={}, headers = {}) => {
+const obtenerGraduados = async (params = {}, headers = {}) => {
   try {
     const query = new URLSearchParams(params).toString();
     const response = await axios.get(`${API_URL}?${query}`, {
@@ -17,6 +17,7 @@ const obtenerGraduados = async (params ={}, headers = {}) => {
     throw error;
   }
 };
+
 const registrarGraduado = async (formData) => {
   try {
     const token = Cookies.get("token");
@@ -48,12 +49,13 @@ const registrarGraduado = async (formData) => {
   }
 };
 
-const obtenerGraduadosPorValidar = async (headers = {}) => {
+  const obtenerGraduadosPorValidar = async (params = {}, headers = {}) => {
   try {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontro el token.");
 
-    const response = await axios.get(`${API_URL}/validar`, {
+    const query = new URLSearchParams(params).toString();
+    const response = await axios.get(`${API_URL}/validar?${query}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
