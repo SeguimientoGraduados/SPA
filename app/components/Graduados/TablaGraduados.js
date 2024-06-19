@@ -1,6 +1,6 @@
 "use client";
 import { Card, Typography } from "@material-tailwind/react";
-import ContactoPopover from "./ContactoPopoverComponent";
+import ContactoPopover from "./ContactoPopover";
 
 const TABLE_HEAD = [
   "Nombre",

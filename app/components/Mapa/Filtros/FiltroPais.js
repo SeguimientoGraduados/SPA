@@ -1,6 +1,6 @@
 import { Select, Option } from "@material-tailwind/react";
 
-const FiltroPaisComponent = ({ paises, onPaisChange }) => {
+const FiltroPais = ({ paises, onPaisChange }) => {
   const handleSelectChange = (event) => {
     const paisId = event;
     onPaisChange(paisId);
@@ -19,4 +19,4 @@ const FiltroPaisComponent = ({ paises, onPaisChange }) => {
   );
 };
 
-export default FiltroPaisComponent;
+export default FiltroPais;

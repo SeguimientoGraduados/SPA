@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import graduadosService from "../../services/graduadosService";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
 import Cookies from "js-cookie";
-import ModalFormulario from "./ModalFormularioComponent";
-import Bloques from "./BloquesComponent";
+import ModalFormulario from "./ModalFormulario";
+import Bloques from "./Bloques";
 
 const Form = ({ carreras, ciudades, enumerados }) => {
   const { registrarGraduado } = graduadosService;

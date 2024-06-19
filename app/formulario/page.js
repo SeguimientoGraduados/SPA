@@ -1,5 +1,5 @@
 "use client";
-import Form from "../components/Formulario/FormularioComponent";
+import Form from "../components/Formulario/Formulario";
 import React, { useState, useEffect } from "react";
 import obtenerTodasLasCarreras from "../services/carrerasService";
 import obtenerTodasLasCiudades from "../services/ciudadesService";

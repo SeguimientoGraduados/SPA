@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Switch } from "@material-tailwind/react";
 
-const InteresesComponent = ({sendChange}) => {
+const Intereses = ({sendChange}) => {
   const [intereses, setIntereses] = useState({
     comunidad: false,
     oferta: false,
@@ -65,4 +65,4 @@ const InteresesComponent = ({sendChange}) => {
   );
 };
 
-export default InteresesComponent;
+export default Intereses;

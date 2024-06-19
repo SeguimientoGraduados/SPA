@@ -3,9 +3,9 @@ import { Input, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import SelectOption from "../Utils/SelectOption";
-import { ValidacionComponent } from "./ValidacionComponent";
+import { ValidacionComponent } from "./Validacion";
 
-const TituloForm = ({ onChange, carreras }) => {
+const Titulo = ({ onChange, carreras }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
   const [errors, setErrors] = useState([]);
 
@@ -107,4 +107,4 @@ const TituloForm = ({ onChange, carreras }) => {
   );
 };
 
-export default TituloForm;
+export default Titulo;

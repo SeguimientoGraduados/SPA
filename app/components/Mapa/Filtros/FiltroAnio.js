@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import ReactSlider from "react-slider";
 
-const FiltroAnioComponent = ({ min, max, onAnioChange }) => {
+const FiltroAnio = ({ min, max, onAnioChange }) => {
   const [rango, setRango] = useState([min, max]);
   
   const handleAnioChange = (value) => {
@@ -26,4 +26,4 @@ const FiltroAnioComponent = ({ min, max, onAnioChange }) => {
   );
 };
 
-export default FiltroAnioComponent;
+export default FiltroAnio;

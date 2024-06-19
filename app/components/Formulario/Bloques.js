@@ -3,15 +3,15 @@ import RadioHorizontal from "../Utils/RadioHorizontal";
 import TooltipInfo from "../Utils/TooltipInfo";
 import SelectOption from "../Utils/SelectOption";
 import DatePicker from "../Utils/DatePicker";
-import TituloForm from "./TituloForm";
+import Titulo from "./Titulo";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
 import { conversorFecha } from "../Utils/ConversorFecha";
-import ContactoComponent from "./ContactoComponent";
+import Contacto from "./Contacto";
 import React, { useState } from "react";
 import CheckboxList from "../Utils/CheckboxList";
-import FormacionComponent from "./FormacionComponent";
-import { ValidacionComponent } from "./ValidacionComponent";
-import InteresesComponent from "./InteresesComponent";
+import Formacion from "./Formacion";
+import { Validacion } from "./Validacion";
+import Intereses from "./Intereses";
 
 const Bloques = ({
   correo,
@@ -46,7 +46,7 @@ const Bloques = ({
 
   const handleValidation = (e) => {
     const { name, value } = e.currentTarget;
-    const updatedErrors = ValidacionComponent(name, value, errors);
+    const updatedErrors = Validacion(name, value, errors);
     setErrors(updatedErrors);
   };
 
@@ -194,7 +194,7 @@ const Bloques = ({
           </span>
         )}
 
-        <TituloForm
+        <Titulo
           onChange={handleChange}
           carreras={opcionesCarreras}
           name="carreras"
@@ -211,7 +211,7 @@ const Bloques = ({
         />
         {errors && <span className="text-xs text-red-600 -mt-2">{error}</span>}
 
-        <ContactoComponent
+        <Contacto
           handleChange={handleChangeRRSS}
           opcionesRrss={opcionesRrss}
           error={errors.rrss}
@@ -321,7 +321,7 @@ const Bloques = ({
           <span className="text-xs text-red-600 -mt-2">{errors.cv}</span>
         )}
 
-        <FormacionComponent
+        <Formacion
           sendChange={handleChange}
           opcionesFormacion={opcionesFormacion}
         />
@@ -335,7 +335,7 @@ const Bloques = ({
         Interés/Predisposición a:
       </Typography>
 
-      <InteresesComponent sendChange={handleChangeInteres}/>
+      <Intereses sendChange={handleChangeInteres}/>
     </>
   );
 };

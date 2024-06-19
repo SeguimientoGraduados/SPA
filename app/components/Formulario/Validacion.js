@@ -1,4 +1,4 @@
-export const ValidacionComponent = (name, value, errors) => {
+export const Validacion = (name, value, errors) => {
   let errorObj = { ...errors };
 
   const validateNombre = (value) => {

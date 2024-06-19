@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { IconButton, Card, Typography } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import FiltroPaisComponent from "./Filtros/FiltroPaisComponent";
-import FiltroDepartamentoComponent from "./Filtros/FiltroDepartamentoComponent";
-import FiltroAnioComponent from "./Filtros/FiltroAnioComponent";
+import FiltroPais from "./Filtros/FiltroPais";
+import FiltroDepartamento from "./Filtros/FiltroDepartamento";
+import FiltroAnio from "./Filtros/FiltroAnio";
 import graduadosService from "@/app/services/graduadosService";
 
 const Filtros = ({ onFiltrosChange }) => {
@@ -86,17 +86,17 @@ const Filtros = ({ onFiltrosChange }) => {
           <Typography variant="paragraph" className="text-center">
             Filtros
           </Typography>
-          <FiltroPaisComponent
+          <FiltroPais
             paises={paises}
             onPaisChange={(pais) => handlePaisChange(pais)}
           />
-          <FiltroDepartamentoComponent
+          <FiltroDepartamento
             departamentos={departamentos}
             onDepartamentoChange={(departamento) =>
               handleDepartamentoChange(departamento)
             }
           />
-          <FiltroAnioComponent
+          <FiltroAnio
             min={anioMin}
             max={anioMax}
             onAnioChange={(min, max) => handleAnioChange(min, max)}

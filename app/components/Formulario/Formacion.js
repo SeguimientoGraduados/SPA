@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SelectOption from "../Utils/SelectOption";
 
-const FormacionComponent = ({ sendChange, opcionesFormacion }) => {
+const Formacion = ({ sendChange, opcionesFormacion }) => {
   const [formaciones, setFormaciones] = useState([
     { titulo: "", institucion: "", nivel: "" },
   ]);
@@ -79,4 +79,4 @@ const FormacionComponent = ({ sendChange, opcionesFormacion }) => {
   );
 };
 
-export default FormacionComponent;
+export default Formacion;

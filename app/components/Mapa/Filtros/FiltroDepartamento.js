@@ -1,6 +1,6 @@
 import { Select, Option } from "@material-tailwind/react";
 
-const FiltroDepartamentoComponent = ({ departamentos, onDepartamentoChange }) => {
+const FiltroDepartamento = ({ departamentos, onDepartamentoChange }) => {
   const handleSelectChange = (event) => {
     const dptoId = event;
     onDepartamentoChange(dptoId);
@@ -19,4 +19,4 @@ const FiltroDepartamentoComponent = ({ departamentos, onDepartamentoChange }) =>
   );
 };
 
-export default FiltroDepartamentoComponent;
+export default FiltroDepartamento;

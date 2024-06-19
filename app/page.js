@@ -1,7 +1,7 @@
 "use client";
 import Mapa from "./components/Mapa";
 import graduadosService from "./services/graduadosService";
-import TablaGraduados from "./components/Graduados/TablaGraduadosComponent";
+import TablaGraduados from "./components/Graduados/TablaGraduados";
 import React, { useState, useEffect } from "react";
 import { DefaultSkeleton } from "./components/Utils/Skeleton";
 

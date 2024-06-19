@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-const ContactoComponent = ({ handleChange, opcionesRrss, error = {} }) => {
+const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
   const [showFacebook, setShowFacebook] = useState(false);
   const [showTwitter, setShowTwitter] = useState(false);
 
@@ -120,4 +120,4 @@ const ContactoComponent = ({ handleChange, opcionesRrss, error = {} }) => {
   );
 };
 
-export default ContactoComponent;
+export default Contacto;
