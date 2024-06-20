@@ -37,7 +37,7 @@ const Home = () => {
   }
 
   return (
-    <section className="bg-gray-200 flex flex-col gap-8 px-20 py-10">
+    <section className="bg-gray-200 flex flex-col gap-8 p-10">
       <Mapa
         graduadosPorCiudad={graduados}
         selectedCity={selectedCity}

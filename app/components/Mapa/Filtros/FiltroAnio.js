@@ -11,7 +11,7 @@ const FiltroAnio = ({ min, max, onAnioChange }) => {
 
   return (
     <div className="flex flex-col pb-12 px-3">
-      <Typography variant="small">Año de graduacion:</Typography>
+      <Typography variant="paragraph" color="blue-gray">Año de graduación:</Typography>
       <ReactSlider
         className="slider"
         thumbClassName="thumb"
