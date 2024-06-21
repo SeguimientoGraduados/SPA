@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import FiltroPais from "./Filtros/FiltroPais";
 import FiltroDepartamento from "./Filtros/FiltroDepartamento";
+import FiltroCarrera from "./Filtros/FiltroCarrera";
 import FiltroAnio from "./Filtros/FiltroAnio";
 import graduadosService from "@/app/services/graduadosService";
 
@@ -12,11 +13,13 @@ const Filtros = ({ onFiltrosChange }) => {
 
   const [paises, setPaises] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
+  const [carreras, setCarreras] = useState([]);
   const [anioMin, setAnioMin] = useState(null);
   const [anioMax, setAnioMax] = useState(null);
 
   const [paisSeleccionado, setPaisSeleccionado] = useState(null);
   const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState(null);
+  const [carreraSeleccionado, setCarreraSeleccionado] = useState(null);
   const [anioMinSeleccionado, setAnioMinSeleccionado] = useState(null);
   const [anioMaxSeleccionado, setAnioMaxSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -27,6 +30,10 @@ const Filtros = ({ onFiltrosChange }) => {
 
   const handleDepartamentoChange = (dpto) => {
     setDepartamentoSeleccionado(dpto);
+  };
+
+  const handleCarreraChange = (carrera) => {
+    setCarreraSeleccionado(carrera);
   };
 
   const handleAnioChange = (min, max) => {
@@ -40,6 +47,7 @@ const Filtros = ({ onFiltrosChange }) => {
         const response = await obtenerValoresParaFiltrar();
         setPaises(response.paises);
         setDepartamentos(response.departamentos);
+        setCarreras(response.carreras);
         setAnioMin(response.anios.anio_min);
         setAnioMinSeleccionado(response.anios.anio_min);
         setAnioMax(response.anios.anio_max);
@@ -62,6 +70,9 @@ const Filtros = ({ onFiltrosChange }) => {
     if (departamentoSeleccionado) {
       filtros.departamento = departamentoSeleccionado;
     }
+    if (carreraSeleccionado) {
+      filtros.carrera = carreraSeleccionado;
+    }
     if (anioMinSeleccionado) {
       filtros.anioDesde = anioMinSeleccionado;
     }
@@ -73,6 +84,7 @@ const Filtros = ({ onFiltrosChange }) => {
   }, [
     paisSeleccionado,
     departamentoSeleccionado,
+    carreraSeleccionado,
     anioMinSeleccionado,
     anioMaxSeleccionado,
   ]);
@@ -95,6 +107,10 @@ const Filtros = ({ onFiltrosChange }) => {
           <FiltroDepartamento
             departamentos={departamentos}
             onDepartamentoChange={handleDepartamentoChange}
+          />
+          <FiltroCarrera
+            carreras={carreras}
+            onCarreraChange={handleCarreraChange}
           />
           <FiltroAnio
             min={anioMin}
