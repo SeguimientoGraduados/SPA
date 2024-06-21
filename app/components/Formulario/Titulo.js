@@ -3,7 +3,7 @@ import { Input, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import SelectOption from "../Utils/SelectOption";
-import { ValidacionComponent } from "./Validacion";
+import { Validacion } from "./Validacion";
 
 const Titulo = ({ onChange, carreras }) => {
   const [titles, setTitles] = useState([{ title: "", year: "" }]);
@@ -40,7 +40,7 @@ const Titulo = ({ onChange, carreras }) => {
     const name = "anio_graduacion";
     const value = titles[index].year;
 
-    const updatedErrors = titles.map((_, i) => i === index ? ValidacionComponent(name, value, errors) : errors[i]);
+    const updatedErrors = titles.map((_, i) => i === index ? Validacion(name, value, errors) : errors[i]);
     setErrors(updatedErrors);
   };
 

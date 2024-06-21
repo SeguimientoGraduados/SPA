@@ -140,6 +140,36 @@ const obtenerValoresParaFiltrar = async (headers = {}) => {
   }
 };
 
+const exportarExcelGraduados = async (params = {}, headers = {}) => {
+  try {
+    const token = Cookies.get("token");
+    if (!token) throw new Error("No se encontro el token.");
+
+    const query = new URLSearchParams(params).toString();
+    const response = await axios.get(`${API_URL}/exportar-excel?${query}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: 'blob',
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'graduados.xlsx');
+    document.body.appendChild(link);
+    link.click();
+
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.error("Error descargando archivo:", error);
+    throw error;
+  }
+};
+
 export default {
   obtenerGraduados,
   registrarGraduado,
@@ -147,5 +177,6 @@ export default {
   aprobarSolicitudGraduado,
   rechazarSolicitudGraduado,
   obtenerEnumerados,
-  obtenerValoresParaFiltrar
+  obtenerValoresParaFiltrar,
+  exportarExcelGraduados
 };

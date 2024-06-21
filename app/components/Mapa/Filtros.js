@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Typography, Spinner } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +7,13 @@ import FiltroDepartamento from "./Filtros/FiltroDepartamento";
 import FiltroCarrera from "./Filtros/FiltroCarrera";
 import FiltroAnio from "./Filtros/FiltroAnio";
 import graduadosService from "@/app/services/graduadosService";
+import BotonExportarExcel from "./Filtros/ExportarExcel";
+import { AuthContext } from "@/app/context/AuthContext";
 
-const Filtros = ({ onFiltrosChange }) => {
+const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
   const { obtenerValoresParaFiltrar } = graduadosService;
+  const { authState } = useContext(AuthContext);
+  const { isAuthenticated, user } = authState;
 
   const [paises, setPaises] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
@@ -22,6 +26,7 @@ const Filtros = ({ onFiltrosChange }) => {
   const [carreraSeleccionado, setCarreraSeleccionado] = useState(null);
   const [anioMinSeleccionado, setAnioMinSeleccionado] = useState(null);
   const [anioMaxSeleccionado, setAnioMaxSeleccionado] = useState(null);
+
   const [cargando, setCargando] = useState(true);
 
   const handlePaisChange = (pais) => {
@@ -39,6 +44,26 @@ const Filtros = ({ onFiltrosChange }) => {
   const handleAnioChange = (min, max) => {
     setAnioMinSeleccionado(min);
     setAnioMaxSeleccionado(max);
+  };
+
+  const handleDescargarExcelClick = () => {
+    const filtros = {};
+    if (paisSeleccionado) {
+      filtros.pais = paisSeleccionado;
+    }
+    if (departamentoSeleccionado) {
+      filtros.departamento = departamentoSeleccionado;
+    }
+    if (carreraSeleccionado) {
+      filtros.carrera = carreraSeleccionado;
+    }
+    if (anioMinSeleccionado) {
+      filtros.anioDesde = anioMinSeleccionado;
+    }
+    if (anioMaxSeleccionado) {
+      filtros.anioHasta = anioMaxSeleccionado;
+    }
+    onDescargarExcel(filtros);
   };
 
   useEffect(() => {
@@ -117,6 +142,11 @@ const Filtros = ({ onFiltrosChange }) => {
             max={anioMax}
             onAnioChange={handleAnioChange}
           />
+          {isAuthenticated && user?.rol === "admin" && (
+            <BotonExportarExcel
+              onClickDescargarExcel={handleDescargarExcelClick}
+            />
+          )}
         </>
       )}
     </div>

@@ -5,6 +5,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import CiudadMarker from "./CiudadMarker";
 import Filtros from "./Filtros";
+import graduadosService from "@/app/services/graduadosService";
 
 const Mapa = ({
   graduadosPorCiudad,
@@ -12,14 +13,27 @@ const Mapa = ({
   setSelectedCity,
   onFiltrosChange,
 }) => {
+  const { exportarExcelGraduados } = graduadosService;
+
   const handleFiltrosChange = async (params) => {
     onFiltrosChange(params);
+  };
+
+  const handleDescargarExcel = async (params) => {
+    try {
+      const response = await exportarExcelGraduados(params);
+    } catch (error) {
+      console.error("Error al descargar el archivo:", error);
+    }
   };
 
   return (
     <div className="grid grid-cols-7 gap-4" style={{ height: "450px" }}>
       <div className="col-span-1">
-        <Filtros onFiltrosChange={handleFiltrosChange} />
+        <Filtros
+          onFiltrosChange={handleFiltrosChange}
+          onDescargarExcel={handleDescargarExcel}
+        />
       </div>
       <div className="col-span-6 pl-10">
         <MapContainer
