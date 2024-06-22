@@ -1,11 +1,12 @@
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import L from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import CiudadMarker from "./CiudadMarker";
 import Filtros from "./Filtros";
 import graduadosService from "@/app/services/graduadosService";
+import '../../globals.css';
 
 const Mapa = ({
   graduadosPorCiudad,
@@ -25,6 +26,14 @@ const Mapa = ({
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
     }
+  };
+
+  const createClusterCustomIcon = function (cluster) {
+    return L.divIcon({
+      html: `<div><span>${cluster.getChildCount()}</span></div>`,
+      className: 'custom-marker-cluster',
+      iconSize: L.point(40, 40, true),
+    });
   };
 
   return (
@@ -49,14 +58,21 @@ const Mapa = ({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {graduadosPorCiudad.map((ciudad, index) => (
-            <CiudadMarker
-              key={index}
-              ciudad={ciudad.ciudad}
-              selectedCity={selectedCity}
-              setSelectedCity={setSelectedCity}
-            />
-          ))}
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={60}
+            spiderfyOnMaxZoom={true}
+            iconCreateFunction={createClusterCustomIcon}
+          >
+            {graduadosPorCiudad.map((ciudad, index) => (
+              <CiudadMarker
+                key={index}
+                ciudad={ciudad.ciudad}
+                selectedCity={selectedCity}
+                setSelectedCity={setSelectedCity}
+              />
+            ))}
+          </MarkerClusterGroup>
           <ZoomControl position="bottomright" zoomInText="+" zoomOutText="-" />
         </MapContainer>
       </div>
