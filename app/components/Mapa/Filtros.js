@@ -6,6 +6,7 @@ import FiltroPais from "./Filtros/FiltroPais";
 import FiltroDepartamento from "./Filtros/FiltroDepartamento";
 import FiltroCarrera from "./Filtros/FiltroCarrera";
 import FiltroAnio from "./Filtros/FiltroAnio";
+import FiltrosIntereses from "./Filtros/FiltrosIntereses";
 import graduadosService from "@/app/services/graduadosService";
 import BotonExportarExcel from "./Filtros/ExportarExcel";
 import BotonLimpiarFiltros from "./Filtros/LimpiarFiltros";
@@ -23,11 +24,16 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
   const [anioMax, setAnioMax] = useState(null);
 
   const [paisSeleccionado, setPaisSeleccionado] = useState(null);
-  const [departamentoSeleccionado, setDepartamentoSeleccionado] =
-    useState(null);
+  const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState(null);
   const [carreraSeleccionado, setCarreraSeleccionado] = useState(null);
   const [anioMinSeleccionado, setAnioMinSeleccionado] = useState(null);
   const [anioMaxSeleccionado, setAnioMaxSeleccionado] = useState(null);
+
+  const [intereses, setIntereses] = useState({
+    comunidad: false,
+    oferta: false,
+    demanda: false,
+  });
 
   const [cargando, setCargando] = useState(true);
 
@@ -46,6 +52,15 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
   const handleAnioChange = (min, max) => {
     setAnioMinSeleccionado(min);
     setAnioMaxSeleccionado(max);
+  };
+
+  const handleInteresChange = (interes) => {
+    const nuevosIntereses = {
+      ...intereses,
+      [interes]: !intereses[interes],
+    };
+
+    setIntereses(nuevosIntereses);
   };
 
   const handleDescargarExcelClick = () => {
@@ -74,6 +89,12 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
     setCarreraSeleccionado(null);
     setAnioMinSeleccionado(null);
     setAnioMaxSeleccionado(null);
+    const interesesLimpios = {
+      comunidad: false,
+      oferta: false,
+      demanda: false,
+    }
+    setIntereses(interesesLimpios);
   };
 
   useEffect(() => {
@@ -136,6 +157,15 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
     if (anioMaxSeleccionado) {
       filtros.anioHasta = anioMaxSeleccionado;
     }
+    if (intereses.comunidad) {
+      filtros.interes_comunidad = intereses.comunidad;
+    }
+    if (intereses.oferta) {
+      filtros.interes_oferta = intereses.oferta;
+    }
+    if (intereses.demanda) {
+      filtros.interes_demanda = intereses.demanda;
+    }
 
     onFiltrosChange(filtros);
   }, [
@@ -144,10 +174,11 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
     carreraSeleccionado,
     anioMinSeleccionado,
     anioMaxSeleccionado,
+    intereses
   ]);
 
   return (
-    <div className="flex flex-col py-4 gap-4">
+    <div className="flex flex-col py-4 gap-2">
       <div className="flex flex-row gap-4 items-center justify-between">
         <div className="flex flex-row gap-4 items-center ">
           <FontAwesomeIcon icon={faFilter} color="blue" />
@@ -186,9 +217,12 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
             anioMaxSeleccionado={anioMaxSeleccionado}
           />
           {isAuthenticated && user?.rol === "admin" && (
-            <BotonExportarExcel
-              onClickDescargarExcel={handleDescargarExcelClick}
-            />
+            <>
+              <FiltrosIntereses intereses={intereses} onInteresChange={handleInteresChange}/>
+              <BotonExportarExcel
+                onClickDescargarExcel={handleDescargarExcelClick}
+              />
+            </>
           )}
         </>
       )}
