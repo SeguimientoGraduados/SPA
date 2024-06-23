@@ -8,6 +8,7 @@ import FiltroCarrera from "./Filtros/FiltroCarrera";
 import FiltroAnio from "./Filtros/FiltroAnio";
 import graduadosService from "@/app/services/graduadosService";
 import BotonExportarExcel from "./Filtros/ExportarExcel";
+import BotonLimpiarFiltros from "./Filtros/LimpiarFiltros";
 import { AuthContext } from "@/app/context/AuthContext";
 
 const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
@@ -22,7 +23,8 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
   const [anioMax, setAnioMax] = useState(null);
 
   const [paisSeleccionado, setPaisSeleccionado] = useState(null);
-  const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState(null);
+  const [departamentoSeleccionado, setDepartamentoSeleccionado] =
+    useState(null);
   const [carreraSeleccionado, setCarreraSeleccionado] = useState(null);
   const [anioMinSeleccionado, setAnioMinSeleccionado] = useState(null);
   const [anioMaxSeleccionado, setAnioMaxSeleccionado] = useState(null);
@@ -66,10 +68,34 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
     onDescargarExcel(filtros);
   };
 
+  const handleLimpiarFiltros = () => {
+    setPaisSeleccionado(null);
+    setDepartamentoSeleccionado(null);
+    setCarreraSeleccionado(null);
+    setAnioMinSeleccionado(null);
+    setAnioMaxSeleccionado(null);
+  };
+
   useEffect(() => {
     const obtenerValores = async () => {
       try {
-        const response = await obtenerValoresParaFiltrar();
+        const filtros = {};
+        if (paisSeleccionado) {
+          filtros.pais = paisSeleccionado;
+        }
+        if (departamentoSeleccionado) {
+          filtros.departamento = departamentoSeleccionado;
+        }
+        if (carreraSeleccionado) {
+          filtros.carrera = carreraSeleccionado;
+        }
+        if (anioMinSeleccionado) {
+          filtros.anioDesde = anioMinSeleccionado;
+        }
+        if (anioMaxSeleccionado) {
+          filtros.anioHasta = anioMaxSeleccionado;
+        }
+        const response = await obtenerValoresParaFiltrar(filtros);
         setPaises(response.paises);
         setDepartamentos(response.departamentos);
         setCarreras(response.carreras);
@@ -85,7 +111,13 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
     };
 
     obtenerValores();
-  }, []);
+  }, [
+    paisSeleccionado,
+    departamentoSeleccionado,
+    carreraSeleccionado,
+    anioMinSeleccionado,
+    anioMaxSeleccionado,
+  ]);
 
   useEffect(() => {
     const filtros = {};
@@ -116,11 +148,14 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
 
   return (
     <div className="flex flex-col py-4 gap-4">
-      <div className="flex flex-row gap-4">
-        <FontAwesomeIcon icon={faFilter} color="blue" className="mt-1" />
-        <Typography variant="h5" color="blue-gray">
-          Filtros
-        </Typography>
+      <div className="flex flex-row gap-4 items-center justify-between">
+        <div className="flex flex-row gap-4 items-center ">
+          <FontAwesomeIcon icon={faFilter} color="blue" />
+          <Typography variant="h5" color="blue-gray">
+            Filtros
+          </Typography>
+        </div>
+        <BotonLimpiarFiltros onClickLimpiarFiltros={handleLimpiarFiltros} />
       </div>
       {cargando ? (
         <div className="flex justify-center items-center h-full">
@@ -128,19 +163,27 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
         </div>
       ) : (
         <>
-          <FiltroPais paises={paises} onPaisChange={handlePaisChange} />
+          <FiltroPais
+            paises={paises}
+            onPaisChange={handlePaisChange}
+            paisSeleccionado={paisSeleccionado}
+          />
           <FiltroDepartamento
             departamentos={departamentos}
             onDepartamentoChange={handleDepartamentoChange}
+            departamentoSeleccionado={departamentoSeleccionado}
           />
           <FiltroCarrera
             carreras={carreras}
             onCarreraChange={handleCarreraChange}
+            carreraSeleccionada={carreraSeleccionado}
           />
           <FiltroAnio
             min={anioMin}
             max={anioMax}
             onAnioChange={handleAnioChange}
+            anioMinSeleccionado={anioMinSeleccionado}
+            anioMaxSeleccionado={anioMaxSeleccionado}
           />
           {isAuthenticated && user?.rol === "admin" && (
             <BotonExportarExcel

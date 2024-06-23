@@ -126,9 +126,10 @@ const obtenerEnumerados = async (headers = {}) => {
   }
 };
 
-const obtenerValoresParaFiltrar = async (headers = {}) => {
+const obtenerValoresParaFiltrar = async (params = {}, headers = {}) => {
   try {
-    const response = await axios.get(`${API_URL}/filtros`, {
+    const query = new URLSearchParams(params).toString();
+    const response = await axios.get(`${API_URL}/filtros?${query}`, {
       headers: {
         "Content-Type": "application/json",
       },

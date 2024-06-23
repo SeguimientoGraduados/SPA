@@ -1,13 +1,17 @@
 import { Typography } from "@material-tailwind/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
 
-const FiltroAnio = ({ min, max, onAnioChange }) => {
+const FiltroAnio = ({ min, max, anioMinSeleccionado, anioMaxSeleccionado, onAnioChange }) => {
   const [rango, setRango] = useState([min, max]);
   
   const handleAnioChange = (value) => {
     onAnioChange(value[0], value[1]);
   };
+
+  useEffect(() => {
+    setRango([anioMinSeleccionado,anioMaxSeleccionado])
+  }, [min, max, anioMinSeleccionado, anioMaxSeleccionado]);
 
   return (
     <div className="flex flex-col pb-12 px-3">
@@ -16,7 +20,7 @@ const FiltroAnio = ({ min, max, onAnioChange }) => {
         className="slider"
         thumbClassName="thumb"
         trackClassName="track"
-        defaultValue={rango}
+        value={rango}
         max={max}
         min={min}
         renderThumb={(props, state) => <Typography variant="small" {...props}>{state.valueNow}</Typography>}
