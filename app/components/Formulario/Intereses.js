@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Switch } from "@material-tailwind/react";
 
-const Intereses = ({sendChange}) => {
+const Intereses = ({ sendChange }) => {
   const [intereses, setIntereses] = useState({
     comunidad: false,
     oferta: false,
@@ -10,13 +10,13 @@ const Intereses = ({sendChange}) => {
 
   const toggleSwitch = (pregunta) => {
     const nuevosIntereses = {
-        ...intereses,
-        [pregunta]: !intereses[pregunta],
-      };
+      ...intereses,
+      [pregunta]: !intereses[pregunta],
+    };
 
     setIntereses(nuevosIntereses);
 
-    sendChange({ target: { name:"intereses", value: nuevosIntereses  } })
+    sendChange({ target: { name: "intereses", value: nuevosIntereses } });
   };
 
   return (
@@ -25,20 +25,21 @@ const Intereses = ({sendChange}) => {
         ¿Está dispuesto a formar parte del ecosistema que interactúe con otros
         egresados y/o las autoridades de la UNS?
       </Typography>
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-4 items-center">
+        <Typography color="gray">No</Typography>
         <Switch
           checked={intereses.comunidad}
           label="Si"
           onChange={() => toggleSwitch("comunidad")}
           color="blue"
-          size="regular"
         />
       </div>
 
       <Typography variant="paragraph">
         ¿Le gustaria proponer iniciativas a la UNS?
       </Typography>
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-4 items-center">
+        <Typography color="gray">No</Typography>
         <Switch
           checked={intereses.oferta}
           label="Si"
@@ -52,7 +53,8 @@ const Intereses = ({sendChange}) => {
         ¿Le gustaria recibir consultas de la UNS?
       </Typography>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-4 items-center">
+        <Typography color="gray">No</Typography>
         <Switch
           checked={intereses.demanda}
           label="Si"

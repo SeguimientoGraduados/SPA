@@ -6,7 +6,7 @@ const FiltrosIntereses = ({ intereses, onInteresChange }) => {
       <Typography variant="paragraph" color="blue-gray">
         Intereses:
       </Typography>
-      <div className="flex flex-col gap-1 mx-10">
+      <div className="flex flex-col gap-1 mx-8">
         <Switch
           checked={intereses.comunidad}
           label="Comunidad"

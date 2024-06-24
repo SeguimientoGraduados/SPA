@@ -241,7 +241,8 @@ const Bloques = ({
             onChange={handleChange}
           />
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center">
+          <Typography variant="paragraph" color="blue=gray">Sector:</Typography>
           <CheckboxList
             handleChange={handleChangeSector}
             direction={"row"}
