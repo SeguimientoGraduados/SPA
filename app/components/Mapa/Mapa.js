@@ -10,8 +10,7 @@ import '../../globals.css';
 
 const Mapa = ({
   graduadosPorCiudad,
-  selectedCity,
-  setSelectedCity,
+  onCityChange,
   onFiltrosChange,
 }) => {
   const { exportarExcelGraduados } = graduadosService;
@@ -67,8 +66,7 @@ const Mapa = ({
               <CiudadMarker
                 key={index}
                 ciudad={ciudad.ciudad}
-                selectedCity={selectedCity}
-                setSelectedCity={setSelectedCity}
+                onCitySelect={onCityChange}
               />
             ))}
           </MarkerClusterGroup>
