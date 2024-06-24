@@ -22,7 +22,7 @@ const Mapa = ({
 
   const handleDescargarExcel = async (params) => {
     try {
-      const response = await exportarExcelGraduados(params);
+      await exportarExcelGraduados(params);
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
     }
@@ -60,7 +60,6 @@ const Mapa = ({
 
           <MarkerClusterGroup
             chunkedLoading
-            maxClusterRadius={60}
             spiderfyOnMaxZoom={true}
             iconCreateFunction={createClusterCustomIcon}
           >

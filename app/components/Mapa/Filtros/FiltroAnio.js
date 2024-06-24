@@ -4,13 +4,13 @@ import ReactSlider from "react-slider";
 
 const FiltroAnio = ({ min, max, anioMinSeleccionado, anioMaxSeleccionado, onAnioChange }) => {
   const [rango, setRango] = useState([min, max]);
-  
+
   const handleAnioChange = (value) => {
     onAnioChange(value[0], value[1]);
   };
 
   useEffect(() => {
-    setRango([anioMinSeleccionado,anioMaxSeleccionado])
+    setRango([anioMinSeleccionado, anioMaxSeleccionado])
   }, [min, max, anioMinSeleccionado, anioMaxSeleccionado]);
 
   return (
@@ -23,7 +23,10 @@ const FiltroAnio = ({ min, max, anioMinSeleccionado, anioMaxSeleccionado, onAnio
         value={rango}
         max={max}
         min={min}
-        renderThumb={(props, state) => <Typography variant="small" {...props}>{state.valueNow}</Typography>}
+        renderThumb={(props, state) => {
+          const { key, ...restProps } = props;
+          return <Typography key={key} variant="small" {...restProps}>{state.valueNow}</Typography>;
+        }}
         onAfterChange={(value) => handleAnioChange(value)}
       />
     </div>
