@@ -1,22 +1,35 @@
 import "leaflet/dist/leaflet.css";
-import React from "react";
+import React, { useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import CiudadMarker from "./CiudadMarker";
 import Filtros from "./Filtros";
 import graduadosService from "@/app/services/graduadosService";
+import { Button } from "@material-tailwind/react";
 import '../../globals.css';
 
 const Mapa = ({
   graduadosPorCiudad,
-  onCityChange,
   onFiltrosChange,
 }) => {
   const { exportarExcelGraduados } = graduadosService;
+  const [filtros, setFiltros] = useState({});
 
   const handleFiltrosChange = async (params) => {
-    onFiltrosChange(params);
+    const nuevosFiltros = { ...filtros, ...params };
+    setFiltros(nuevosFiltros);
+    onFiltrosChange(nuevosFiltros);
+  };
+
+  const handleCitySelect = (ciudad) => {
+    handleFiltrosChange({ ciudad: ciudad.nombre });
+  };
+
+  const handleRemoveCity = () => {
+    const { ciudad, ...restoDeFiltros } = filtros;
+    setFiltros(restoDeFiltros);
+    onFiltrosChange(restoDeFiltros);
   };
 
   const handleDescargarExcel = async (params) => {
@@ -36,43 +49,55 @@ const Mapa = ({
   };
 
   return (
-    <div className="grid grid-cols-7 gap-4" style={{ height: "450px" }}>
-      <div className="col-span-1">
-        <Filtros
-          onFiltrosChange={handleFiltrosChange}
-          onDescargarExcel={handleDescargarExcel}
-        />
-      </div>
-      <div className="col-span-6 pl-10">
-        <MapContainer
-          className="z-30"
-          center={[-38.7183, -62.266]}
-          zoom={3}
-          scrollWheelZoom={false}
-          style={{ height: "100%", width: "100%" }}
-          zoomControl={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    <div>
+      <div className="grid grid-cols-7 gap-4" style={{ height: "450px" }}>
+        <div className="col-span-1">
+          <Filtros
+            onFiltrosChange={handleFiltrosChange}
+            onDescargarExcel={handleDescargarExcel}
           />
-
-          <MarkerClusterGroup
-            chunkedLoading
-            spiderfyOnMaxZoom={true}
-            iconCreateFunction={createClusterCustomIcon}
+        </div>
+        <div className="col-span-6 pl-10">
+          <MapContainer
+            className="z-30"
+            center={[-38.7183, -62.266]}
+            zoom={3}
+            scrollWheelZoom={false}
+            style={{ height: "100%", width: "100%" }}
+            zoomControl={false}
           >
-            {graduadosPorCiudad.map((ciudad, index) => (
-              <CiudadMarker
-                key={index}
-                ciudad={ciudad.ciudad}
-                onCitySelect={onCityChange}
-              />
-            ))}
-          </MarkerClusterGroup>
-          <ZoomControl position="bottomright" zoomInText="+" zoomOutText="-" />
-        </MapContainer>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <MarkerClusterGroup
+              chunkedLoading
+              spiderfyOnMaxZoom={true}
+              iconCreateFunction={createClusterCustomIcon}
+            >
+              {graduadosPorCiudad.map((ciudad, index) => (
+                <CiudadMarker
+                  key={index}
+                  ciudad={ciudad.ciudad}
+                  onCitySelect={handleCitySelect}
+                />
+              ))}
+            </MarkerClusterGroup>
+            <ZoomControl position="bottomright" zoomInText="+" zoomOutText="-" />
+          </MapContainer>
+
+        </div>
       </div>
+      {/* Boton provisorio insta */}
+      {filtros.ciudad && (
+        <Button
+          onClick={handleRemoveCity}
+          className="text-xs px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+        >
+          Eliminar ciudad
+        </Button>
+      )}
     </div>
   );
 };

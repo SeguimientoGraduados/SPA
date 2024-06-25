@@ -8,15 +8,7 @@ import { DefaultSkeleton } from "./components/Utils/Skeleton";
 const Home = () => {
   const { obtenerGraduados } = graduadosService;
   const [graduados, setGraduados] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
 
-  const handleCityChange = async (ciudad) => {
-    setSelectedCity(ciudad)
-    console.log(selectedCity.nombre)
-    // const filtros = {};
-    // filtros.ciudad = ciudad.nombre;
-    // handleCambioFiltros(filtros);
-  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,7 +40,6 @@ const Home = () => {
     <section className="bg-gray-200 flex flex-col gap-8 p-10">
       <Mapa
         graduadosPorCiudad={graduados}
-        onCityChange={handleCityChange}
         onFiltrosChange={handleCambioFiltros}
       />
       <TablaGraduados graduadosPorCiudad={graduados} />
