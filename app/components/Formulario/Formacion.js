@@ -48,6 +48,7 @@ const Formacion = ({ sendChange, opcionesFormacion }) => {
               <div className="grid grid-cols-2 gap-2 mb-2">
                 <Input
                   label="Título"
+                  className="bg-tremor-background"
                   onBlur={(e) => handleInternalChange(e, index, "titulo")}
                 />
                 <SelectOption
@@ -58,11 +59,12 @@ const Formacion = ({ sendChange, opcionesFormacion }) => {
               </div>
               <Input
                 label="Institución"
+                className="bg-tremor-background"
                 onBlur={(e) => handleInternalChange(e, index, "institucion")}
               />
             </div>
             <IconButton
-              variant="outlined"
+              variant="gradient"
               color="red"
               className="rounded-full"
               onClick={() => removeFormacion(index)}
@@ -71,7 +73,7 @@ const Formacion = ({ sendChange, opcionesFormacion }) => {
             </IconButton>
           </div>
         ))}
-        <IconButton variant="outlined" color="blue" className="rounded-full" onClick={addFormacion}>
+        <IconButton variant="gradient" color="blue" className="rounded-full" onClick={addFormacion}>
           <FontAwesomeIcon icon={faPlus} />
         </IconButton>
       </div>

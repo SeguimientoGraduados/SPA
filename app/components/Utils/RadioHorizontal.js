@@ -34,7 +34,7 @@ const RadioHorizontal = () => {
                 onChange={handleRadioChange}
                 ripple={false}
                 icon={<Icon />}
-                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
                 label={
                     <Typography
                         variant="small"
@@ -52,7 +52,7 @@ const RadioHorizontal = () => {
                 onChange={handleRadioChange}
                 ripple={false}
                 icon={<Icon />}
-                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
                 label={
                     <Typography
                         variant="small"
@@ -70,7 +70,7 @@ const RadioHorizontal = () => {
                 onChange={handleRadioChange}
                 ripple={false}
                 icon={<Icon />}
-                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
                 label={
                     <Typography
                         variant="small"

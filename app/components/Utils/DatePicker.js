@@ -18,7 +18,7 @@ const YearDropdown = ({ selectedYear, onChange }) => {
 
     return (
         <select
-            className="border border-gray-300 rounded-md p-1"
+            className="border border-gray-300 rounded-md p-1 bg-tremor-background"
             value={selectedYear}
             onChange={(e) => onChange(Number(e.target.value))}
         >
@@ -59,7 +59,8 @@ const DatePicker = ({ label, onChange, name, error }) => {
                         value={date ? format(date, "PPP", { locale: es }) : ""}
                         error={error}
                         required
-                        readOnly                      
+                        readOnly                
+                        className="bg-tremor-background"      
                     />
                 </PopoverHandler>
                 <PopoverContent>

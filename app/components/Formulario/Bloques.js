@@ -145,6 +145,7 @@ const Bloques = ({
           onInput={handleRequired}
           onBlur={handleValidation}
           error={errors.nombre}
+          className="bg-tremor-background"
         />
         {errors.nombre && (
           <span className="text-xs text-red-600 -mt-2">{errors.nombre}</span>
@@ -161,6 +162,7 @@ const Bloques = ({
           onInput={handleRequired}
           onBlur={handleValidation}
           error={errors.email}
+          className="bg-tremor-background"
         />
         {errors.email && (
           <span className="text-xs text-red-600 -mt-2">{errors.email}</span>
@@ -175,6 +177,7 @@ const Bloques = ({
           onInvalid={handleRequired}
           onBlur={handleValidation}
           error={errors.dni}
+          className="bg-tremor-background"
         />
         {errors.dni && (
           <span className="text-xs text-red-600 -mt-2">{errors.dni}</span>
@@ -208,6 +211,7 @@ const Bloques = ({
           onInvalid={handleValidation}
           onInput={handleValidation}
           error={Boolean(error)}
+          className="bg-tremor-background"
         />
         {errors && <span className="text-xs text-red-600 -mt-2">{error}</span>}
 
@@ -239,6 +243,7 @@ const Bloques = ({
             label="Nombre de la Empresa"
             name="ocupacion_empresa"
             onChange={handleChange}
+            className="bg-tremor-background"
           />
         </div>
         <div className="flex justify-center items-center">
@@ -258,6 +263,7 @@ const Bloques = ({
           label="Información Adicional"
           name="ocupacion_informacion_adicional"
           onChange={handleChange}
+          className="bg-tremor-background"
         />
 
         <div className="flex items-center flex-row">
@@ -291,6 +297,7 @@ const Bloques = ({
           label="Descripcion"
           name="habilidades_competencias"
           onChange={handleChange}
+          className="bg-tremor-background"
         />
 
         <div className="flex items-center flex-row justify-between">
@@ -312,11 +319,11 @@ const Bloques = ({
         <Input
           label="CV"
           placeholder="https://drive.google.com/CV_Ejemplo"
-          labelProps={{ className: "font-semibold" }}
           name="cv"
           onChange={handleChange}
           onBlur={handleValidation}
           error={errors.cv}
+          className="bg-tremor-background"
         />
         {errors.cv && (
           <span className="text-xs text-red-600 -mt-2">{errors.cv}</span>

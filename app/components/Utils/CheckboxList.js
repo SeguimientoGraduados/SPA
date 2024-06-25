@@ -41,7 +41,7 @@ const CheckboxList = ({ direction, items, handleChange, name, opcionesSelecciona
                 ripple={false}
                 label={item}
                 checked={opcionesSeleccionadas.includes(valorNormalizado)}
-                className="h-4 w-4 rounded-full hover:scale-105 hover:before:opacity-0"
+                className="h-4 w-4 rounded-full hover:scale-105 hover:before:opacity-0 bg-tremor-background"
               />
             </ListItemPrefix>
           </ListItem>

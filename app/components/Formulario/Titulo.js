@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import SelectOption from "../Utils/SelectOption";
+import SelectFiltrable from "../Utils/SelectFiltrable";
 import { Validacion } from "./Validacion";
 
 const Titulo = ({ onChange, carreras }) => {
@@ -49,15 +49,14 @@ const Titulo = ({ onChange, carreras }) => {
     <div className="flex flex-col gap-4 items-center w-full">
       {titles.map((item, index) => (
         <div key={index} className="flex flex-row items-center gap-3 w-full">
-          <SelectOption
-            select={"Título"}
+          <SelectFiltrable
+            select={"Carrera"}
             handleChange={(e) => handleInternalChange(e, index, "title")}
             options={carreras}
             name="carreras"
             value={item.title}
-            className="flex-grow"
           />
-          <div className="flex-grow">
+          <div className="flex-grow mt-7">
             <div className="relative">
               <Input
                 label="Año de Graduación"
@@ -72,7 +71,7 @@ const Titulo = ({ onChange, carreras }) => {
                 }
                 onInput={(e) => e.currentTarget.setCustomValidity('')}
                 error={(errors[index] != null) ? errors[index].anio_graduacion : ''}
-                className="mt-3"
+                className="mt-3 bg-tremor-background"
               />
               {errors[index] && errors[index].anio_graduacion && (
                 <span className="mt-4 text-xs text-red-600 absolute left-0">
@@ -85,9 +84,9 @@ const Titulo = ({ onChange, carreras }) => {
 
 
           <IconButton
-            className="rounded-full"
+            className="rounded-full mt-7"
             onClick={() => removeTitle(index)}
-            variant="outlined"
+            variant="gradient"
             color="red"
             size="sm"
           >
@@ -98,7 +97,7 @@ const Titulo = ({ onChange, carreras }) => {
       <IconButton
         className="rounded-full"
         onClick={addTitle}
-        variant="outlined"
+        variant="gradient"
         color="blue"
       >
         <FontAwesomeIcon icon={faPlus} />

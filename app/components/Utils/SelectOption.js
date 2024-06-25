@@ -11,6 +11,7 @@ const SelectOption = ({ className, select, options, handleChange, name }) => {
       <Select
         label={select}
         onChange={handleSelectChange}
+        className="bg-tremor-background"
         selected={(element) =>
           element &&
           React.cloneElement(element, {

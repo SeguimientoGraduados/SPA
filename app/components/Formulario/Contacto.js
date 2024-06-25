@@ -38,6 +38,7 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
           placeholder="https://www.linkedin.com/in/ejemplo/"
           onBlur={(e) => handleChange(e, "linkedin")}
           error={error.linkedin}
+          className="bg-tremor-background"
         />
         {error.linkedin && <span className="text-xs text-red-600 -mt-2">{error.linkedin}</span>}
 
@@ -49,12 +50,13 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
                 placeholder="https://www.facebook.com/ejemplo/"
                 onBlur={(e) => handleChange(e, "facebook")}
                 error={error.facebook}
+                className="bg-tremor-background"
               />
 
               <IconButton
                 className="rounded-full"
                 onClick={handleMostrarFacebook}
-                variant="outlined"
+                variant="gradient"
                 color="red"
                 size="sm"
               >
@@ -74,11 +76,12 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
                 placeholder="https://www.twitter.com/ejemplo/"
                 onBlur={(e) => handleChange(e, "twitter")}
                 error={error.twitter}
+                className="bg-tremor-background"
               />
               <IconButton
                 className="rounded-full"
                 onClick={handleMostrarTwitter}
-                variant="outlined"
+                variant="gradient"
                 color="red"
                 size="sm"
               >
@@ -95,7 +98,7 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
               className="rounded-full"
               onClick={handleMostrarFacebook}
               color="blue"
-              variant="outlined"
+              variant="gradient"
               size="lg"
             >
               <FontAwesomeIcon icon={faFacebook} />
@@ -107,7 +110,7 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
               className="rounded-full"
               onClick={handleMostrarTwitter}
               color="blue"
-              variant="outlined"
+              variant="gradient"
               size="lg"
             >
 
