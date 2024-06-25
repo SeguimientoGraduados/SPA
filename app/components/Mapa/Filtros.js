@@ -12,7 +12,7 @@ import BotonExportarExcel from "./Filtros/ExportarExcel";
 import BotonLimpiarFiltros from "./Filtros/LimpiarFiltros";
 import { AuthContext } from "@/app/context/AuthContext";
 
-const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
+const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSeleccionada }) => {
   const { obtenerValoresParaFiltrar } = graduadosService;
   const { authState } = useContext(AuthContext);
   const { isAuthenticated, user } = authState;
@@ -84,6 +84,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
   };
 
   const handleLimpiarFiltros = () => {
+
     setPaisSeleccionado(null);
     setDepartamentoSeleccionado(null);
     setCarreraSeleccionado(null);
@@ -95,12 +96,18 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
       demanda: false,
     }
     setIntereses(interesesLimpios);
+    if (ciudadSeleccionada) {
+      onLimpiarCiudad();
+    }
   };
 
   useEffect(() => {
     const obtenerValores = async () => {
       try {
         const filtros = {};
+        if (ciudadSeleccionada) {
+          filtros.ciudad = ciudadSeleccionada;
+        }
         if (paisSeleccionado) {
           filtros.pais = paisSeleccionado;
         }
@@ -133,6 +140,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
 
     obtenerValores();
   }, [
+    ciudadSeleccionada,
     paisSeleccionado,
     departamentoSeleccionado,
     carreraSeleccionado,
@@ -218,7 +226,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel }) => {
           />
           {isAuthenticated && user?.rol === "admin" && (
             <>
-              <FiltrosIntereses intereses={intereses} onInteresChange={handleInteresChange}/>
+              <FiltrosIntereses intereses={intereses} onInteresChange={handleInteresChange} />
               <BotonExportarExcel
                 onClickDescargarExcel={handleDescargarExcelClick}
               />

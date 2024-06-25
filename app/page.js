@@ -23,7 +23,6 @@ const Home = () => {
   }, []);
 
   const handleCambioFiltros = async (params) => {
-    console.log(params)
     try {
       const response = await obtenerGraduados(params);
       setGraduados(response);

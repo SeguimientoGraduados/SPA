@@ -15,21 +15,22 @@ const Mapa = ({
 }) => {
   const { exportarExcelGraduados } = graduadosService;
   const [filtros, setFiltros] = useState({});
+  const [ciudadSeleccionada, setCiudadSeleccionada] = useState(null);
 
   const handleFiltrosChange = async (params) => {
-    const nuevosFiltros = { ...filtros, ...params };
-    setFiltros(nuevosFiltros);
-    onFiltrosChange(nuevosFiltros);
+    onFiltrosChange(params)
   };
 
-  const handleCitySelect = (ciudad) => {
+  const handleCiudadSelect = (ciudad) => {
     handleFiltrosChange({ ciudad: ciudad.nombre });
+    setCiudadSeleccionada(ciudad.nombre);
   };
 
-  const handleRemoveCity = () => {
+  const handleCiudadLimpiar = () => {
     const { ciudad, ...restoDeFiltros } = filtros;
-    setFiltros(restoDeFiltros);
+    setFiltros(restoDeFiltros); 
     onFiltrosChange(restoDeFiltros);
+    setCiudadSeleccionada(null);
   };
 
   const handleDescargarExcel = async (params) => {
@@ -55,6 +56,8 @@ const Mapa = ({
           <Filtros
             onFiltrosChange={handleFiltrosChange}
             onDescargarExcel={handleDescargarExcel}
+            onLimpiarCiudad={handleCiudadLimpiar}
+            ciudadSeleccionada={ciudadSeleccionada}
           />
         </div>
         <div className="col-span-6 pl-10">
@@ -80,7 +83,7 @@ const Mapa = ({
                 <CiudadMarker
                   key={index}
                   ciudad={ciudad.ciudad}
-                  onCitySelect={handleCitySelect}
+                  onCitySelect={handleCiudadSelect}
                 />
               ))}
             </MarkerClusterGroup>
@@ -89,15 +92,6 @@ const Mapa = ({
 
         </div>
       </div>
-      {/* Boton provisorio insta */}
-      {filtros.ciudad && (
-        <Button
-          onClick={handleRemoveCity}
-          className="text-xs px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
-        >
-          Eliminar ciudad
-        </Button>
-      )}
     </div>
   );
 };
