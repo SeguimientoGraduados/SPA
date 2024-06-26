@@ -18,18 +18,19 @@ const Mapa = ({
   const [ciudadSeleccionada, setCiudadSeleccionada] = useState(null);
 
   const handleFiltrosChange = async (params) => {
+    setFiltros(params)
     onFiltrosChange(params)
   };
 
   const handleCiudadSelect = (ciudad) => {
-    handleFiltrosChange({ ciudad: ciudad.nombre });
+    const newFiltros = { ...filtros, ciudad: ciudad.nombre };
+    handleFiltrosChange(newFiltros);
     setCiudadSeleccionada(ciudad.nombre);
   };
 
   const handleCiudadLimpiar = () => {
     const { ciudad, ...restoDeFiltros } = filtros;
-    setFiltros(restoDeFiltros); 
-    onFiltrosChange(restoDeFiltros);
+    handleFiltrosChange(restoDeFiltros);
     setCiudadSeleccionada(null);
   };
 
@@ -84,6 +85,7 @@ const Mapa = ({
                   key={index}
                   ciudad={ciudad.ciudad}
                   onCitySelect={handleCiudadSelect}
+                  onCityClear={handleCiudadLimpiar}
                 />
               ))}
             </MarkerClusterGroup>

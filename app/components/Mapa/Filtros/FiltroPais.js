@@ -19,6 +19,7 @@ const FiltroPais = ({ paises, paisSeleccionado, onPaisChange }) => {
         label="País"
         value={paisSeleccionado || ""}
         onChange={handleSelectChange}
+        className="bg-tremor-background"
       >
         {listaPaises.map((pais, index) => (
           <Option key={index} value={pais.id}>

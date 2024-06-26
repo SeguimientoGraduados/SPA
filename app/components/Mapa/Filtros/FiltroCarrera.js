@@ -19,6 +19,7 @@ const FiltroCarrera = ({ carreras, carreraSeleccionada, onCarreraChange }) => {
         label="Carrera"
         value={carreraSeleccionada || ""}
         onChange={handleSelectChange}
+        className="bg-tremor-background"
       >
         {listaCarreras.map((carrera, index) => (
           <Option key={index} value={carrera.id}>

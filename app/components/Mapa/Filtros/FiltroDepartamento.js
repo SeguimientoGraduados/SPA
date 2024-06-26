@@ -19,6 +19,7 @@ const FiltroDepartamento = ({ departamentos, departamentoSeleccionado, onDeparta
         label="Departamento"
         value={departamentoSeleccionado || ""}
         onChange={handleSelectChange}
+        className="bg-tremor-background"
       >
         {listaDepartamentos.map((departamento, index) => (
           <Option key={index} value={departamento.id}>
