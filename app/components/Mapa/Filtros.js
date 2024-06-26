@@ -88,8 +88,8 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
     setPaisSeleccionado(null);
     setDepartamentoSeleccionado(null);
     setCarreraSeleccionado(null);
-    setAnioMinSeleccionado(null);
-    setAnioMaxSeleccionado(null);
+    setAnioMinSeleccionado(anioMin);
+    setAnioMaxSeleccionado(anioMax);
     const interesesLimpios = {
       comunidad: false,
       oferta: false,
@@ -104,26 +104,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
   useEffect(() => {
     const obtenerValores = async () => {
       try {
-        const filtros = {};
-        if (ciudadSeleccionada) {
-          filtros.ciudad = ciudadSeleccionada;
-        }
-        if (paisSeleccionado) {
-          filtros.pais = paisSeleccionado;
-        }
-        if (departamentoSeleccionado) {
-          filtros.departamento = departamentoSeleccionado;
-        }
-        if (carreraSeleccionado) {
-          filtros.carrera = carreraSeleccionado;
-        }
-        if (anioMinSeleccionado) {
-          filtros.anioDesde = anioMinSeleccionado;
-        }
-        if (anioMaxSeleccionado) {
-          filtros.anioHasta = anioMaxSeleccionado;
-        }
-        const response = await obtenerValoresParaFiltrar(filtros);
+        const response = await obtenerValoresParaFiltrar();
         setPaises(response.paises);
         setDepartamentos(response.departamentos);
         setCarreras(response.carreras);
@@ -139,14 +120,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
     };
 
     obtenerValores();
-  }, [
-    ciudadSeleccionada,
-    paisSeleccionado,
-    departamentoSeleccionado,
-    carreraSeleccionado,
-    anioMinSeleccionado,
-    anioMaxSeleccionado,
-  ]);
+  }, []);
 
   useEffect(() => {
     const filtros = {};

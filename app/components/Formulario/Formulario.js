@@ -88,7 +88,6 @@ const Form = ({ carreras, ciudades, enumerados }) => {
       setAlertaVisible(false);
       setRegistroExitoso(true);
       setModalVisible(true);
-      console.log("Formulario enviado con éxito");
     } catch (error) {
       setRegistroExitoso(false);
       setModalVisible(true);

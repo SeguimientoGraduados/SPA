@@ -1,29 +1,34 @@
-import React from 'react';
-import { Marker, Popup } from 'react-leaflet';
+import React from "react";
+import { Marker, Popup } from "react-leaflet";
 
-const CiudadMarker = ({ ciudad, onCitySelect }) => {
+const CiudadMarker = ({ ciudad, onCitySelect, onCityClear }) => {
   const handleMarkerClick = () => {
-    onCitySelect(ciudad); 
+    onCitySelect(ciudad);
   };
-  const iconUrl = 'http://localhost:3000/_next/static/media/marker-icon-2x.93fdb12c.png';
+  const handlePopupClose = () => {
+    onCityClear();
+  };
+  const iconUrl =
+    "http://localhost:3000/_next/static/media/marker-icon-2x.93fdb12c.png";
   const customIcon = new L.Icon({
     iconUrl: iconUrl,
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
-    shadowSize: [41, 41]
+    shadowSize: [41, 41],
   });
   return (
     <Marker
       position={[ciudad.latitud, ciudad.longitud]}
       eventHandlers={{
-        click: handleMarkerClick
+        click: handleMarkerClick,
+        popupclose: handlePopupClose,
       }}
       icon={customIcon}
     >
       <Popup>
         {ciudad.nombre} - {ciudad.cantidad_graduados}
-        {ciudad.cantidad_graduados === 1 ? ' graduado' : ' graduados'}
+        {ciudad.cantidad_graduados === 1 ? " graduado" : " graduados"}
       </Popup>
     </Marker>
   );
