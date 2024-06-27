@@ -38,7 +38,10 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
         <tbody>
           {graduadosPorCiudad.map((datosCiudad) =>
             datosCiudad.ciudad.graduados.map((graduado) => (
-              <tr key={graduado.nombre} className="even:bg-blue-gray-50/50">
+              <tr
+                key={graduado.nombre}
+                className="even:bg-blue-gray-50/50 min-h-[60px]"
+              >
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -49,26 +52,20 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
                   </Typography>
                 </td>
                 <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {graduado.carreras.length > 0
-                      ? graduado.carreras[0].nombre
-                      : ""}
-                  </Typography>
+                  {graduado.carreras.map((carrera, index) => (
+                    <Typography variant="small" color="blue-gray">
+                      {carrera.nombre}
+                    </Typography>
+                  ))}
                 </td>
-                <td className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {graduado.carreras.length > 0
-                      ? graduado.carreras[0].anio_graduacion
-                      : ""}
-                  </Typography>
+                <td className="p-4 h-full min-h-[60px]">
+                  <div className="flex flex-col gap-5">
+                    {graduado.carreras.map((carrera, index) => (
+                      <Typography variant="small" color="blue-gray">
+                        {carrera.anio_graduacion}
+                      </Typography>
+                    ))}
+                  </div>
                 </td>
                 <td className="p-4">
                   <Typography
