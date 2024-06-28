@@ -124,6 +124,9 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
 
   useEffect(() => {
     const filtros = {};
+    if (ciudadSeleccionada) {
+      filtros.ciudad = ciudadSeleccionada;
+    }
     if (paisSeleccionado) {
       filtros.pais = paisSeleccionado;
     }
