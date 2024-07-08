@@ -35,7 +35,7 @@ const ContactoPopover = ({ graduado }) => {
           <FontAwesomeIcon icon={faAddressCard} />
         </Button>
       </PopoverHandler>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 z-50">
         <div className="flex flex-col items-center gap-2">
           <div className="text-center">
             <Typography variant="paragraph">
