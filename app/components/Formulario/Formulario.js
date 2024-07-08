@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import ModalFormulario from "./ModalFormulario";
 import Bloques from "./Bloques";
 
-const Form = ({ carreras, ciudades, enumerados }) => {
+const Form = ({ carreras, enumerados }) => {
   const { registrarGraduado } = graduadosService;
 
   const [formData, setFormData] = useState({
@@ -112,7 +112,6 @@ const Form = ({ carreras, ciudades, enumerados }) => {
                 <Bloques
                   correo={formData.contacto}
                   carreras={carreras}
-                  ciudades={ciudades}
                   opcionesRrss={enumerados.rrss}
                   opcionesOcupacion={enumerados.ocupacion_trabajo}
                   opcionesExperiencia={enumerados.exp_anios}

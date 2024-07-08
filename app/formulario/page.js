@@ -2,14 +2,12 @@
 import Form from "../components/Formulario/Formulario";
 import React, { useState, useEffect } from "react";
 import obtenerTodasLasCarreras from "../services/carrerasService";
-import obtenerTodasLasCiudades from "../services/ciudadesService";
 import graduadosService from "../services/graduadosService";
 import { DefaultSkeleton } from "../components/Utils/Skeleton";
 
 const Formulario = () => {
   const { obtenerEnumerados } = graduadosService;
   const [carreras, setCarreras] = useState([]);
-  const [ciudades, setCiudades] = useState([]);
   const [enumerados, setEnumerados] = useState(null);
 
   useEffect(() => {
@@ -17,8 +15,6 @@ const Formulario = () => {
       try {
         const dataCarreras = await obtenerTodasLasCarreras();
         setCarreras(dataCarreras);
-        const dataCiudades = await obtenerTodasLasCiudades();
-        setCiudades(dataCiudades);
         const dataEnumerados = await obtenerEnumerados();
         setEnumerados(dataEnumerados);
       } catch (error) {
