@@ -53,7 +53,7 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
                 </td>
                 <td className="p-4">
                   {graduado.carreras.map((carrera, index) => (
-                    <Typography variant="small" color="blue-gray">
+                    <Typography key={index} variant="small" color="blue-gray">
                       {carrera.nombre}
                     </Typography>
                   ))}
@@ -61,7 +61,7 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
                 <td className="p-4 h-full min-h-[60px]">
                   <div className="flex flex-col gap-5">
                     {graduado.carreras.map((carrera, index) => (
-                      <Typography variant="small" color="blue-gray">
+                      <Typography key={index} variant="small" color="blue-gray">
                         {carrera.anio_graduacion}
                       </Typography>
                     ))}
