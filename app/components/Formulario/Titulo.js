@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { Input, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SelectFiltrable from "../Utils/SelectFiltrable";
 import { Validacion } from "./Validacion";
 
-const Titulo = ({ onChange, carreras }) => {
-  const [titles, setTitles] = useState([{ title: "", year: "" }]);
-  const [errors, setErrors] = useState([]);
+const Titulo = ({ onChange, carreras, valuesIniciales = [] }) => {
+  const initialTitles = valuesIniciales.length > 0 ? valuesIniciales : [{ title: "", year: "" }];
+
+  const [titles, setTitles] = useState(initialTitles);
+  const [errors, setErrors] = useState(new Array(initialTitles.length).fill(null));
 
   const updateTitles = (newTitles) => {
     setTitles(newTitles);
 
-    const formattedTitles = newTitles.filter(item => item.title && item.year).map(item => ({
-      carrera_id: item.title,
-      anio_graduacion: item.year,
-    }));
+    const formattedTitles = newTitles
+      .filter((item) => item.title && item.year)
+      .map((item) => ({
+        carrera_id: item.title,
+        anio_graduacion: item.year,
+      }));
 
     onChange({ target: { name: "carreras", value: formattedTitles } });
   };
@@ -32,7 +36,9 @@ const Titulo = ({ onChange, carreras }) => {
   };
 
   const handleInternalChange = (e, index, field) => {
-    const newTitles = titles.map((item, i) => i === index ? { ...item, [field]: e.target.value } : item);
+    const newTitles = titles.map((item, i) =>
+      i === index ? { ...item, [field]: e.target.value } : item
+    );
     updateTitles(newTitles);
   };
 
@@ -40,10 +46,11 @@ const Titulo = ({ onChange, carreras }) => {
     const name = "anio_graduacion";
     const value = titles[index].year;
 
-    const updatedErrors = titles.map((_, i) => i === index ? Validacion(name, value, errors) : errors[i]);
+    const updatedErrors = titles.map((_, i) =>
+      i === index ? Validacion(name, value, errors) : errors[i]
+    );
     setErrors(updatedErrors);
   };
-
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -54,7 +61,7 @@ const Titulo = ({ onChange, carreras }) => {
             handleChange={(e) => handleInternalChange(e, index, "title")}
             options={carreras}
             name="carreras"
-            value={item.title}
+            selectedOption={item.title}
           />
           <div className="flex-grow mt-7">
             <div className="relative">
@@ -67,10 +74,13 @@ const Titulo = ({ onChange, carreras }) => {
                 value={item.year}
                 required={index === 0}
                 onInvalid={(e) =>
-                  index === 0 && e.currentTarget.setCustomValidity('Campo obligatorio')
+                  index === 0 &&
+                  e.currentTarget.setCustomValidity("Campo obligatorio")
                 }
-                onInput={(e) => e.currentTarget.setCustomValidity('')}
-                error={(errors[index] != null) ? errors[index].anio_graduacion : ''}
+                onInput={(e) => e.currentTarget.setCustomValidity("")}
+                error={
+                  errors[index] != null ? errors[index].anio_graduacion : ""
+                }
                 className="mt-3 bg-tremor-background"
               />
               {errors[index] && errors[index].anio_graduacion && (
@@ -81,7 +91,6 @@ const Titulo = ({ onChange, carreras }) => {
             </div>
             <div className="min-h-[20px]"></div>
           </div>
-
 
           <IconButton
             className="rounded-full mt-7"

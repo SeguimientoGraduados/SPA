@@ -18,6 +18,24 @@ const obtenerGraduados = async (params = {}, headers = {}) => {
   }
 };
 
+const obtenerDatosGraduado = async (headers = {}) => {
+  try {
+    const token = Cookies.get("token");
+    if (!token) throw new Error("No se encontro el token.");
+
+    const response = await axios.get(`${API_URL}/perfil`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching graduado data:", error);
+    throw error;
+  }
+};
+
 const registrarGraduado = async (formData) => {
   try {
     const token = Cookies.get("token");
@@ -173,6 +191,7 @@ const exportarExcelGraduados = async (params = {}, headers = {}) => {
 
 export default {
   obtenerGraduados,
+  obtenerDatosGraduado,
   registrarGraduado,
   obtenerGraduadosPorValidar,
   aprobarSolicitudGraduado,

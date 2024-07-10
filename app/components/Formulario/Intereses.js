@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Typography, Switch } from "@material-tailwind/react";
 
-const Intereses = ({ sendChange }) => {
+const Intereses = ({ sendChange, comunidadInicial = false, ofertaInicial = false, demandaInicial = false }) => {
   const [intereses, setIntereses] = useState({
-    comunidad: false,
-    oferta: false,
-    demanda: false,
+    comunidad: comunidadInicial,
+    oferta: ofertaInicial,
+    demanda: demandaInicial,
   });
 
   const toggleSwitch = (pregunta) => {

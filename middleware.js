@@ -8,13 +8,18 @@ export function middleware(request) {
     userData = JSON.parse(user.value);
   }
 
-  const protectedRoutes = ["/solicitudes", "/formulario"];
+  const protectedRoutes = ["/solicitudes", "/formulario", "/perfil"];
 
   if (protectedRoutes.includes(request.nextUrl.pathname)) {
     if (!token) {
       return NextResponse.redirect(new URL('/', request.url));
     }
   }
+
+  if (request.nextUrl.pathname==="/perfil" && userData.rol=="admin")
+    {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
 
   if (request.nextUrl.pathname==="/solicitudes" && userData.rol!="admin")
   {
@@ -25,5 +30,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/solicitudes", "/formulario"],
+  matcher: ["/solicitudes", "/formulario", "/perfil"],
 };

@@ -1,21 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input, Typography, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faXTwitter, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
-  const [showFacebook, setShowFacebook] = useState(false);
-  const [showTwitter, setShowTwitter] = useState(false);
+const socialMediaIcons = {
+  linkedin: faLinkedin,
+  facebook: faFacebook,
+  twitter: faXTwitter,
+};
 
-  const handleMostrarFacebook = () => {
-    setShowFacebook((cur) => !cur);
+const SocialMediaInput = ({ label, placeholder, value, onChange, onRemove, error }) => (
+  <div>
+    <div className="flex flex-row items-center gap-3">
+      <Input
+        label={label}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        error={error}
+        className="bg-tremor-background"
+      />
+      <IconButton
+        className="rounded-full"
+        onClick={onRemove}
+        variant="gradient"
+        color="red"
+        size="sm"
+      >
+        <FontAwesomeIcon icon={faMinus} />
+      </IconButton>
+    </div>
+    {error && <span className="text-xs text-red-600 -mt-2">{error}</span>}
+  </div>
+);
+
+const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [] }) => {
+  const [socialMedia, setSocialMedia] = useState({
+    linkedin: "",
+    facebook: "",
+    twitter: "",
+  });
+
+  const [visibleSocialMedia, setVisibleSocialMedia] = useState({
+    linkedin: true,
+    facebook: false,
+    twitter: false,
+  });
+
+  useEffect(() => {
+    const initialSocialMedia = {...socialMedia};
+    const initialVisibility = { ...visibleSocialMedia };
+
+    valoresIniciales.forEach((item) => {
+      initialSocialMedia[item.rrss] = item.url;
+      initialVisibility[item.rrss] = true;
+    });
+
+    setSocialMedia(initialSocialMedia);
+    setVisibleSocialMedia(initialVisibility);
+  }, [valoresIniciales]);
+
+  const handleSocialMediaChange = (e, type) => {
+    setSocialMedia((prev) => ({ ...prev, [type]: e.target.value }));
+    handleChange(e, type);
   };
 
-  const handleMostrarTwitter = () => {
-    setShowTwitter((cur) => !cur);
+  const toggleSocialMedia = (type) => {
+    setVisibleSocialMedia((prev) => ({ ...prev, [type]: !prev[type] }));
   };
 
   const getLabel = (value) => {
@@ -25,97 +79,38 @@ const Contacto = ({ handleChange, opcionesRrss, error = {} }) => {
 
   return (
     <div>
-      <Typography
-        variant="h5"
-        color="blue-gray"
-        className="font-normal text-center mt-2"
-      >
-        Informacion de Contacto
+      <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
+        Información de Contacto
       </Typography>
       <div className="grid gap-2 my-6">
-        <Input
-          label={getLabel('linkedin')}
-          placeholder="https://www.linkedin.com/in/ejemplo/"
-          onBlur={(e) => handleChange(e, "linkedin")}
-          error={error.linkedin}
-          className="bg-tremor-background"
-        />
-        {error.linkedin && <span className="text-xs text-red-600 -mt-2">{error.linkedin}</span>}
-
-        {showFacebook && (
-          <div>
-            <div className="flex flex-row items-center gap-3">
-              <Input
-                label={getLabel('facebook')}
-                placeholder="https://www.facebook.com/ejemplo/"
-                onBlur={(e) => handleChange(e, "facebook")}
-                error={error.facebook}
-                className="bg-tremor-background"
-              />
-
-              <IconButton
-                className="rounded-full"
-                onClick={handleMostrarFacebook}
-                variant="gradient"
-                color="red"
-                size="sm"
-              >
-                <FontAwesomeIcon icon={faMinus} />
-              </IconButton>
-            </div>
-            {error.facebook && <span className="text-xs text-red-600 -mt-2">{error.facebook}</span>}
-          </div>
-
-        )}
-
-        {showTwitter && (
-          <div>
-            <div className="flex flex-row items-center gap-3">
-              <Input
-                label={getLabel('twitter')}
-                placeholder="https://www.twitter.com/ejemplo/"
-                onBlur={(e) => handleChange(e, "twitter")}
-                error={error.twitter}
-                className="bg-tremor-background"
-              />
-              <IconButton
-                className="rounded-full"
-                onClick={handleMostrarTwitter}
-                variant="gradient"
-                color="red"
-                size="sm"
-              >
-                <FontAwesomeIcon icon={faMinus} />
-              </IconButton>
-            </div>
-            {error.twitter && <span className="text-xs text-red-600 -mt-2">{error.twitter}</span>}
-          </div>
+        {Object.entries(visibleSocialMedia).map(([type, isVisible]) => 
+          isVisible && (
+            <SocialMediaInput
+              key={type}
+              label={getLabel(type)}
+              placeholder={`https://www.${type}.com/ejemplo/`}
+              value={socialMedia[type]}
+              onChange={(e) => handleSocialMediaChange(e, type)}
+              onRemove={() => toggleSocialMedia(type)}
+              error={error[type]}
+            />
+          )
         )}
 
         <div className="flex flex-row gap-6 justify-center">
-          {!showFacebook && (
-            <IconButton
-              className="rounded-full"
-              onClick={handleMostrarFacebook}
-              color="blue"
-              variant="gradient"
-              size="lg"
-            >
-              <FontAwesomeIcon icon={faFacebook} />
-            </IconButton>
-          )}
-
-          {!showTwitter && (
-            <IconButton
-              className="rounded-full"
-              onClick={handleMostrarTwitter}
-              color="blue"
-              variant="gradient"
-              size="lg"
-            >
-
-              <FontAwesomeIcon icon={faXTwitter} />
-            </IconButton>
+          {Object.entries(visibleSocialMedia).map(([type, isVisible]) => 
+            !isVisible && (
+              <IconButton
+                key={type}
+                className="rounded-full"
+                onClick={() => toggleSocialMedia(type)}
+                color="blue"
+                variant="gradient"
+                size="lg"
+              >
+                <FontAwesomeIcon icon={socialMediaIcons[type]} />
+              </IconButton>
+            )
           )}
         </div>
       </div>

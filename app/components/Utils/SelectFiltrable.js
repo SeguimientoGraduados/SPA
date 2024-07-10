@@ -8,6 +8,7 @@ const SelectFiltrable = ({
   options,
   handleChange,
   name,
+  selectedOption = ""
 }) => {
   const handleSelectChange = (value) => {
     handleChange({ target: { name, value } });
@@ -28,6 +29,7 @@ const SelectFiltrable = ({
         id={select}
         onValueChange={handleSelectChange}
         placeholder={"Buscar..."}
+        value={selectedOption}
       >
         {options.map((option, index) => (
           <SearchSelectItem

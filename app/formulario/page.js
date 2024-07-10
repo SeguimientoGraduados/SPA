@@ -31,7 +31,7 @@ const Formulario = () => {
 
   return (
     <section className="flex flex-col items-center justify-between py-4">
-      <Form carreras={carreras} ciudades={ciudades} enumerados={enumerados} />
+      <Form carreras={carreras} enumerados={enumerados} />
     </section>
   );
 };

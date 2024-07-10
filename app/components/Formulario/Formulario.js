@@ -1,14 +1,36 @@
-import { Card, Button, Typography } from "@material-tailwind/react";
+import {
+  Card,
+  Button,
+  Typography,
+  Input,
+  Textarea,
+} from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import graduadosService from "../../services/graduadosService";
+import { DefaultSkeleton } from "../Utils/Skeleton";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
 import Cookies from "js-cookie";
 import ModalFormulario from "./ModalFormulario";
-import Bloques from "./Bloques";
+import RadioHorizontal from "../Utils/RadioHorizontal";
+import TooltipInfo from "../Utils/TooltipInfo";
+import SelectOption from "../Utils/SelectOption";
+import DatePicker from "../Utils/DatePicker";
+import Titulo from "./Titulo";
+import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
+import { conversorFecha } from "../Utils/ConversorFecha";
+import Contacto from "./Contacto";
+import CheckboxList from "../Utils/CheckboxList";
+import Formacion from "./Formacion";
+import { Validacion } from "./Validacion";
+import Intereses from "./Intereses";
 
-const Form = ({ carreras, enumerados }) => {
-  const { registrarGraduado } = graduadosService;
-
+const FormularioGraduado = ({
+  carreras,
+  enumerados,
+  datosGraduado = {},
+  onSubmit,
+  modoEdicion = false,
+}) => {
   const [formData, setFormData] = useState({
     nombre: "",
     dni: "",
@@ -30,19 +52,46 @@ const Form = ({ carreras, enumerados }) => {
     interes_demanda: false,
   });
 
+  const [alertaVisible, setAlertaVisible] = useState(false);
+  const [campoObligatorio, setCampoObligatorio] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [registroExitoso, setRegistroExitoso] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [error, setError] = useState(null);
+  const [rrssData, setRrssData] = useState({
+    linkedin: "",
+    facebook: "",
+    twitter: "",
+  });
+  const [opcionesSector, setOpcionesSector] = useState([]);
+  const [intereses, setIntereses] = useState({
+    comunidad: false,
+    oferta: false,
+    demanda: false,
+  });
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
-    const userCookie = Cookies.get("user");
-    if (userCookie) {
-      const decodedUser = decodeURIComponent(userCookie);
-      const user = JSON.parse(decodedUser);
-      if (user.rol != "admin") {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      ...datosGraduado,
+    }));
+
+    if (formData.contacto == "") {
+      const userCookie = Cookies.get("user");
+      if (userCookie) {
+        const decodedUser = decodeURIComponent(userCookie);
+        const user = JSON.parse(decodedUser);
         setFormData((prevFormData) => ({
           ...prevFormData,
-          contacto: user.email,
+          contacto: prevFormData.contacto || user.email,
         }));
       }
     }
-  }, []);
+
+    setIsLoading(false);
+  }, [datosGraduado]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,11 +111,6 @@ const Form = ({ carreras, enumerados }) => {
     }
   };
 
-  const [alertaVisible, setAlertaVisible] = useState(false);
-  const [campoObligatorio, setCampoObligatorio] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [registroExitoso, setRegistroExitoso] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fecha_nacimiento) {
@@ -84,7 +128,7 @@ const Form = ({ carreras, enumerados }) => {
     }
 
     try {
-      await registrarGraduado(formData);
+      await onSubmit(formData);
       setAlertaVisible(false);
       setRegistroExitoso(true);
       setModalVisible(true);
@@ -94,6 +138,103 @@ const Form = ({ carreras, enumerados }) => {
       console.error("Error al enviar el formulario:", error);
     }
   };
+
+  const handleValidation = (e) => {
+    const { name, value } = e.currentTarget;
+    const updatedErrors = Validacion(name, value, errors);
+    setErrors(updatedErrors);
+  };
+
+  const handleChangeCiudad = async (e) => {
+    const { value } = e.target;
+    try {
+      const ciudadAPI = await obtenerCoordenadasCiudad(value);
+      const nuevaCiudad = {
+        nombre: ciudadAPI.name,
+        latitud: parseFloat(ciudadAPI.lat),
+        longitud: parseFloat(ciudadAPI.lon),
+        pais: ciudadAPI.address.country,
+      };
+      setError(null);
+      handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleChangeRRSS = (e, rrssName) => {
+    const newRrssData = { ...rrssData, [rrssName]: e.target.value };
+    setRrssData(newRrssData);
+
+    const formattedRrss = Object.keys(newRrssData)
+      .filter((key) => newRrssData[key] !== "")
+      .map((key) => ({
+        rrss: key,
+        url: newRrssData[key],
+      }));
+    handleValidation({ currentTarget: { name: "rrss", value: formattedRrss } });
+    handleChange({ target: { name: "rrss", value: formattedRrss } });
+  };
+
+  const handleChangeFecha = (e) => {
+    const { value } = e.target;
+    const fechaFormateada = conversorFecha(value);
+    handleValidation({
+      currentTarget: { name: "fecha_nacimiento", value: fechaFormateada },
+    });
+    handleChange({
+      target: { name: "fecha_nacimiento", value: fechaFormateada },
+    });
+  };
+
+  const handleChangeSector = (e) => {
+    const { value } = e.target;
+    const sector = value[0];
+    setOpcionesSector(sector);
+    handleChange({ target: { name: "ocupacion_sector", value: sector } });
+  };
+
+  const handleChangeOcupacion = (e) => {
+    const { value } = e.target;
+    handleChange({ target: { name: "ocupacion_trabajo", value } });
+  };
+
+  const handleChangeAnios = (e) => {
+    const { value } = e.target;
+    handleChange({ target: { name: "experiencia_anios", value } });
+  };
+
+  const handleChangeInteres = (e) => {
+    const { value } = e.target;
+    setIntereses(value);
+    handleChange({
+      target: { name: "intereses", value: value },
+    });
+  };
+
+  const handleRequired = (e) => {
+    if (e.type === "invalid") {
+      e.currentTarget.setCustomValidity("Campo obligatorio");
+    } else if (e.type === "input") {
+      e.currentTarget.setCustomValidity("");
+    }
+  };
+
+  const opcionesCarreras = carreras.map((carrera) => ({
+    value: carrera.id.toString(),
+    label: carrera.nombre,
+  }));
+
+  const carrerasIniciales = datosGraduado.carreras
+    ? datosGraduado.carreras.map((carrera) => ({
+        title: carrera.id.toString(),
+        year: carrera.anio_graduacion,
+      }))
+    : {};
+
+  if (isLoading) {
+    return <DefaultSkeleton />;
+  }
 
   return (
     <>
@@ -109,15 +250,282 @@ const Form = ({ carreras, enumerados }) => {
           <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
               <div className="flex flex-col gap-3">
-                <Bloques
-                  correo={formData.contacto}
-                  carreras={carreras}
-                  opcionesRrss={enumerados.rrss}
-                  opcionesOcupacion={enumerados.ocupacion_trabajo}
-                  opcionesExperiencia={enumerados.exp_anios}
-                  opcionesSectorProp={enumerados.ocupacion_sector}
-                  opcionesFormacion={enumerados.nivel_formacion}
-                  handleChange={handleChange}
+                <Typography
+                  variant="h3"
+                  color="blue-gray"
+                  className="text-center font-normal"
+                >
+                  Información Personal
+                </Typography>
+
+                <div className="flex flex-col gap-4">
+                  {modoEdicion ? (
+                    <div className="grid grid-cols-3 items-center px-2">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal w-40"
+                      >
+                        Nombre completo:
+                      </Typography>
+                      <Input
+                        label="Nombre completo"
+                        name="nombre"
+                        onChange={handleChange}
+                        value={formData.nombre}
+                        disabled={modoEdicion}
+                        onInvalid={handleRequired}
+                        onInput={handleRequired}
+                        onBlur={handleValidation}
+                        error={errors.nombre}
+                        className="bg-tremor-background col-span-2"
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      label="Nombre completo"
+                      name="nombre"
+                      onChange={handleChange}
+                      value={formData.nombre}
+                      disabled={modoEdicion}
+                      required
+                      onInvalid={handleRequired}
+                      onInput={handleRequired}
+                      onBlur={handleValidation}
+                      error={errors.nombre}
+                      className="bg-tremor-background"
+                    />
+                  )}
+
+                  {errors.nombre && (
+                    <span className="text-xs text-red-600 -mt-2">
+                      {errors.nombre}
+                    </span>
+                  )}
+
+                  {modoEdicion ? (
+                    <div className="grid grid-cols-3 items-center px-2">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        DNI:
+                      </Typography>
+                      <Input
+                        label="DNI"
+                        name="dni"
+                        onChange={handleChange}
+                        value={formData.dni}
+                        disabled={modoEdicion}
+                        onInput={handleRequired}
+                        onInvalid={handleRequired}
+                        onBlur={handleValidation}
+                        error={errors.dni}
+                        className="bg-tremor-background col-span-2"
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      label="DNI"
+                      name="dni"
+                      onChange={handleChange}
+                      required
+                      value={formData.dni}
+                      disabled={modoEdicion}
+                      onInput={handleRequired}
+                      onInvalid={handleRequired}
+                      onBlur={handleValidation}
+                      error={errors.dni}
+                      className="bg-tremor-background col-span-2"
+                    />
+                  )}
+
+                  {errors.dni && (
+                    <span className="text-xs text-red-600 -mt-2">
+                      {errors.dni}
+                    </span>
+                  )}
+
+                  <DatePicker
+                    label={"Fecha de nacimiento"}
+                    name="fecha_nacimiento"
+                    onChange={handleChangeFecha}
+                    value={formData.fecha_nacimiento}
+                    onInput={handleRequired}
+                    error={errors.fecha_nacimiento}
+                    required
+                  />
+                  {errors.fecha_nacimiento && (
+                    <span className="text-xs text-red-600 -mt-2">
+                      {errors.fecha_nacimiento}
+                    </span>
+                  )}
+
+                  <Titulo
+                    onChange={handleChange}
+                    carreras={opcionesCarreras}
+                    valuesIniciales={carrerasIniciales}
+                    name="carreras"
+                  />
+
+                  <Input
+                    label="Ciudad"
+                    name="ciudad"
+                    onBlur={handleChangeCiudad}
+                    value={formData.ciudad.nombre}
+                    required
+                    onInvalid={handleValidation}
+                    onInput={handleValidation}
+                    error={Boolean(error)}
+                    className="bg-tremor-background"
+                  />
+                  {errors && (
+                    <span className="text-xs text-red-600 -mt-2">{error}</span>
+                  )}
+
+                  <Contacto
+                    handleChange={handleChangeRRSS}
+                    opcionesRrss={enumerados.rrss}
+                    error={errors.rrss}
+                    valoresIniciales={formData.rrss}
+                  />
+                </div>
+
+                <Typography
+                  variant="h3"
+                  color="blue-gray"
+                  className="text-center font-normal"
+                >
+                  Información Laboral
+                </Typography>
+
+                <div className="flex flex-col gap-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <SelectOption
+                      select={"Ocupacion actual"}
+                      handleChange={handleChangeOcupacion}
+                      options={enumerados.ocupacion_trabajo}
+                      name="ocupacion_trabajo"
+                    />
+                    <Input
+                      label="Nombre de la Empresa"
+                      name="ocupacion_empresa"
+                      onChange={handleChange}
+                      value={formData.ocupacion_empresa}
+                      className="bg-tremor-background"
+                    />
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Typography variant="paragraph" color="blue=gray">
+                      Sector:
+                    </Typography>
+                    <CheckboxList
+                      handleChange={handleChangeSector}
+                      direction={"row"}
+                      items={enumerados.ocupacion_sector}
+                      name="ocupacion_sector"
+                      opcionesSeleccionadas={formData.ocupacion_sector}
+                      seleccionUnica={true}
+                    />
+                  </div>
+
+                  <Textarea
+                    variant="outlined"
+                    label="Información Adicional"
+                    name="ocupacion_informacion_adicional"
+                    onChange={handleChange}
+                    value={formData.ocupacion_informacion_adicional}
+                    className="bg-tremor-background"
+                  />
+
+                  <div className="flex items-center flex-row">
+                    <TooltipInfo label={"Privacidad de las respuestas"} />
+                    <RadioHorizontal />
+                  </div>
+
+                  <Typography
+                    variant="h5"
+                    color="blue-gray"
+                    className="font-normal text-center"
+                  >
+                    Experiencia Laboral
+                  </Typography>
+
+                  <SelectOption
+                    select={"Años de Experiencia:"}
+                    handleChange={handleChangeAnios}
+                    options={enumerados.exp_anios}
+                    selectedValue={formData.experiencia_anios}
+                    name="experiencia_anios"
+                  />
+                  <Typography
+                    className="font-normal text-center"
+                    variant="h5"
+                    color="blue-gray"
+                  >
+                    Habilidades/Competencias
+                  </Typography>
+                  <Textarea
+                    variant="outlined"
+                    label="Descripcion"
+                    name="habilidades_competencias"
+                    onChange={handleChange}
+                    value={formData.habilidades_competencias}
+                    className="bg-tremor-background"
+                  />
+
+                  <div className="flex items-center flex-row justify-between">
+                    <TooltipInfo label={"Privacidad de las respuestas"} />
+                    <RadioHorizontal />
+                  </div>
+                </div>
+
+                <Typography
+                  variant="h3"
+                  color="blue-gray"
+                  className="text-center font-normal"
+                >
+                  Información Adicional
+                </Typography>
+
+                <div className="flex flex-col gap-4">
+                  <Input
+                    label="CV"
+                    placeholder="https://drive.google.com/CV_Ejemplo"
+                    name="cv"
+                    onChange={handleChange}
+                    value={formData.cv}
+                    onBlur={handleValidation}
+                    error={errors.cv}
+                    className="bg-tremor-background"
+                  />
+                  {errors.cv && (
+                    <span className="text-xs text-red-600 -mt-2">
+                      {errors.cv}
+                    </span>
+                  )}
+
+                  <Formacion
+                    sendChange={handleChange}
+                    opcionesFormacion={enumerados.nivel_formacion}
+                    formacionInicial={formData.formacion}
+                  />
+                </div>
+
+                <Typography
+                  className="font-normal text-center"
+                  variant="h5"
+                  color="blue-gray"
+                >
+                  Interés/Predisposición a:
+                </Typography>
+
+                <Intereses
+                  sendChange={handleChangeInteres}
+                  comunidadInicial={formData.interes_comunidad}
+                  ofertaInicial={formData.interes_oferta}
+                  demandaInicial={formData.interes_demanda}
                 />
 
                 {alertaVisible && campoObligatorio && (
@@ -127,7 +535,7 @@ const Form = ({ carreras, enumerados }) => {
             </Card>
             <div className="flex justify-center py-2">
               <Button type="submit" color="blue">
-                Enviar Formulario
+                Enviar
               </Button>
             </div>
           </form>
@@ -139,6 +547,33 @@ const Form = ({ carreras, enumerados }) => {
         </div>
       </div>
     </>
+  );
+};
+
+const Form = ({
+  carreras,
+  enumerados,
+  modoEdicion = false,
+  datosGraduado = {},
+}) => {
+  const { registrarGraduado, actualizarGraduado } = graduadosService;
+
+  const handleSubmit = async (formData) => {
+    if (modoEdicion) {
+      await actualizarGraduado(formData);
+    } else {
+      await registrarGraduado(formData);
+    }
+  };
+
+  return (
+    <FormularioGraduado
+      carreras={carreras}
+      enumerados={enumerados}
+      datosGraduado={datosGraduado}
+      onSubmit={handleSubmit}
+      modoEdicion={modoEdicion}
+    />
   );
 };
 

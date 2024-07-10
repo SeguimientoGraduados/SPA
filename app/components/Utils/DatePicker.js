@@ -4,6 +4,7 @@ import {
     Popover,
     PopoverHandler,
     PopoverContent,
+    Typography
 } from "@material-tailwind/react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
@@ -31,8 +32,8 @@ const YearDropdown = ({ selectedYear, onChange }) => {
     );
 };
 
-const DatePicker = ({ label, onChange, name, error }) => {
-    const [date, setDate] = useState(undefined);
+const DatePicker = ({ label, onChange, name, error, value = "" }) => {
+    const [date, setDate] = useState(value);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date());
 
@@ -51,16 +52,26 @@ const DatePicker = ({ label, onChange, name, error }) => {
     };
 
     return (
-        <div>
+        <div className={value !== "" ? 'grid grid-cols-3 items-center px-2' : ''}>
+            {value && (
+                <Typography
+                   variant="small"
+                   color="blue-gray"
+                   className="font-normal w-52"
+                >
+                    Fecha de nacimiento:
+                </Typography>
+            )}
             <Popover placement="bottom">
                 <PopoverHandler>
                     <Input
                         label={label}
                         value={date ? format(date, "PPP", { locale: es }) : ""}
+                        disabled={value != ""}
                         error={error}
-                        required
+                        required={value == ""}
                         readOnly                
-                        className="bg-tremor-background"      
+                        className={`bg-tremor-background ${value != "" ? 'col-span-2' : ''}`}      
                     />
                 </PopoverHandler>
                 <PopoverContent>

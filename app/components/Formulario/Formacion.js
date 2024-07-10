@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SelectOption from "../Utils/SelectOption";
 
-const Formacion = ({ sendChange, opcionesFormacion }) => {
-  const [formaciones, setFormaciones] = useState([
-    { titulo: "", institucion: "", nivel: "" },
-  ]);
+const Formacion = ({ sendChange, opcionesFormacion, formacionInicial = [] }) => {
+  const [formaciones, setFormaciones] = useState(formacionInicial);
 
   const addFormacion = () => {
     setFormaciones([...formaciones, { titulo: "", institucion: "", nivel: "" }]);
@@ -50,6 +48,7 @@ const Formacion = ({ sendChange, opcionesFormacion }) => {
                   label="Título"
                   className="bg-tremor-background"
                   onBlur={(e) => handleInternalChange(e, index, "titulo")}
+                  value={item.titulo}
                 />
                 <SelectOption
                   select="Nivel"
@@ -61,6 +60,7 @@ const Formacion = ({ sendChange, opcionesFormacion }) => {
                 label="Institución"
                 className="bg-tremor-background"
                 onBlur={(e) => handleInternalChange(e, index, "institucion")}
+                value={item.institucion}
               />
             </div>
             <IconButton

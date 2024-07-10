@@ -14,7 +14,6 @@ import { Validacion } from "./Validacion";
 import Intereses from "./Intereses";
 
 const Bloques = ({
-  correo,
   handleChange,
   carreras,
   opcionesRrss,
@@ -149,23 +148,6 @@ const Bloques = ({
         />
         {errors.nombre && (
           <span className="text-xs text-red-600 -mt-2">{errors.nombre}</span>
-        )}
-
-        <Input
-          label="Email"
-          name="contacto"
-          value={correo}
-          placeholder="ejemplo@mail.com"
-          onChange={handleChange}
-          required
-          onInvalid={handleRequired}
-          onInput={handleRequired}
-          onBlur={handleValidation}
-          error={errors.email}
-          className="bg-tremor-background"
-        />
-        {errors.email && (
-          <span className="text-xs text-red-600 -mt-2">{errors.email}</span>
         )}
 
         <Input
