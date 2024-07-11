@@ -1,30 +1,31 @@
-import { Select, Option } from "@material-tailwind/react";
 import React from "react";
+import { Select, SelectItem } from "@tremor/react";
 
-const SelectOption = ({ className, select, options, handleChange, name }) => {
+const SelectOption = ({
+  className,
+  select,
+  options,
+  handleChange,
+  name,
+  initialValue,
+}) => {
   const handleSelectChange = (value) => {
     handleChange({ target: { name, value } });
   };
 
   return (
-    <div className={className}>
+    <div className={className}>   
       <Select
-        label={select}
-        onChange={handleSelectChange}
-        className="bg-tremor-background"
-        selected={(element) =>
-          element &&
-          React.cloneElement(element, {
-            disabled: false,
-            className:
-              "flex items-center opacity-100 px-0 gap-2 pointer-events-none w-48 truncate",
-          })
-        }
+        id={select}
+        placeholder={select}
+        onValueChange={handleSelectChange}
+        value={initialValue}
+        className="bg-tremor-background rounded-md"
       >
         {options.map((option, index) => (
-          <Option key={index} value={option.value}>
+          <SelectItem key={index} value={option.value}>
             {option.label}
-          </Option>
+          </SelectItem>
         ))}
       </Select>
     </div>

@@ -16,8 +16,6 @@ const SelectFiltrable = ({
 
   return (
     <div className={className}>
-
-
       <label
         htmlFor={select}
         className="text-base text-tremor-content pl-1"

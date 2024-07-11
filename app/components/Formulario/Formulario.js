@@ -249,7 +249,7 @@ const FormularioGraduado = ({
         <div className="flex flex-col justify-center">
           <form className="mt-4" onSubmit={handleSubmit}>
             <Card color="transparent" shadow={false} className="items-center">
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <Typography
                   variant="h3"
                   color="blue-gray"
@@ -258,7 +258,7 @@ const FormularioGraduado = ({
                   Información Personal
                 </Typography>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                   {modoEdicion ? (
                     <div className="grid grid-cols-3 items-center px-2">
                       <Typography
@@ -395,7 +395,7 @@ const FormularioGraduado = ({
                 <Typography
                   variant="h3"
                   color="blue-gray"
-                  className="text-center font-normal"
+                  className="text-center font-normal mb-2"
                 >
                   Información Laboral
                 </Typography>
@@ -407,14 +407,15 @@ const FormularioGraduado = ({
                       handleChange={handleChangeOcupacion}
                       options={enumerados.ocupacion_trabajo}
                       name="ocupacion_trabajo"
+                      initialValue={formData.ocupacion_trabajo}
                     />
                     <Input
-                      label="Nombre de la Empresa"
+                      label="Nombre de la empresa"
                       name="ocupacion_empresa"
                       onChange={handleChange}
                       value={formData.ocupacion_empresa}
                       className="bg-tremor-background"
-                    />
+                      />
                   </div>
                   <div className="flex justify-center items-center">
                     <Typography variant="paragraph" color="blue=gray">
@@ -432,7 +433,7 @@ const FormularioGraduado = ({
 
                   <Textarea
                     variant="outlined"
-                    label="Información Adicional"
+                    label="Información adicional"
                     name="ocupacion_informacion_adicional"
                     onChange={handleChange}
                     value={formData.ocupacion_informacion_adicional}
@@ -453,10 +454,10 @@ const FormularioGraduado = ({
                   </Typography>
 
                   <SelectOption
-                    select={"Años de Experiencia:"}
+                    select={"Años de experiencia:"}
                     handleChange={handleChangeAnios}
                     options={enumerados.exp_anios}
-                    selectedValue={formData.experiencia_anios}
+                    initialValue={formData.experiencia_anios}
                     name="experiencia_anios"
                   />
                   <Typography

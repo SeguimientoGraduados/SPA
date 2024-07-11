@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import SelectOption from "../Utils/SelectOption";
 
-const Formacion = ({ sendChange, opcionesFormacion, formacionInicial = [] }) => {
+const Formacion = ({
+  sendChange,
+  opcionesFormacion,
+  formacionInicial = [],
+}) => {
   const [formaciones, setFormaciones] = useState(formacionInicial);
 
   const addFormacion = () => {
-    setFormaciones([...formaciones, { titulo: "", institucion: "", nivel: "" }]);
+    setFormaciones([
+      ...formaciones,
+      { titulo: "", institucion: "", nivel: "" },
+    ]);
   };
 
   const handleInternalChange = (e, index, field) => {
@@ -16,7 +23,9 @@ const Formacion = ({ sendChange, opcionesFormacion, formacionInicial = [] }) => 
     const newformaciones = [...formaciones];
     newformaciones[index][field] = value;
 
-    const allFieldsFilled = Object.values(newformaciones[index]).every(val => val !== "");
+    const allFieldsFilled = Object.values(newformaciones[index]).every(
+      (val) => val !== ""
+    );
     if (allFieldsFilled) {
       setFormaciones(newformaciones);
       sendChange({ target: { name: "formacion", value: newformaciones } });
@@ -29,7 +38,6 @@ const Formacion = ({ sendChange, opcionesFormacion, formacionInicial = [] }) => 
     sendChange({ target: { name: "formacion", value: [] } });
   };
 
-
   return (
     <>
       <Typography
@@ -41,39 +49,50 @@ const Formacion = ({ sendChange, opcionesFormacion, formacionInicial = [] }) => 
       </Typography>
       <div className="flex flex-col gap-4 items-center">
         {formaciones.map((item, index) => (
-          <div key={index} className="w-full flex flex-row gap-3 items-center">
-            <div>
-              <div className="grid grid-cols-2 gap-2 mb-2">
+          <div
+            key={index}
+            className="w-full grid grid-cols-6 gap-3 items-start"
+          >
+            <div className="col-span-5 grid grid-cols-2 gap-2">
+              <Input
+                label="Título"
+                className="bg-tremor-background"
+                onBlur={(e) => handleInternalChange(e, index, "titulo")}
+                value={item.titulo}
+              />
+              <SelectOption
+                select="Nivel"
+                handleChange={(e) => handleInternalChange(e, index, "nivel")}
+                options={opcionesFormacion}
+              />
+              <div className="col-span-2">
                 <Input
-                  label="Título"
-                  className="bg-tremor-background"
-                  onBlur={(e) => handleInternalChange(e, index, "titulo")}
-                  value={item.titulo}
-                />
-                <SelectOption
-                  select="Nivel"
-                  handleChange={(e) => handleInternalChange(e, index, "nivel")}
-                  options={opcionesFormacion}
+                  label="Institución"
+                  className="bg-tremor-background w-full"
+                  onBlur={(e) => handleInternalChange(e, index, "institucion")}
+                  value={item.institucion}
                 />
               </div>
-              <Input
-                label="Institución"
-                className="bg-tremor-background"
-                onBlur={(e) => handleInternalChange(e, index, "institucion")}
-                value={item.institucion}
-              />
             </div>
-            <IconButton
-              variant="gradient"
-              color="red"
-              className="rounded-full"
-              onClick={() => removeFormacion(index)}
-            >
-              <FontAwesomeIcon icon={faMinus} />
-            </IconButton>
+
+            <div className="flex items-center my-auto justify-center">
+              <IconButton
+                variant="gradient"
+                color="red"
+                className="rounded-full"
+                onClick={() => removeFormacion(index)}
+              >
+                <FontAwesomeIcon icon={faMinus} />
+              </IconButton>
+            </div>
           </div>
         ))}
-        <IconButton variant="gradient" color="blue" className="rounded-full" onClick={addFormacion}>
+        <IconButton
+          variant="gradient"
+          color="blue"
+          className="rounded-full"
+          onClick={addFormacion}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </IconButton>
       </div>
