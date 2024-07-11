@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
         graduado: graduado
       });
     }
-  }, []);
+  }, [authState]);
 
   const login = (user, token, graduado) => {
     Cookies.set("token", token, {

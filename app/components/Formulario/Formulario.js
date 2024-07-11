@@ -5,7 +5,7 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import graduadosService from "../../services/graduadosService";
 import { DefaultSkeleton } from "../Utils/Skeleton";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
@@ -233,6 +233,10 @@ const FormularioGraduado = ({
       }))
     : {};
 
+  const fechaInicial = datosGraduado.fecha_nacimiento
+    ? datosGraduado.fecha_nacimiento
+    : "";
+
   if (isLoading) {
     return <DefaultSkeleton />;
   }
@@ -352,7 +356,7 @@ const FormularioGraduado = ({
                     label={"Fecha de nacimiento"}
                     name="fecha_nacimiento"
                     onChange={handleChangeFecha}
-                    value={formData.fecha_nacimiento}
+                    value={fechaInicial}
                     onInput={handleRequired}
                     error={errors.fecha_nacimiento}
                     required
@@ -416,7 +420,7 @@ const FormularioGraduado = ({
                       onChange={handleChange}
                       value={formData.ocupacion_empresa}
                       className="bg-tremor-background"
-                      />
+                    />
                   </div>
                   <div className="flex justify-center items-center">
                     <Typography variant="paragraph" color="blue=gray">
@@ -559,7 +563,6 @@ const Form = ({
   datosGraduado = {},
 }) => {
   const { setAuthState } = useContext(AuthContext);
-
   const { registrarGraduado, actualizarGraduado } = graduadosService;
 
   const handleSubmit = async (formData) => {
@@ -567,10 +570,14 @@ const Form = ({
       await actualizarGraduado(formData);
     } else {
       await registrarGraduado(formData);
-      setAuthState((prev) => ({
-        ...prev,
-        graduado: true
-      }));
+      setAuthState((prev) => {
+        const newState = {
+          ...prev,
+          graduado: true,
+        };
+        console.log("Nuevo AuthState:", newState);
+        return newState;
+      });
     }
   };
 
