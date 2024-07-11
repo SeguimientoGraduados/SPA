@@ -67,6 +67,37 @@ const registrarGraduado = async (formData) => {
   }
 };
 
+const actualizarGraduado = async (formData) => {
+  try {
+    const token = Cookies.get("token");
+    if (!token) throw new Error("No se encontró el token.");
+
+    const response = await axios.put(`${API_URL}`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status !== 201) {
+      throw new Error("Error en la solicitud");
+    }
+
+    return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error en la respuesta del servidor:", error.response.data);
+      console.error("Código de estado:", error.response.status);
+      console.error("Encabezados:", error.response.headers);
+    } else if (error.request) {
+      console.error("No se recibió respuesta del servidor:", error.request);
+    } else {
+      console.error("Error al configurar la solicitud:", error.message);
+    }
+    throw new Error("Error actualizando al graduado");
+  }
+};
+
   const obtenerGraduadosPorValidar = async (params = {}, headers = {}) => {
   try {
     const token = Cookies.get("token");
@@ -193,6 +224,7 @@ export default {
   obtenerGraduados,
   obtenerDatosGraduado,
   registrarGraduado,
+  actualizarGraduado,
   obtenerGraduadosPorValidar,
   aprobarSolicitudGraduado,
   rechazarSolicitudGraduado,

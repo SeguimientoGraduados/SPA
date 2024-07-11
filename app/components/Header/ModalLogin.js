@@ -36,7 +36,7 @@ const ModalLogin = () => {
   const handleLogin = async () => {
     try {
       const data = await loginAPI(email, password);
-      login(data.user, data.token);
+      login(data.user, data.token, data.graduado);
       setOpen(false);
     } catch (error) {
       handleError(error);

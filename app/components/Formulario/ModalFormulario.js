@@ -49,7 +49,7 @@ const ModalFormulario = ({ open, handleOpen, registroExitoso }) => {
                         {registroExitoso ? '¡Éxito!' : '¡Hubo un error!'}
                     </Typography>
                     <Typography className="text-center font-normal">
-                        {registroExitoso ? 'El formulario se envió exitosamente.' : 'Hubo un error al intentar registrar el formulario.'}
+                        {registroExitoso ? 'El formulario se envió exitosamente.' : 'Hubo un error al procesar el formulario.'}
                     </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
