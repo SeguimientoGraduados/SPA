@@ -66,7 +66,7 @@ const ModalLogin = () => {
     }
     try {
       const data = await registerAPI(name, email, password);
-      login(data.user, data.token);
+      login(data.user, data.token, data.graduado);
       setOpen(false);
     } catch (error) {
       console.error("Error al registrarse:", error);
@@ -99,7 +99,7 @@ const ModalLogin = () => {
           <Dropdown
             user={toTitleCase(authState.user.name)}
             onDatos={handleDatos}
-            mostrarDatos={authState.user.rol === "user"}
+            mostrarDatos={authState.user.rol === "user" && authState.graduado}
             onLogout={handleLogout}
           />
         ) : (

@@ -9,7 +9,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 
 const Header = () => {
   const { authState } = useContext(AuthContext);
-  const { isAuthenticated, user } = authState;
+  const { isAuthenticated, user, graduado } = authState;
   
   return (
     <header className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-md flex flex-row justify-between px-40 py-3">
@@ -25,7 +25,7 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex flex-row items-center">
-        {isAuthenticated && user?.rol !== "admin" && (
+        {isAuthenticated && user?.rol !== "admin" && !graduado && (
           <Link href="/formulario" passHref>
             <Button className="text-md" variant="text" color="white">
               SUMATE AL MAPA

@@ -23,6 +23,7 @@ import CheckboxList from "../Utils/CheckboxList";
 import Formacion from "./Formacion";
 import { Validacion } from "./Validacion";
 import Intereses from "./Intereses";
+import { AuthContext } from "@/app/context/AuthContext";
 
 const FormularioGraduado = ({
   carreras,
@@ -557,6 +558,8 @@ const Form = ({
   modoEdicion = false,
   datosGraduado = {},
 }) => {
+  const { setAuthState } = useContext(AuthContext);
+
   const { registrarGraduado, actualizarGraduado } = graduadosService;
 
   const handleSubmit = async (formData) => {
@@ -564,6 +567,10 @@ const Form = ({
       await actualizarGraduado(formData);
     } else {
       await registrarGraduado(formData);
+      setAuthState((prev) => ({
+        ...prev,
+        graduado: true
+      }));
     }
   };
 
