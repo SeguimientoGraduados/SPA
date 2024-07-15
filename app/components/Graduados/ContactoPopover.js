@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
-  faTwitter,
+  faXTwitter,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 
@@ -55,7 +55,7 @@ const ContactoPopover = ({ graduado }) => {
                         <FontAwesomeIcon icon={faFacebook} />
                       )}
                       {item.rrss === "twitter" && (
-                        <FontAwesomeIcon icon={faTwitter} />
+                        <FontAwesomeIcon icon={faXTwitter} />
                       )}
                       {item.rrss === "linkedin" && (
                         <FontAwesomeIcon icon={faLinkedin} />

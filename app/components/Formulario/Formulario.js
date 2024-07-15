@@ -104,6 +104,14 @@ const FormularioGraduado = ({
         interes_oferta: value.oferta,
         interes_demanda: value.demanda,
       }));
+    } else if (name === "carreras") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        carreras: value.map((carrera) => ({
+          id: carrera.carrera_id,
+          anio_graduacion: carrera.anio_graduacion,
+        })),
+      }));
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -128,8 +136,18 @@ const FormularioGraduado = ({
       }
     }
 
+    const carrerasFormateadas = formData.carreras.map((carrera) => ({
+      carrera_id: carrera.id,
+      anio_graduacion: carrera.anio_graduacion,
+    }));
+  
+    const dataToSubmit = {
+      ...formData,
+      carreras: carrerasFormateadas,
+    };
+
     try {
-      await onSubmit(formData);
+      await onSubmit(dataToSubmit);
       setAlertaVisible(false);
       setRegistroExitoso(true);
       setModalVisible(true);
@@ -161,6 +179,11 @@ const FormularioGraduado = ({
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    handleChange({ target: { name, value } });
   };
 
   const handleChangeRRSS = (e, rrssName) => {
@@ -228,9 +251,9 @@ const FormularioGraduado = ({
 
   const carrerasIniciales = datosGraduado.carreras
     ? datosGraduado.carreras.map((carrera) => ({
-        title: carrera.id.toString(),
-        year: carrera.anio_graduacion,
-      }))
+      title: carrera.id.toString(),
+      year: carrera.anio_graduacion,
+    }))
     : {};
 
   const fechaInicial = datosGraduado.fecha_nacimiento
@@ -374,17 +397,31 @@ const FormularioGraduado = ({
                     name="carreras"
                   />
 
-                  <Input
-                    label="Ciudad"
-                    name="ciudad"
-                    onBlur={handleChangeCiudad}
-                    value={formData.ciudad.nombre}
-                    required
-                    onInvalid={handleValidation}
-                    onInput={handleValidation}
-                    error={Boolean(error)}
-                    className="bg-tremor-background"
-                  />
+                  {modoEdicion ? (
+                    <Input
+                      label="Ciudad"
+                      name="ciudad"
+                      onBlur={handleChangeCiudad}
+                      onChange={handleInputChange}
+                      value={formData.ciudad.nombre}
+                      required
+                      onInvalid={handleValidation}
+                      onInput={handleValidation}
+                      error={Boolean(error)}
+                      className="bg-tremor-background"
+                    />
+                  ) : (
+                    <Input
+                      label="Ciudad"
+                      name="ciudad"
+                      onBlur={handleChangeCiudad}
+                      required
+                      onInvalid={handleValidation}
+                      onInput={handleValidation}
+                      error={Boolean(error)}
+                      className="bg-tremor-background"
+                    />
+                  )}
                   {errors && (
                     <span className="text-xs text-red-600 -mt-2">{error}</span>
                   )}
