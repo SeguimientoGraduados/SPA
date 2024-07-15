@@ -4,6 +4,7 @@ import {
   Typography,
   Input,
   Textarea,
+  Tooltip
 } from "@material-tailwind/react";
 import React, { useState, useEffect, useContext } from "react";
 import graduadosService from "../../services/graduadosService";
@@ -24,6 +25,8 @@ import Formacion from "./Formacion";
 import { Validacion } from "./Validacion";
 import Intereses from "./Intereses";
 import { AuthContext } from "@/app/context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 
 const FormularioGraduado = ({
   carreras,
@@ -251,9 +254,9 @@ const FormularioGraduado = ({
 
   const carrerasIniciales = datosGraduado.carreras
     ? datosGraduado.carreras.map((carrera) => ({
-      title: carrera.id.toString(),
-      year: carrera.anio_graduacion,
-    }))
+        title: carrera.id.toString(),
+        year: carrera.anio_graduacion,
+      }))
     : {};
 
   const fechaInicial = datosGraduado.fecha_nacimiento
@@ -268,10 +271,9 @@ const FormularioGraduado = ({
     <>
       <div className="max-w-screen-xl sm:w-full">
         <Typography variant="parragraph" color="gray">
-          La información que proporciones es invaluable para comprender mejor el
+          La información que proporciones servirá para comprender mejor el
           perfil y las trayectorias laborales de los graduados de la Universidad
-          Nacional del Sur. Tus respuestas serán tratadas de manera confidencial
-          y se utilizarán únicamente con fines estadísticos y de investigación.
+          Nacional del Sur, con el objetivo de ayudarlos en su vida profesional.
         </Typography>
         <hr className="my-2 border-t-2 border-blue-800" />
         <div className="flex flex-col justify-center">
@@ -482,7 +484,6 @@ const FormularioGraduado = ({
                     className="bg-tremor-background"
                   />
 
-
                   <div className="flex items-center flex-row">
                     <TooltipInfo label={"Privacidad de las respuestas"} />
                     <RadioHorizontal />
@@ -535,16 +536,29 @@ const FormularioGraduado = ({
                 </Typography>
 
                 <div className="flex flex-col gap-4">
-                  <Input
-                    label="CV"
-                    placeholder="https://drive.google.com/CV_Ejemplo"
-                    name="cv"
-                    onChange={handleChange}
-                    value={formData.cv}
-                    onBlur={handleValidation}
-                    error={errors.cv}
-                    className="bg-tremor-background"
-                  />
+                  <div className="flex flex-row gap-3 items-center">
+                    <Tooltip
+                      className="w-48"
+                      content={
+                        <Typography variant="small" className="text-sm">
+                          Aquí puedes dejar el enlace a tu CV ya sea como pdf en Google Drive o cualquier otra página de tu preferencia.
+                        </Typography>
+                      }
+                    >
+                      <FontAwesomeIcon icon={faCircleQuestion} size="lg" color="grey"/>
+                    </Tooltip>
+                    <Input
+                      label="CV"
+                      placeholder="https://drive.google.com/CV_Ejemplo"
+                      name="cv"
+                      onChange={handleChange}
+                      value={formData.cv}
+                      onBlur={handleValidation}
+                      error={errors.cv}
+                      className="bg-tremor-background"
+                    />
+                  </div>
+
                   {errors.cv && (
                     <span className="text-xs text-red-600 -mt-2">
                       {errors.cv}

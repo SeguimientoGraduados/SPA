@@ -5,7 +5,6 @@ import bandera from "../../../public/arg.svg";
 import { Typography, Tooltip } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBriefcase,
   faEnvelope,
   faHandshake,
 } from "@fortawesome/free-solid-svg-icons";
