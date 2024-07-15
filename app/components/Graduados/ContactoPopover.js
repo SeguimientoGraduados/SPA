@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
+import { faAddressCard, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
   faXTwitter,
@@ -38,9 +38,12 @@ const ContactoPopover = ({ graduado }) => {
       <PopoverContent className="w-80 z-50">
         <div className="flex flex-col items-center gap-2">
           <div className="text-center">
-            <Typography variant="paragraph">
-              Correo: {graduado.email}
-            </Typography>
+            <div className="flex items-center">
+              <FontAwesomeIcon icon={faEnvelope} />
+              <Typography variant="paragraph" className="ml-2">
+               <a href={`mailto:${graduado.email}`}>{graduado.email}</a>                
+              </Typography>
+            </div>
             {tieneRedesSociales && (
               <div>
                 <div className="flex flex-row gap-4 justify-center mt-1">

@@ -140,7 +140,7 @@ const FormularioGraduado = ({
       carrera_id: carrera.id,
       anio_graduacion: carrera.anio_graduacion,
     }));
-  
+
     const dataToSubmit = {
       ...formData,
       carreras: carrerasFormateadas,
@@ -452,7 +452,7 @@ const FormularioGraduado = ({
                       initialValue={formData.ocupacion_trabajo}
                     />
                     <Input
-                      label="Nombre de la empresa"
+                      label="Nombre de la organización"
                       name="ocupacion_empresa"
                       onChange={handleChange}
                       value={formData.ocupacion_empresa}
@@ -478,9 +478,10 @@ const FormularioGraduado = ({
                     label="Información adicional"
                     name="ocupacion_informacion_adicional"
                     onChange={handleChange}
-                    value={formData.ocupacion_informacion_adicional}
+                    value={formData.ocupacion_informacion_adicional || ""}
                     className="bg-tremor-background"
                   />
+
 
                   <div className="flex items-center flex-row">
                     <TooltipInfo label={"Privacidad de las respuestas"} />
@@ -514,7 +515,7 @@ const FormularioGraduado = ({
                     label="Descripcion"
                     name="habilidades_competencias"
                     onChange={handleChange}
-                    value={formData.habilidades_competencias}
+                    value={formData.habilidades_competencias || ""}
                     className="bg-tremor-background"
                   />
 
