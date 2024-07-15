@@ -514,9 +514,10 @@ const FormularioGraduado = ({
                     variant="outlined"
                     label="Descripcion"
                     name="habilidades_competencias"
+                    placeholder="Describa sus habilidades y competencias, incluyendo herramientas, idiomas, habilidades blandas, y cualquier otra información relevante que considere importante para su perfil profesional."
                     onChange={handleChange}
                     value={formData.habilidades_competencias || ""}
-                    className="bg-tremor-background"
+                    className="bg-tremor-background placeholder:pt-5"
                   />
 
                   <div className="flex items-center flex-row justify-between">
