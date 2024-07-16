@@ -4,13 +4,6 @@ export const Validacion = (name, value, errors) => {
   const validateNombre = (value) => {
     const trimmedValue = value.trim();
   
-    if (
-      !/^[A-Za-zÁÉÍÓÚáéíóúñÑ]+(?: [A-Za-zÁÉÍÓÚáéíóúñÑ]+)*$/.test(trimmedValue) &&
-      trimmedValue.length > 0
-    ) {
-      return "Ingrese nombre completo sin espacios dobles (Nombre/s y Apellido/s)";
-    }
-  
     if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value) && trimmedValue.length > 0) {
       return "El nombre solo puede contener letras y espacios";
     }

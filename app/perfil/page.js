@@ -24,6 +24,7 @@ const Perfil = () => {
         const dataGraduado = await obtenerDatosGraduado();
         setDatos({
           nombre: dataGraduado.nombre,
+          apellido: dataGraduado.apellido,
           dni: dataGraduado.dni,
           fecha_nacimiento: dataGraduado.fecha_nacimiento,
           ciudad: dataGraduado.ciudad,

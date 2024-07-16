@@ -38,6 +38,7 @@ const FormularioGraduado = ({
 }) => {
   const [formData, setFormData] = useState({
     nombre: "",
+    apellido: "",
     dni: "",
     fecha_nacimiento: "",
     ciudad: [],
@@ -261,9 +262,9 @@ const FormularioGraduado = ({
 
   const carrerasIniciales = datosGraduado.carreras
     ? datosGraduado.carreras.map((carrera) => ({
-      title: carrera.id.toString(),
-      year: carrera.anio_graduacion,
-    }))
+        title: carrera.id.toString(),
+        year: carrera.anio_graduacion,
+      }))
     : {};
 
   const fechaInicial = datosGraduado.fecha_nacimiento
@@ -297,41 +298,79 @@ const FormularioGraduado = ({
 
                 <div className="flex flex-col gap-2">
                   {modoEdicion ? (
-                    <div className="grid grid-cols-3 items-center px-2">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal w-40"
-                      >
-                        Nombre completo:
-                      </Typography>
+                    <>
+                      <div className="grid grid-cols-3 items-center px-2">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal w-40"
+                        >
+                          Nombre:
+                        </Typography>
+                        <Input
+                          label="Nombre"
+                          name="nombre"
+                          onChange={handleChange}
+                          value={formData.nombre}
+                          disabled={modoEdicion}
+                          onInvalid={handleRequired}
+                          onInput={handleRequired}
+                          onBlur={handleValidation}
+                          error={errors.nombre}
+                          className="bg-tremor-background col-span-2"
+                        />
+                      </div>
+                      <div className="grid grid-cols-3 items-center px-2">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal w-40"
+                        >
+                          Apellido:
+                        </Typography>
+                        <Input
+                          label="Apellido"
+                          name="nombre"
+                          onChange={handleChange}
+                          value={formData.apellido}
+                          disabled={modoEdicion}
+                          onInvalid={handleRequired}
+                          onInput={handleRequired}
+                          onBlur={handleValidation}
+                          error={errors.nombre}
+                          className="bg-tremor-background col-span-2"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex flex-row gap-4">
                       <Input
-                        label="Nombre completo"
+                        label="Nombre"
                         name="nombre"
                         onChange={handleChange}
                         value={formData.nombre}
                         disabled={modoEdicion}
+                        required
                         onInvalid={handleRequired}
                         onInput={handleRequired}
                         onBlur={handleValidation}
                         error={errors.nombre}
-                        className="bg-tremor-background col-span-2"
+                        className="bg-tremor-background"
+                      />
+                      <Input
+                        label="Apellido"
+                        name="nombre"
+                        onChange={handleChange}
+                        value={formData.apellido}
+                        disabled={modoEdicion}
+                        required
+                        onInvalid={handleRequired}
+                        onInput={handleRequired}
+                        onBlur={handleValidation}
+                        error={errors.nombre}
+                        className="bg-tremor-background"
                       />
                     </div>
-                  ) : (
-                    <Input
-                      label="Nombre completo"
-                      name="nombre"
-                      onChange={handleChange}
-                      value={formData.nombre}
-                      disabled={modoEdicion}
-                      required
-                      onInvalid={handleRequired}
-                      onInput={handleRequired}
-                      onBlur={handleValidation}
-                      error={errors.nombre}
-                      className="bg-tremor-background"
-                    />
                   )}
 
                   {errors.nombre && (
@@ -527,7 +566,6 @@ const FormularioGraduado = ({
                     value={formData.habilidades_competencias || ""}
                     className="bg-tremor-background placeholder:pt-5"
                   />
-
                 </div>
 
                 <Typography
@@ -581,21 +619,20 @@ const FormularioGraduado = ({
                   />
                 </div>
 
-                  <Typography
-                    className="font-normal text-center"
-                    variant="h5"
-                    color="blue-gray"
-                  >
-                    Interés/Predisposición a:
-                  </Typography>
+                <Typography
+                  className="font-normal text-center"
+                  variant="h5"
+                  color="blue-gray"
+                >
+                  Interés/Predisposición a:
+                </Typography>
 
-
-                  <Intereses
-                    sendChange={handleChangeInteres}
-                    comunidadInicial={formData.interes_comunidad}
-                    ofertaInicial={formData.interes_oferta}
-                    demandaInicial={formData.interes_demanda}
-                  />
+                <Intereses
+                  sendChange={handleChangeInteres}
+                  comunidadInicial={formData.interes_comunidad}
+                  ofertaInicial={formData.interes_oferta}
+                  demandaInicial={formData.interes_demanda}
+                />
                 {alertaVisible && campoObligatorio && (
                   <AlertaObligatorio input={campoObligatorio} />
                 )}
