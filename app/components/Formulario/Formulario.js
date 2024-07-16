@@ -4,14 +4,15 @@ import {
   Typography,
   Input,
   Textarea,
-  Tooltip
+  Tooltip,
 } from "@material-tailwind/react";
 import React, { useState, useEffect, useContext } from "react";
 import graduadosService from "../../services/graduadosService";
 import { DefaultSkeleton } from "../Utils/Skeleton";
 import AlertaObligatorio from "../Utils/AlertObligatorio";
 import Cookies from "js-cookie";
-import ModalFormulario from "./ModalFormulario";
+import ModalResultado from "./ModalResultado";
+import ModalConfirmacion from "./ModalConfirmacion";
 import RadioHorizontal from "../Utils/RadioHorizontal";
 import TooltipInfo from "../Utils/TooltipInfo";
 import SelectOption from "../Utils/SelectOption";
@@ -58,7 +59,9 @@ const FormularioGraduado = ({
 
   const [alertaVisible, setAlertaVisible] = useState(false);
   const [campoObligatorio, setCampoObligatorio] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalResultadoVisible, setModalResultadoVisible] = useState(false);
+  const [modalConfirmacionVisible, setModalConfirmacionVisible] =
+    useState(false);
   const [registroExitoso, setRegistroExitoso] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -153,10 +156,10 @@ const FormularioGraduado = ({
       await onSubmit(dataToSubmit);
       setAlertaVisible(false);
       setRegistroExitoso(true);
-      setModalVisible(true);
+      setModalResultadoVisible(true);
     } catch (error) {
       setRegistroExitoso(false);
-      setModalVisible(true);
+      setModalResultadoVisible(true);
       console.error("Error al enviar el formulario:", error);
     }
   };
@@ -245,6 +248,10 @@ const FormularioGraduado = ({
     } else if (e.type === "input") {
       e.currentTarget.setCustomValidity("");
     }
+  };
+
+  const handleOpenConfirmacion = () => {
+    setModalConfirmacionVisible((cur) => !cur);
   };
 
   const opcionesCarreras = carreras.map((carrera) => ({
@@ -541,11 +548,17 @@ const FormularioGraduado = ({
                       className="w-48"
                       content={
                         <Typography variant="small" className="text-sm">
-                          Aquí puedes dejar el enlace a tu CV ya sea como pdf en Google Drive o cualquier otra página de tu preferencia.
+                          Aquí puedes dejar el enlace a tu CV ya sea como pdf en
+                          Google Drive o cualquier otra página de tu
+                          preferencia.
                         </Typography>
                       }
                     >
-                      <FontAwesomeIcon icon={faCircleQuestion} size="lg" color="grey"/>
+                      <FontAwesomeIcon
+                        icon={faCircleQuestion}
+                        size="lg"
+                        color="grey"
+                      />
                     </Tooltip>
                     <Input
                       label="CV"
@@ -593,14 +606,25 @@ const FormularioGraduado = ({
               </div>
             </Card>
             <div className="flex justify-center py-2">
-              <Button type="submit" color="blue">
+              <Button
+                color="blue"
+                onClick={modoEdicion ? null : handleOpenConfirmacion}
+                type={modoEdicion ? "submit" : "button"}
+              >
                 Enviar
               </Button>
             </div>
           </form>
-          <ModalFormulario
-            open={modalVisible}
-            handleOpen={setModalVisible}
+
+          <ModalConfirmacion
+            open={modalConfirmacionVisible}
+            handleOpen={setModalConfirmacionVisible}
+            onAceptar={onSubmit}
+          />
+
+          <ModalResultado
+            open={modalResultadoVisible}
+            handleOpen={setModalResultadoVisible}
             registroExitoso={registroExitoso}
           />
         </div>
@@ -628,7 +652,6 @@ const Form = ({
           ...prev,
           graduado: true,
         };
-        console.log("Nuevo AuthState:", newState);
         return newState;
       });
     }

@@ -8,7 +8,7 @@ import {
     Typography
 } from "@material-tailwind/react";
 
-const ModalFormulario = ({ open, handleOpen, registroExitoso }) => {
+const ModalResultado = ({ open, handleOpen, registroExitoso }) => {
     const router = useRouter();
     const handleAceptar = () => {
         handleOpen(false);
@@ -62,4 +62,4 @@ const ModalFormulario = ({ open, handleOpen, registroExitoso }) => {
     );
 };
 
-export default ModalFormulario;
+export default ModalResultado;
