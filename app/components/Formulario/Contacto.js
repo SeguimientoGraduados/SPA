@@ -5,6 +5,8 @@ import { Input, Typography, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faXTwitter, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import TooltipInfo from "../Utils/TooltipInfo";
+import RadioHorizontal from "../Utils/RadioHorizontal";
 
 const socialMediaIcons = {
   linkedin: faLinkedin,
@@ -51,7 +53,7 @@ const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [
   });
 
   useEffect(() => {
-    const initialSocialMedia = {...socialMedia};
+    const initialSocialMedia = { ...socialMedia };
     const initialVisibility = { ...visibleSocialMedia };
 
     valoresIniciales.forEach((item) => {
@@ -79,11 +81,15 @@ const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [
 
   return (
     <div>
-      <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-2">
+      <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-4">
         Información de Contacto
       </Typography>
+      <div className="flex flex-row justify-center">
+        <TooltipInfo label={"Privacidad de Contacto:"} />
+        <RadioHorizontal />
+      </div>
       <div className="grid gap-2 my-6">
-        {Object.entries(visibleSocialMedia).map(([type, isVisible]) => 
+        {Object.entries(visibleSocialMedia).map(([type, isVisible]) =>
           isVisible && (
             <SocialMediaInput
               key={type}
@@ -98,7 +104,7 @@ const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [
         )}
 
         <div className="flex flex-row gap-6 justify-center">
-          {Object.entries(visibleSocialMedia).map(([type, isVisible]) => 
+          {Object.entries(visibleSocialMedia).map(([type, isVisible]) =>
             !isVisible && (
               <IconButton
                 key={type}

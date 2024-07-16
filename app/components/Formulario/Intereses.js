@@ -20,7 +20,7 @@ const Intereses = ({ sendChange, comunidadInicial = false, ofertaInicial = false
   };
 
   return (
-    <div className="max-w-md mx-auto my-4 flex flex-col gap-2">
+    <div className="max-w-md mx-auto flex flex-col gap-2">
       <Typography variant="paragraph">
         ¿Está dispuesto a formar parte del ecosistema que interactúe con otros
         egresados y/o las autoridades de la UNS?

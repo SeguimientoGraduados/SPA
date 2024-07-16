@@ -4,6 +4,7 @@ const TooltipInfo = ({ label }) => {
   return (
     <div className="flex flex-row items-center">
       <Tooltip
+      className="bg-blue-600"
         content={
           <div className="w-80">
             <Typography color="white" className="font-medium">
@@ -26,15 +27,6 @@ const TooltipInfo = ({ label }) => {
                   className="font-normal opacity-80"
                 >
                   • Protegido: Solo el personal autorizado de la UNS
-                </Typography>
-              </li>
-              <li>
-                <Typography
-                  variant="small"
-                  color="white"
-                  className="font-normal opacity-80"
-                >
-                  • Privado: No se va a entregar esa información
                 </Typography>
               </li>
             </ul>

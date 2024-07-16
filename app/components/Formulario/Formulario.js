@@ -254,9 +254,9 @@ const FormularioGraduado = ({
 
   const carrerasIniciales = datosGraduado.carreras
     ? datosGraduado.carreras.map((carrera) => ({
-        title: carrera.id.toString(),
-        year: carrera.anio_graduacion,
-      }))
+      title: carrera.id.toString(),
+      year: carrera.anio_graduacion,
+    }))
     : {};
 
   const fechaInicial = datosGraduado.fecha_nacimiento
@@ -435,14 +435,19 @@ const FormularioGraduado = ({
                     valoresIniciales={formData.rrss}
                   />
                 </div>
-
-                <Typography
-                  variant="h3"
-                  color="blue-gray"
-                  className="text-center font-normal mb-2"
-                >
-                  Información Laboral
-                </Typography>
+                <div>
+                  <Typography
+                    variant="h3"
+                    color="blue-gray"
+                    className="text-center font-normal"
+                  >
+                    Información Laboral
+                  </Typography>
+                  <div className="flex flex-row justify-center">
+                    <TooltipInfo label={"Privacidad de Información Laboral:"} />
+                    <RadioHorizontal />
+                  </div>
+                </div>
 
                 <div className="flex flex-col gap-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -484,11 +489,6 @@ const FormularioGraduado = ({
                     className="bg-tremor-background"
                   />
 
-                  <div className="flex items-center flex-row">
-                    <TooltipInfo label={"Privacidad de las respuestas"} />
-                    <RadioHorizontal />
-                  </div>
-
                   <Typography
                     variant="h5"
                     color="blue-gray"
@@ -521,16 +521,12 @@ const FormularioGraduado = ({
                     className="bg-tremor-background placeholder:pt-5"
                   />
 
-                  <div className="flex items-center flex-row justify-between">
-                    <TooltipInfo label={"Privacidad de las respuestas"} />
-                    <RadioHorizontal />
-                  </div>
                 </div>
 
                 <Typography
                   variant="h3"
                   color="blue-gray"
-                  className="text-center font-normal"
+                  className="text-center font-normal mt-4"
                 >
                   Información Adicional
                 </Typography>
@@ -545,7 +541,7 @@ const FormularioGraduado = ({
                         </Typography>
                       }
                     >
-                      <FontAwesomeIcon icon={faCircleQuestion} size="lg" color="grey"/>
+                      <FontAwesomeIcon icon={faCircleQuestion} size="lg" color="grey" />
                     </Tooltip>
                     <Input
                       label="CV"
@@ -572,21 +568,21 @@ const FormularioGraduado = ({
                   />
                 </div>
 
-                <Typography
-                  className="font-normal text-center"
-                  variant="h5"
-                  color="blue-gray"
-                >
-                  Interés/Predisposición a:
-                </Typography>
+                  <Typography
+                    className="font-normal text-center"
+                    variant="h5"
+                    color="blue-gray"
+                  >
+                    Interés/Predisposición a:
+                  </Typography>
 
-                <Intereses
-                  sendChange={handleChangeInteres}
-                  comunidadInicial={formData.interes_comunidad}
-                  ofertaInicial={formData.interes_oferta}
-                  demandaInicial={formData.interes_demanda}
-                />
 
+                  <Intereses
+                    sendChange={handleChangeInteres}
+                    comunidadInicial={formData.interes_comunidad}
+                    ofertaInicial={formData.interes_oferta}
+                    demandaInicial={formData.interes_demanda}
+                  />
                 {alertaVisible && campoObligatorio && (
                   <AlertaObligatorio input={campoObligatorio} />
                 )}
