@@ -1,5 +1,6 @@
 import { Radio, Typography } from "@material-tailwind/react";
 import React, { useState } from 'react';
+import TooltipInfo from "./TooltipInfo";
 
 function Icon() {
     return (
@@ -18,51 +19,56 @@ function Icon() {
     );
 }
 
-const RadioHorizontal = () => {
+const RadioHorizontal = ({ label, value, handleChange }) => {
 
-    const [selectedOption, setSelectedOption] = useState('protegido');
+    const [selectedOption, setSelectedOption] = useState(value);
 
     const handleRadioChange = (event) => {
+        const newValue = event.target.value === 'publico';
         setSelectedOption(event.target.value);
+        handleChange(newValue);
     };
     return (
-        <div>
-            <Radio
-                color="blue"
-                value="publico"
-                checked={selectedOption === 'publico'}
-                onChange={handleRadioChange}
-                ripple={false}
-                icon={<Icon />}
-                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
-                label={
-                    <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="text-blue-gray-400"
-                    >
-                        Público
-                    </Typography>
-                }
-            />
-            <Radio
-                color="blue"
-                value="protegido"
-                checked={selectedOption === 'protegido'}
-                onChange={handleRadioChange}
-                ripple={false}
-                icon={<Icon />}
-                className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
-                label={
-                    <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="text-blue-gray-400"
-                    >
-                        Protegido
-                    </Typography>
-                }
-            />
+        <div className="flex flex-row justify-center">
+            <TooltipInfo label={label} />
+            <div>
+                <Radio
+                    color="blue"
+                    value="publico"
+                    checked={selectedOption === 'publico'}
+                    onChange={handleRadioChange}
+                    ripple={false}
+                    icon={<Icon />}
+                    className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
+                    label={
+                        <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="text-blue-gray-400"
+                        >
+                            Público
+                        </Typography>
+                    }
+                />
+                <Radio
+                    color="blue"
+                    value="protegido"
+                    checked={selectedOption === 'protegido'}
+                    onChange={handleRadioChange}
+                    ripple={false}
+                    icon={<Icon />}
+                    className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0 bg-tremor-background"
+                    label={
+                        <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="text-blue-gray-400"
+                        >
+                            Protegido
+                        </Typography>
+                    }
+                />
+            </div>
         </div>
     );
 }

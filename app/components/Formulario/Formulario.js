@@ -14,7 +14,6 @@ import Cookies from "js-cookie";
 import ModalResultado from "./ModalResultado";
 import ModalConfirmacion from "./ModalConfirmacion";
 import RadioHorizontal from "../Utils/RadioHorizontal";
-import TooltipInfo from "../Utils/TooltipInfo";
 import SelectOption from "../Utils/SelectOption";
 import DatePicker from "../Utils/DatePicker";
 import Titulo from "./Titulo";
@@ -56,6 +55,9 @@ const FormularioGraduado = ({
     interes_comunidad: false,
     interes_oferta: false,
     interes_demanda: false,
+    visibilidad_contacto: true,
+    visibilidad_laboral: true,
+    visibilidad_formacion: true,
   });
 
   const [alertaVisible, setAlertaVisible] = useState(false);
@@ -225,6 +227,7 @@ const FormularioGraduado = ({
     handleChange({ target: { name: "ocupacion_sector", value: sector } });
   };
 
+
   const handleChangeOcupacion = (e) => {
     const { value } = e.target;
     handleChange({ target: { name: "ocupacion_trabajo", value } });
@@ -254,6 +257,9 @@ const FormularioGraduado = ({
   const handleOpenConfirmacion = () => {
     setModalConfirmacionVisible((cur) => !cur);
   };
+  const handleVisibilidadChange = (campo, valor) => {
+    handleChange({ target: { name: campo, value: valor } });
+  };
 
   const opcionesCarreras = carreras.map((carrera) => ({
     value: carrera.id.toString(),
@@ -262,9 +268,9 @@ const FormularioGraduado = ({
 
   const carrerasIniciales = datosGraduado.carreras
     ? datosGraduado.carreras.map((carrera) => ({
-        title: carrera.id.toString(),
-        year: carrera.anio_graduacion,
-      }))
+      title: carrera.id.toString(),
+      year: carrera.anio_graduacion,
+    }))
     : {};
 
   const fechaInicial = datosGraduado.fecha_nacimiento
@@ -359,7 +365,7 @@ const FormularioGraduado = ({
                       />
                       <Input
                         label="Apellido"
-                        name="nombre"
+                        name="apellido"
                         onChange={handleChange}
                         value={formData.apellido}
                         disabled={modoEdicion}
@@ -479,6 +485,8 @@ const FormularioGraduado = ({
                     opcionesRrss={enumerados.rrss}
                     error={errors.rrss}
                     valoresIniciales={formData.rrss}
+                    visibilidadContacto={formData.visibilidad_contacto}
+                    handleVisibilidadChange={(valor) => handleVisibilidadChange('visibilidad_contacto', valor)}
                   />
                 </div>
                 <div>
@@ -490,11 +498,13 @@ const FormularioGraduado = ({
                     Información Laboral
                   </Typography>
                   <div className="flex flex-row justify-center">
-                    <TooltipInfo label={"Privacidad de Información Laboral:"} />
-                    <RadioHorizontal />
+                    <RadioHorizontal
+                      label="Privacidad de Respuestas:"
+                      value={formData.visibilidad_laboral ? 'publico' : 'protegido'}
+                      handleChange={(valor) => handleVisibilidadChange('visibilidad_laboral', valor)}
+                    />
                   </div>
                 </div>
-
                 <div className="flex flex-col gap-4">
                   <div className="grid grid-cols-2 gap-4">
                     <SelectOption
@@ -616,6 +626,8 @@ const FormularioGraduado = ({
                     sendChange={handleChange}
                     opcionesFormacion={enumerados.nivel_formacion}
                     formacionInicial={formData.formacion}
+                    visibilidadFormacion={formData.formacion}
+                    handleVisibilidadChange={(valor) => handleVisibilidadChange('visibilidad_formacion', valor)}
                   />
                 </div>
 
