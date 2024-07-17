@@ -54,7 +54,7 @@ const Formacion = ({
         </Typography>
         <div className="flex flex-row justify-center">
           <RadioHorizontal
-            label="Privacidad de Respuestas:"
+            label="Privacidad de respuestas:"
             value={visibilidadFormacion ? 'publico' : 'protegido'}
             handleChange={handleVisibilidadChange}
           />

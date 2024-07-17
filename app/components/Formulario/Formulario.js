@@ -499,7 +499,7 @@ const FormularioGraduado = ({
                   </Typography>
                   <div className="flex flex-row justify-center">
                     <RadioHorizontal
-                      label="Privacidad de Respuestas:"
+                      label="Privacidad de respuestas:"
                       value={formData.visibilidad_laboral ? 'publico' : 'protegido'}
                       handleChange={(valor) => handleVisibilidadChange('visibilidad_laboral', valor)}
                     />
@@ -569,7 +569,7 @@ const FormularioGraduado = ({
                   </Typography>
                   <Textarea
                     variant="outlined"
-                    label="Descripcion"
+                    label="Descripción"
                     name="habilidades_competencias"
                     placeholder="Describa sus habilidades y competencias, incluyendo herramientas, idiomas, habilidades blandas, y cualquier otra información relevante que considere importante para su perfil profesional."
                     onChange={handleChange}

@@ -81,11 +81,11 @@ const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [
   return (
     <div>
       <Typography variant="h5" color="blue-gray" className="font-normal text-center mt-4">
-        Información de Contacto
+        Información de contacto
       </Typography>
       <div className="flex flex-row justify-center">
         <RadioHorizontal
-          label="Privacidad de Respuestas:"
+          label="Privacidad de respuestas:"
           value={visibilidadContacto ? 'publico' : 'protegido'}
           handleChange={handleVisibilidadChange}
         />  
