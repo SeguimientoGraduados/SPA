@@ -27,6 +27,7 @@ import Intereses from "./Intereses";
 import { AuthContext } from "@/app/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import CiudadAutocomplete from "./CiudadAutocomplete";
 
 const FormularioGraduado = ({
   carreras,
@@ -188,6 +189,9 @@ const FormularioGraduado = ({
     } catch (error) {
       setError(error.message);
     }
+  };
+  const handleCiudadSelect = (nuevaCiudad) => {
+    handleChange({ target: { name: "ciudad", value: nuevaCiudad } });
   };
 
   const handleInputChange = (e) => {
@@ -465,15 +469,9 @@ const FormularioGraduado = ({
                       className="bg-tremor-background"
                     />
                   ) : (
-                    <Input
-                      label="Ciudad"
-                      name="ciudad"
-                      onBlur={handleChangeCiudad}
-                      required
-                      onInvalid={handleValidation}
-                      onInput={handleValidation}
-                      error={Boolean(error)}
-                      className="bg-tremor-background"
+                    <CiudadAutocomplete
+                      onCiudadSelect={handleCiudadSelect}
+                      onValidation={handleValidation}
                     />
                   )}
                   {errors && (
