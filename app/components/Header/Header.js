@@ -12,7 +12,7 @@ const Header = () => {
   const { isAuthenticated, user, graduado } = authState;
   
   return (
-    <header className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-md flex flex-row justify-between px-40 py-3">
+    <header className="bg-gradient-to-t from-blue-600 to-blue-800 shadow-md flex flex-row justify-between px-40 py-3">
       <div className="flex items-center">
         <Link href="/">
           <Image

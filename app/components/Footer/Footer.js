@@ -11,7 +11,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-md px-32 py-4">
+    <footer className="bg-gradient-to-b from-blue-600 to-blue-800 shadow-md px-32 py-4">
       <div className="flex justify-around items-center">
         <Image className="h-auto w-auto" src={logoUns} alt="UNS" width={80} />
         <div className="text-sm text-center">
