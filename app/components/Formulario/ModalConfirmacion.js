@@ -7,14 +7,14 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const ModalConfirmacion = ({ open, handleOpen, onAceptar }) => {
+const ModalConfirmacion = ({ open, handleOpen, onAceptar, formData }) => {
   const handleCancelar = () => {
     handleOpen(false);
   };
 
   const handleAceptar = () => {
     handleOpen(false);
-    onAceptar()
+    onAceptar(formData)
   };
 
   return (

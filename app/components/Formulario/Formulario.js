@@ -653,6 +653,7 @@ const FormularioGraduado = ({
             open={modalConfirmacionVisible}
             handleOpen={setModalConfirmacionVisible}
             onAceptar={onSubmit}
+            formData={formData}
           />
 
           <ModalResultado
