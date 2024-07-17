@@ -5,7 +5,6 @@ import { Input, Typography, IconButton } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faXTwitter, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import TooltipInfo from "../Utils/TooltipInfo";
 import RadioHorizontal from "../Utils/RadioHorizontal";
 
 const socialMediaIcons = {
@@ -39,7 +38,7 @@ const SocialMediaInput = ({ label, placeholder, value, onChange, onRemove, error
   </div>
 );
 
-const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [] }) => {
+const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [], visibilidadContacto, handleVisibilidadChange }) => {
   const [socialMedia, setSocialMedia] = useState({
     linkedin: "",
     facebook: "",
@@ -85,8 +84,11 @@ const Contacto = ({ handleChange, opcionesRrss, error = {}, valoresIniciales = [
         Información de Contacto
       </Typography>
       <div className="flex flex-row justify-center">
-        <TooltipInfo label={"Privacidad de Contacto:"} />
-        <RadioHorizontal />
+        <RadioHorizontal
+          label="Privacidad de Respuestas:"
+          value={visibilidadContacto ? 'publico' : 'protegido'}
+          handleChange={handleVisibilidadChange}
+        />  
       </div>
       <div className="grid gap-2 my-6">
         {Object.entries(visibleSocialMedia).map(([type, isVisible]) =>

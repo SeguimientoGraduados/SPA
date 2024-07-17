@@ -10,6 +10,8 @@ const Formacion = ({
   sendChange,
   opcionesFormacion,
   formacionInicial = [],
+  visibilidadFormacion,
+  handleVisibilidadChange
 }) => {
   const [formaciones, setFormaciones] = useState(formacionInicial);
 
@@ -51,8 +53,11 @@ const Formacion = ({
           Educación y/o Formación externa
         </Typography>
         <div className="flex flex-row justify-center">
-          <TooltipInfo label={"Privacidad de Formación:"} />
-          <RadioHorizontal />
+          <RadioHorizontal
+            label="Privacidad de Respuestas:"
+            value={visibilidadFormacion ? 'publico' : 'protegido'}
+            handleChange={handleVisibilidadChange}
+          />
         </div>
 
         <div className="flex flex-col gap-4 items-center">

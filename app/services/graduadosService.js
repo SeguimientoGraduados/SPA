@@ -37,6 +37,7 @@ const obtenerDatosGraduado = async (headers = {}) => {
 };
 
 const registrarGraduado = async (formData) => {
+  console.log(formData)
   try {
     const token = Cookies.get("token");
     if (!token) throw new Error("No se encontró el token.");
