@@ -1,7 +1,7 @@
 import { Card, Typography } from "@material-tailwind/react";
 import ModalSolicitudes from "./ModalSolicitudes";
 
-const TABLE_HEAD = ["Nombre", "DNI", "Carrera", "Año de graduación", ""];
+const TABLE_HEAD = ["Nombre", "Apellido", "DNI", "Carrera", "Año de graduación", ""];
 
 const TablaSolicitudes = ({ solicitudes , fetchData}) => {
   return (
@@ -38,6 +38,15 @@ const TablaSolicitudes = ({ solicitudes , fetchData}) => {
                     className="font-normal"
                   >
                     {solicitud.nombre}
+                  </Typography>
+                </td>
+                <td className={classes}>
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                  >
+                    {solicitud.apellido}
                   </Typography>
                 </td>
                 <td className={classes}>
