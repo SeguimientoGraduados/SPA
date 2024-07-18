@@ -8,16 +8,15 @@ const FormacionTooltip = ({ formacion = [] }) => {
       className="z-50 bg-white border border-blue-gray-50"
       content={
         <div className="flex flex-col gap-2 items-center">
-          {formacion.map((form) => (
-            <>
-              <Typography
-                variant="small"
-                color="blue-gray"
-                className="font-normal"
-              >
-                {form.titulo} - {form.institucion}
-              </Typography>
-            </>
+          {formacion.map((form, index) => (
+            <Typography
+              key={index} 
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              {form.titulo} - {form.institucion}
+            </Typography>
           ))}
         </div>
       }

@@ -456,17 +456,10 @@ const FormularioGraduado = ({
                   />
 
                   {modoEdicion ? (
-                    <Input
-                      label="Ciudad"
-                      name="ciudad"
-                      onBlur={handleChangeCiudad}
-                      onChange={handleInputChange}
-                      value={formData.ciudad.nombre}
-                      required
-                      onInvalid={handleValidation}
-                      onInput={handleValidation}
-                      error={Boolean(error)}
-                      className="bg-tremor-background"
+                    <CiudadAutocomplete
+                      onCiudadSelect={handleCiudadSelect}
+                      onValidation={handleValidation}
+                      initialValue={formData.ciudad}
                     />
                   ) : (
                     <CiudadAutocomplete

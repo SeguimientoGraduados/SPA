@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useCallback, useRef  } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Input, List, ListItem } from "@material-tailwind/react";
 import obtenerCoordenadasCiudad from '@/app/services/geocodificationService';
 import { debounce } from 'lodash';
 
-const CiudadAutocomplete = ({ onCiudadSelect, onValidation }) => {
-    const [inputValue, setInputValue] = useState('');
+const CiudadAutocomplete = ({ onCiudadSelect, onValidation, initialValue = null }) => {
+    const [inputValue, setInputValue] = useState(initialValue ? initialValue.nombre + ", " + initialValue.pais : '');
     const [opciones, setOpciones] = useState([]);
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
     const [error, setError] = useState(null);
     const wrapperRef = useRef(null);
+
+    useEffect(() => {
+        if (initialValue) {
+            onCiudadSelect(initialValue);
+        }
+    }, []);
 
     const debouncedBuscarCiudades = useCallback(
         debounce((valor) => {
