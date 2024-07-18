@@ -5,12 +5,20 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL + "/graduados";
 
 const obtenerGraduados = async (params = {}, headers = {}) => {
   try {
-    const query = new URLSearchParams(params).toString();
-    const response = await axios.get(`${API_URL}?${query}`, {
+    const token = Cookies.get("token");
+
+    const config = {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    };
+  
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const query = new URLSearchParams(params).toString();
+    const response = await axios.get(`${API_URL}?${query}`, config);
     return response.data;
   } catch (error) {
     console.error("Error fetching graduados data:", error);

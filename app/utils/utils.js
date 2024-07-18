@@ -11,3 +11,10 @@ export const normalizeText = (text) => {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
 };
+
+export const formateoTrabajo = (text) => {
+    if (text === "rel_dependencia")
+        return "Relación de dependencia"
+    if (text === "autonomo")
+        return "Autónomo"
+}

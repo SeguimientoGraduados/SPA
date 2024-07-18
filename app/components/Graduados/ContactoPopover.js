@@ -2,6 +2,7 @@ import {
   Popover,
   PopoverHandler,
   PopoverContent,
+  IconButton,
   Button,
   Typography,
 } from "@material-tailwind/react";
@@ -26,14 +27,15 @@ const ContactoPopover = ({ graduado }) => {
   return (
     <Popover>
       <PopoverHandler>
-        <Button
+        <IconButton
           variant="outlined"
-          color="blue"
+          color={graduado.email != "" ? "blue" : "gray"}
           className="rounded-full"
           size="md"
+          disabled={graduado.email == ""}
         >
           <FontAwesomeIcon icon={faAddressCard} />
-        </Button>
+        </IconButton>
       </PopoverHandler>
       <PopoverContent className="w-80 z-50">
         <div className="flex flex-col items-center gap-2">
