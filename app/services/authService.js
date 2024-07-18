@@ -3,12 +3,13 @@ import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const registerAPI = async (name, email, password) => {
+const registerAPI = async (name, email, password, captchaValue) => {
     try {
         const response = await axios.post(`${API_URL}/register`, {
             name: name,
             email: email,
-            password: password
+            password: password,
+            captchaToken: captchaValue
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -24,11 +25,12 @@ const registerAPI = async (name, email, password) => {
     }
 }
 
-const loginAPI = async (email, password) => {
+const loginAPI = async (email, password, captchaValue) => {
     try {
         const response = await axios.post(`${API_URL}/login`, {
             email: email,
-            password: password
+            password: password,
+            captchaToken: captchaValue
         }, {
             headers: {
                 'Content-Type': 'application/json'

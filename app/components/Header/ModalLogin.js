@@ -15,6 +15,10 @@ import {
   Alert,
 } from "@material-tailwind/react";
 import { AlertIcon } from "../Utils/Icons";
+import ReCAPTCHA from 'react-google-recaptcha';
+
+const SITE_KEY = process.env.NEXT_PUBLIC_SITE_KEY;
+
 
 const ModalLogin = () => {
   const { loginAPI, registerAPI, logoutAPI } = authService;
@@ -25,8 +29,14 @@ const ModalLogin = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   const { authState, login, logout, user } = useContext(AuthContext);
+
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
 
   const handleOpen = () => {
     setOpen((cur) => !cur);
@@ -34,10 +44,15 @@ const ModalLogin = () => {
   };
 
   const handleLogin = async () => {
+    if (!captchaValue) {
+      setError("Por favor complete el CAPTCHA");
+      return;
+    }
     try {
-      const data = await loginAPI(email, password);
+      const data = await loginAPI(email, password, captchaValue);
       login(data.user, data.token, data.graduado);
       setOpen(false);
+      setCaptchaValue(null);
     } catch (error) {
       handleError(error);
     }
@@ -60,14 +75,19 @@ const ModalLogin = () => {
   };
 
   const handleRegister = async () => {
+    if (!captchaValue) {
+      setError("Por favor complete el CAPTCHA");
+      return;
+    }
     if (password !== repeatPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
     try {
-      const data = await registerAPI(name, email, password);
+      const data = await registerAPI(name, email, password, captchaValue);
       login(data.user, data.token, data.graduado);
       setOpen(false);
+      setCaptchaValue(null);
     } catch (error) {
       console.error("Error al registrarse:", error);
       setError("Error al registrarse");
@@ -186,6 +206,12 @@ const ModalLogin = () => {
                 <Checkbox label="Recuérdame" />
               </div>
             )}
+            <div className="self-center">
+              <ReCAPTCHA
+                sitekey={SITE_KEY}
+                onChange={handleCaptchaChange}
+              />
+            </div>
           </CardBody>
           <CardFooter className="pt-0">
             <Button
