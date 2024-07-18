@@ -31,18 +31,18 @@ const ContactoPopover = ({ graduado }) => {
           variant="outlined"
           color={graduado.email != "" ? "blue" : "gray"}
           className="rounded-full"
-          size="md"
+          size="sm"
           disabled={graduado.email == ""}
         >
           <FontAwesomeIcon icon={faAddressCard} />
         </IconButton>
       </PopoverHandler>
-      <PopoverContent className="w-80 z-50">
+      <PopoverContent className="w-70 z-50">
         <div className="flex flex-col items-center gap-2">
           <div className="text-center">
             <div className="flex items-center">
               <FontAwesomeIcon icon={faEnvelope} />
-              <Typography variant="paragraph" className="ml-2">
+              <Typography variant="small" className="ml-2">
                <a href={`mailto:${graduado.email}`}>{graduado.email}</a>                
               </Typography>
             </div>
@@ -76,7 +76,7 @@ const ContactoPopover = ({ graduado }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button variant="text" size="small">
+                <Button className="-mb-2"variant="text" size="small">
                   Ver CV
                 </Button>
               </a>

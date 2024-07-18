@@ -127,7 +127,7 @@ const TablaGraduados = ({ graduadosPorCiudad }) => {
                   <td className="w-1/11">
                     <FormacionTooltip formacion={graduado.formacion} />
                   </td>
-                  <td className="w-1/11">
+                  <td className="w-1/11 py-1">
                     <ContactoPopover graduado={graduado} />
                   </td>
                 </tr>

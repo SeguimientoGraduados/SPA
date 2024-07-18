@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const FormacionTooltip = ({ formacion = [] }) => {
   return (
     <Tooltip
-      className="z-50 bg-white"
+      className="z-50 bg-white border border-blue-gray-50"
       content={
         <div className="flex flex-col gap-2 items-center">
           {formacion.map((form) => (

@@ -9,7 +9,7 @@ const TrabajoTooltip = ({
 }) => {
   return (
     <Tooltip
-      className="z-50 bg-white"
+      className="z-50 bg-white border border-blue-gray-50"
       content={
         <div className="flex flex-col gap-2 items-center">
           <Typography variant="small" color="blue-gray" className="font-normal">
