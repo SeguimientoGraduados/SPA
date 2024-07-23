@@ -13,13 +13,13 @@ const TABLE_HEAD = [
   "Ciudad",
   "Organizacion",
   "Años de experiencia",
-  "Formacion", //Aca la idea es poner el nombre de los titulos de formacion
+  "Formacion", 
   "Contacto",
 ];
 
 const TablaGraduados = ({ graduadosPorCiudad }) => {
   return (
-    <div className="w-full max-w-[95vw] h-[70vh] min-h-[500px] max-h-[1000px] overflow-auto">
+    <div className="w-full max-w-[95vw] h-[60vh] min-h-[500px] max-h-[1000px] overflow-auto">
       <Card className="w-full min-w-max">
         <table className="w-full min-w-max table-auto text-center">
           <thead>

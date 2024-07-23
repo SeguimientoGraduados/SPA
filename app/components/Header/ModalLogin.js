@@ -201,11 +201,6 @@ const ModalLogin = () => {
                 {error}
               </Alert>
             )}
-            {isLogin && (
-              <div className="self-end mr-2.5 -mt-3">
-                <Checkbox label="Recuérdame" />
-              </div>
-            )}
             <div className="self-center">
               <ReCAPTCHA
                 sitekey={SITE_KEY}

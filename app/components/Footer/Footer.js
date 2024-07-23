@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-b from-blue-600 to-blue-800 shadow-md px-32 py-4">
       <div className="flex justify-around items-center">
-        <Image className="h-auto w-auto" src={logoUns} alt="UNS" width={80} />
+        <Image className="h-auto w-auto" src={logoUns} alt="UNS" width={100} />
         <div className="text-sm text-center">
           <Typography variant="small" className="text-sm">
             <span className="font-bold">Universidad Nacional del Sur</span>{" "}
