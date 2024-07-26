@@ -8,6 +8,7 @@ import { DefaultSkeleton } from "./components/Utils/Skeleton";
 const Home = () => {
   const { obtenerGraduados } = graduadosService;
   const [graduados, setGraduados] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,10 +25,13 @@ const Home = () => {
 
   const handleCambioFiltros = async (params) => {
     try {
+      setLoading(true);
       const response = await obtenerGraduados(params);
       setGraduados(response);
     } catch (error) {
       console.error("Error al obtener graduados por ciudad:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,7 +45,7 @@ const Home = () => {
         graduadosPorCiudad={graduados}
         onFiltrosChange={handleCambioFiltros}
       />
-      <TablaGraduados graduadosPorCiudad={graduados} />
+      <TablaGraduados graduadosPorCiudad={graduados} loading={loading}/>
     </section>
   );
 };
