@@ -8,8 +8,7 @@ const CiudadMarker = ({ ciudad, onCitySelect, onCityClear }) => {
   const handlePopupClose = () => {
     onCityClear();
   };
-  const iconUrl =
-    "http://localhost:3000/_next/static/media/marker-icon-2x.93fdb12c.png";
+  const iconUrl = "/marker-icon-2x.93fdb12c.png";
   const customIcon = new L.Icon({
     iconUrl: iconUrl,
     iconSize: [25, 41],
