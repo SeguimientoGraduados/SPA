@@ -1,5 +1,5 @@
 "use client";
-import { Card, Typography } from "@material-tailwind/react";
+import { Card, Typography, Spinner } from "@material-tailwind/react";
 import TrabajoTooltip from "./TrabajoTooltip";
 import ExperienciaTooltip from "./ExperienciaTooltip";
 import FormacionTooltip from "./FormacionTooltip";
@@ -13,11 +13,14 @@ const TABLE_HEAD = [
   "Ciudad",
   "Organizacion",
   "Años de experiencia",
-  "Formacion", 
+  "Formacion",
   "Contacto",
 ];
 
-const TablaGraduados = ({ graduadosPorCiudad }) => {
+const TablaGraduados = ({ graduadosPorCiudad, loading }) => {
+  if (loading) {
+    return <Spinner className=" self-center h-12 w-12" color="blue" />
+  }
   return (
     <div className="w-full max-w-[95vw] h-[60vh] min-h-[500px] max-h-[1000px] overflow-auto">
       <Card className="w-full min-w-max">

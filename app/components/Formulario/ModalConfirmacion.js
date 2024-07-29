@@ -12,9 +12,10 @@ const ModalConfirmacion = ({ open, handleOpen, onAceptar, formData }) => {
     handleOpen(false);
   };
 
-  const handleAceptar = () => {
+  
+  const handleAceptar = (e) => {
     handleOpen(false);
-    onAceptar(formData)
+    onAceptar(e); 
   };
 
   return (
