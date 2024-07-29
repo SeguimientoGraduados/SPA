@@ -24,22 +24,17 @@ const Formacion = ({
 
   const handleInternalChange = (e, index, field) => {
     const { value } = e.target;
-    const newformaciones = [...formaciones];
-    newformaciones[index][field] = value;
+    const newFormaciones = [...formaciones];
+    newFormaciones[index][field] = value;
 
-    const allFieldsFilled = Object.values(newformaciones[index]).every(
-      (val) => val !== ""
-    );
-    if (allFieldsFilled) {
-      setFormaciones(newformaciones);
-      sendChange({ target: { name: "formacion", value: newformaciones } });
-    }
+    setFormaciones(newFormaciones);
+    sendChange({ target: { name: "formacion", value: newFormaciones } });
   };
 
   const removeFormacion = (index) => {
     const newFormaciones = formaciones.filter((_, i) => i !== index);
     setFormaciones(newFormaciones);
-    sendChange({ target: { name: "formacion", value: [] } });
+    sendChange({ target: { name: "formacion", value: newFormaciones } });
   };
 
   return (
@@ -70,19 +65,20 @@ const Formacion = ({
                 <Input
                   label="Título"
                   className="bg-tremor-background"
-                  onBlur={(e) => handleInternalChange(e, index, "titulo")}
+                  onChange={(e) => handleInternalChange(e, index, "titulo")}
                   value={item.titulo}
                 />
                 <SelectOption
                   select="Nivel"
                   handleChange={(e) => handleInternalChange(e, index, "nivel")}
                   options={opcionesFormacion}
+                  value={item.nivel}
                 />
                 <div className="col-span-2">
                   <Input
                     label="Institución"
                     className="bg-tremor-background w-full"
-                    onBlur={(e) => handleInternalChange(e, index, "institucion")}
+                    onChange={(e) => handleInternalChange(e, index, "institucion")}
                     value={item.institucion}
                   />
                 </div>
@@ -108,7 +104,8 @@ const Formacion = ({
           >
             <FontAwesomeIcon icon={faPlus} />
           </IconButton>
-        </div></div>
+        </div>
+      </div>
     </>
   );
 };
