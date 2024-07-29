@@ -19,7 +19,7 @@ const TABLE_HEAD = [
 
 const TablaGraduados = ({ graduadosPorCiudad, loading }) => {
   if (loading) {
-    return <Spinner className=" self-center h-12 w-12" />
+    return <Spinner className=" self-center h-12 w-12" color="blue" />
   }
   return (
     <div className="w-full max-w-[95vw] h-[60vh] min-h-[500px] max-h-[1000px] overflow-auto">

@@ -6,7 +6,6 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import CiudadMarker from "./CiudadMarker";
 import Filtros from "./Filtros";
 import graduadosService from "@/app/services/graduadosService";
-import { Button } from "@material-tailwind/react";
 import '../../globals.css';
 
 const Mapa = ({
@@ -42,37 +41,13 @@ const Mapa = ({
     }
   };
 
-  const clusterStyle = {
-    backgroundColor: '#87CEEB',
-    border: '2px solid #4682B4',
-    borderRadius: '50%',
-    color: 'white',
-    height: '40px',
-    width: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: '16px',
-  };
-  
-  const innerDivStyle = {
-    backgroundColor: '#4682B4',
-    borderRadius: '50%',
-    width: '30px',
-    height: '30px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-  
+
   const createClusterCustomIcon = function (cluster) {
     return L.divIcon({
-      html: `<div><span>${cluster.getChildCount()}</span></div>`,
       className: 'custom-marker-cluster',
-      iconSize: L.point(40, 40, true),
+      iconSize: L.point(55, 55, true),
     });
-  };  
+  };
 
   return (
     <div>
