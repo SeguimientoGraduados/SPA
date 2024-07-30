@@ -3,11 +3,11 @@ export const Validacion = (name, value, errors) => {
 
   const validateNombre = (value) => {
     const trimmedValue = value.trim();
-  
+
     if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value) && trimmedValue.length > 0) {
       return "El nombre solo puede contener letras y espacios";
     }
-  
+
     return "";
   };
 
@@ -37,7 +37,7 @@ export const Validacion = (name, value, errors) => {
   };
 
   const validateAnioGraduacion = (value) => {
-  
+
     const graduationYear = parseInt(value, 10);
     const currentYear = new Date().getFullYear();
     if (
@@ -80,6 +80,26 @@ export const Validacion = (name, value, errors) => {
     return "";
   };
 
+  const validatePassword = (value) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    if (value.length > 0) {
+      if (value.length < minLength) {
+        return `La contraseña debe tener al menos ${minLength} caracteres.`;
+      } else if (!hasUpperCase) {
+        return "La contraseña debe contener al menos una letra mayúscula.";
+      } else if (!hasLowerCase) {
+        return "La contraseña debe contener al menos una letra minúscula.";
+      } else if (!hasNumber) {
+        return "La contraseña debe contener al menos un número.";
+      }
+      return "";
+    }
+    return "";
+  };
+
   switch (name) {
     case "nombre":
       errorObj.nombre = validateNombre(value);
@@ -101,6 +121,9 @@ export const Validacion = (name, value, errors) => {
       break;
     case "cv":
       errorObj.cv = validateCv(value);
+      break;
+    case "password":
+      errorObj.password = validatePassword(value);
       break;
     default:
       break;
