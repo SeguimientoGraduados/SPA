@@ -16,6 +16,7 @@ import {
 } from "@material-tailwind/react";
 import { AlertIcon } from "../Utils/Icons";
 import ReCAPTCHA from 'react-google-recaptcha';
+import { Validacion } from "../Formulario/Validacion";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_SITE_KEY;
 
@@ -112,6 +113,18 @@ const ModalLogin = () => {
     }
   };
 
+  const [errors, setErrors] = useState({ password: "" });
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    if (!isLogin) {
+      const errorObj = Validacion("password", newPassword, errors);
+      setErrors(errorObj);
+    }
+  };
+
   return (
     <>
       <div>
@@ -182,12 +195,18 @@ const ModalLogin = () => {
               size="lg"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Input
-              label="Contraseña"
-              size="lg"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div>
+              <Input
+                label="Contraseña"
+                size="lg"
+                type="password"
+                error={errors.password}
+                onBlur={handlePasswordChange}
+              />
+              {errors.password && (
+                <span style={{ color: 'red', fontSize: '12px' }}>{errors.password}</span>
+              )}
+            </div>
             {!isLogin && (
               <Input
                 label="Repetir Contraseña"
