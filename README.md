@@ -1,7 +1,7 @@
 ## GRADUADOS UNS
 ![image](https://github.com/user-attachments/assets/1344efcc-d473-41f3-85eb-1ba4f0f656e6)
 
-[Enlace a la aplicación](URL_de_la_aplicación)
+[-> Click para ir a la aplicación <- ](https://graduados.vercel.app/)
 
 ### Descripción del Proyecto
 
