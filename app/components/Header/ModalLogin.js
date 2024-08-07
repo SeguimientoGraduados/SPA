@@ -85,7 +85,7 @@ const ModalLogin = () => {
       return;
     }
     try {
-      const data = await registerAPI(name, email, password, captchaValue);
+      const data = await registerAPI(name, email, password, repeatPassword, captchaValue);
       login(data.user, data.token, data.graduado);
       setOpen(false);
       setCaptchaValue(null);
