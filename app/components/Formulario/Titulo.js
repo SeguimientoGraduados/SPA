@@ -92,15 +92,17 @@ const Titulo = ({ onChange, carreras, valuesIniciales = [] }) => {
             <div className="min-h-[20px]"></div>
           </div>
 
-          <IconButton
-            className="rounded-full mt-7"
-            onClick={() => removeTitle(index)}
-            variant="gradient"
-            color="red"
-            size="sm"
-          >
-            <FontAwesomeIcon icon={faMinus} />
-          </IconButton>
+          {index > 0 && (
+            <IconButton
+              className="rounded-full mt-7"
+              onClick={() => removeTitle(index)}
+              variant="gradient"
+              color="red"
+              size="sm"
+            >
+              <FontAwesomeIcon icon={faMinus} />
+            </IconButton>
+          )}
         </div>
       ))}
       <IconButton
