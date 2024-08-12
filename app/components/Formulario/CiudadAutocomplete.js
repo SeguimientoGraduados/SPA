@@ -84,7 +84,7 @@ const CiudadAutocomplete = ({ onCiudadSelect, onValidation, initialValue = null 
     return (
         <div className="relative" ref={wrapperRef}>
             <Input
-                label="Ciudad"
+                label="Ciudad de residencia"
                 value={inputValue}
                 onChange={handleInputChange}
                 onFocus={() => inputValue.length > 2 && setMostrarOpciones(true)}

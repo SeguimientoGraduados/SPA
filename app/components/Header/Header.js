@@ -9,8 +9,12 @@ import { AuthContext } from "@/app/context/AuthContext";
 
 const Header = () => {
   const { authState } = useContext(AuthContext);
-  const { isAuthenticated, user, graduado } = authState;
+  const { isAuthenticated, user, graduado, loading } = authState;
   
+  if (loading) {
+    return; 
+  }
+
   return (
     <header className="bg-gradient-to-t from-blue-600 to-blue-800 shadow-md flex flex-row justify-between px-40 py-3">
       <div className="flex items-center">

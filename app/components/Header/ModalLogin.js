@@ -45,6 +45,7 @@ const ModalLogin = () => {
   };
 
   const handleLogin = async () => {
+    setError(null);
     if (!captchaValue) {
       setError("Por favor complete el CAPTCHA");
       return;
