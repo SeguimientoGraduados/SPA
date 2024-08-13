@@ -504,14 +504,14 @@ const FormularioGraduado = ({
                     valuesIniciales={formData.ocupaciones}
                   />
 
-                  <Textarea
+                  {/* <Textarea
                     variant="outlined"
                     label="Información adicional"
                     name="ocupacion_informacion_adicional"
                     onChange={handleChange}
                     value={formData.ocupacion_informacion_adicional || ""}
                     className="bg-tremor-background"
-                  />
+                  /> */}
 
                   <Typography
                     variant="h5"
