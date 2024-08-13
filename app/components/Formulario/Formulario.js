@@ -28,6 +28,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import CiudadAutocomplete from "./CiudadAutocomplete";
+import Ocupacion from "./Ocupacion";
 
 const FormularioGraduado = ({
   carreras,
@@ -44,9 +45,7 @@ const FormularioGraduado = ({
     ciudad: [],
     contacto: "",
     carreras: [],
-    ocupacion_trabajo: "",
-    ocupacion_empresa: "",
-    ocupacion_sector: "",
+    ocupacion: [],
     ocupacion_informacion_adicional: "",
     experiencia_anios: "",
     habilidades_competencias: "",
@@ -497,35 +496,13 @@ const FormularioGraduado = ({
                   </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <SelectOption
-                      select={"Ocupacion actual"}
-                      handleChange={handleChangeOcupacion}
-                      options={enumerados.ocupacion_trabajo}
-                      name="ocupacion_trabajo"
-                      initialValue={formData.ocupacion_trabajo}
-                    />
-                    <Input
-                      label="Nombre de la organización"
-                      name="ocupacion_empresa"
-                      onChange={handleChange}
-                      value={formData.ocupacion_empresa}
-                      className="bg-tremor-background"
-                    />
-                  </div>
-                  <div className="flex justify-center items-center">
-                    <Typography variant="paragraph" color="blue=gray">
-                      Sector:
-                    </Typography>
-                    <CheckboxList
-                      handleChange={handleChangeSector}
-                      direction={"row"}
-                      items={enumerados.ocupacion_sector}
-                      name="ocupacion_sector"
-                      opcionesSeleccionadas={formData.ocupacion_sector}
-                      seleccionUnica={true}
-                    />
-                  </div>
+                  <Ocupacion
+                    onChange={(e) =>
+                      handleChange({ target: { name: "ocupaciones", value: e } })
+                    }
+                    enumerados={enumerados}
+                    valuesIniciales={formData.ocupaciones}
+                  />
 
                   <Textarea
                     variant="outlined"
