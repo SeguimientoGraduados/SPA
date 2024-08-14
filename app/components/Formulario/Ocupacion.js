@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const Ocupacion = ({ onChange, enumerados, valuesIniciales = [] }) => {
-    const initialOcupaciones = valuesIniciales.length > 0 ? valuesIniciales : [{ ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: [] }];
+
+    const initialOcupaciones = valuesIniciales.length > 0 ? valuesIniciales : [{ ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: "", ocupacion_informacion_adicional:"" }];
 
     const [ocupaciones, setOcupaciones] = useState(initialOcupaciones);
 
@@ -16,7 +17,7 @@ const Ocupacion = ({ onChange, enumerados, valuesIniciales = [] }) => {
     };
 
     const addOcupacion = () => {
-        updateOcupaciones([...ocupaciones, { ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: "" }]);
+        updateOcupaciones([...ocupaciones, { ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: "", ocupacion_informacion_adicional:"" }]);
     };
 
     const removeOcupacion = (index) => {

@@ -20,7 +20,6 @@ import Titulo from "./Titulo";
 import obtenerCoordenadasCiudad from "@/app/services/geocodificationService";
 import { conversorFecha } from "../Utils/ConversorFecha";
 import Contacto from "./Contacto";
-import CheckboxList from "../Utils/CheckboxList";
 import Formacion from "./Formacion";
 import { Validacion } from "./Validacion";
 import Intereses from "./Intereses";
@@ -45,8 +44,7 @@ const FormularioGraduado = ({
     ciudad: [],
     contacto: "",
     carreras: [],
-    ocupacion: [],
-    ocupacion_informacion_adicional: "",
+    ocupaciones: [],
     experiencia_anios: "",
     habilidades_competencias: "",
     formacion: [],
@@ -223,18 +221,6 @@ const FormularioGraduado = ({
     });
   };
 
-  const handleChangeSector = (e) => {
-    const { value } = e.target;
-    const sector = value[0];
-    setOpcionesSector(sector);
-    handleChange({ target: { name: "ocupacion_sector", value: sector } });
-  };
-
-
-  const handleChangeOcupacion = (e) => {
-    const { value } = e.target;
-    handleChange({ target: { name: "ocupacion_trabajo", value } });
-  };
 
   const handleChangeAnios = (e) => {
     const { value } = e.target;
@@ -269,14 +255,24 @@ const FormularioGraduado = ({
     label: carrera.nombre,
   }));
 
-  const carrerasIniciales = datosGraduado.carreras
+  const carrerasIniciales = datosGraduado?.carreras
     ? datosGraduado.carreras.map((carrera) => ({
       title: carrera.id.toString(),
       year: carrera.anio_graduacion,
     }))
     : {};
 
-  const fechaInicial = datosGraduado.fecha_nacimiento
+  const ocupacionesIniciales = datosGraduado?.ocupaciones
+    ? datosGraduado.ocupaciones.map((ocupacion) => ({
+      ocupacion_trabajo: ocupacion.ocupacion_trabajo,
+      ocupacion_empresa: ocupacion.ocupacion_empresa,
+      ocupacion_sector: ocupacion.ocupacion_sector,
+      ocupacion_informacion_adicional: ocupacion.ocupacion_informacion_adicional,
+    }))
+    : {};
+  console.log(datosGraduado)
+
+  const fechaInicial = datosGraduado?.fecha_nacimiento
     ? datosGraduado.fecha_nacimiento
     : "";
 
@@ -501,9 +497,9 @@ const FormularioGraduado = ({
                       handleChange({ target: { name: "ocupaciones", value: e } })
                     }
                     enumerados={enumerados}
-                    valuesIniciales={formData.ocupaciones}
+                    valuesIniciales={ocupacionesIniciales}
                   />
-                  
+
                   <Typography
                     variant="h5"
                     color="blue-gray"
