@@ -8,7 +8,7 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import graduadosService from "@/app/services/graduadosService";
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
 
 const ModalSolicitudes = ({ solicitud, fetchData }) => {
   const { aprobarSolicitudGraduado, rechazarSolicitudGraduado } =
@@ -40,7 +40,10 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
     }
   };
 
-  const fechaFormateada = format(parseISO(solicitud.fecha_nacimiento), 'dd/MM/yyyy');
+  const fechaFormateada = format(
+    parseISO(solicitud.fecha_nacimiento),
+    "dd/MM/yyyy"
+  );
 
   return (
     <>
@@ -118,9 +121,7 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
                 <Typography variant="small" className="font-semibold">
                   Fecha de nacimiento:
                 </Typography>
-                <Typography variant="small">
-                  {fechaFormateada}
-                </Typography>
+                <Typography variant="small">{fechaFormateada}</Typography>
               </div>
             </div>
 
@@ -150,51 +151,53 @@ const ModalSolicitudes = ({ solicitud, fetchData }) => {
               color="blue-gray"
               className="font-semibold text-center font-semibold"
             >
-              Ocupación
+              Ocupación/es
             </Typography>
-            <div className="grid grid-cols-3 gap-2">
-              <div className="flex flex-col">
-                <Typography variant="small" className="font-semibold">
-                  Trabajo:
-                </Typography>
-                <Typography variant="small">
-                  {solicitud.ocupacion_trabajo}
-                </Typography>
+            {solicitud.ocupaciones.map((ocupacion, index) => (
+              <div key={index} className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col">
+                  <Typography variant="small" className="font-semibold">
+                    Trabajo:
+                  </Typography>
+                  <Typography variant="small">
+                    {ocupacion.ocupacion_trabajo}
+                  </Typography>
+                </div>
+                <div className="flex flex-col">
+                  <Typography
+                    variant="small"
+                    className="font-semibold text-center"
+                  >
+                    Organización:
+                  </Typography>
+                  <Typography variant="small" className="text-center">
+                    {ocupacion.ocupacion_empresa}
+                  </Typography>
+                </div>
+                <div className="flex flex-col">
+                  <Typography
+                    variant="small"
+                    className="font-semibold text-center"
+                  >
+                    Sector:
+                  </Typography>
+                  <Typography variant="small" className="text-center">
+                    {ocupacion.ocupacion_sector}
+                  </Typography>
+                </div>
+                <div className="flex flex-col col-span-3">
+                  <Typography
+                    variant="small"
+                    className="font-semibold text-center"
+                  >
+                    Información adicional:
+                  </Typography>
+                  <Typography variant="small" className="text-center">
+                    {ocupacion.ocupacion_informacion_adicional}
+                  </Typography>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <Typography
-                  variant="small"
-                  className="font-semibold text-center"
-                >
-                  Organización:
-                </Typography>
-                <Typography variant="small" className="text-center">
-                  {solicitud.ocupacion_empresa}
-                </Typography>
-              </div>
-              <div className="flex flex-col">
-                <Typography
-                  variant="small"
-                  className="font-semibold text-center"
-                >
-                  Sector:
-                </Typography>
-                <Typography variant="small" className="text-center">
-                  {solicitud.ocupacion_sector}
-                </Typography>
-              </div>
-              <div className="flex flex-col col-span-3">
-                <Typography
-                  variant="small"
-                  className="font-semibold text-center"
-                >
-                  Información adicional:
-                </Typography>
-                <Typography variant="small" className="text-center">
-                  {solicitud.ocupacion_informacion_adicional}
-                </Typography>
-              </div>
-            </div>
+            ))}
             <Typography
               variant="h6"
               color="blue-gray"
