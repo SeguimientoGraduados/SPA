@@ -16,7 +16,7 @@ const Ocupacion = ({ onChange, enumerados, valuesIniciales = [] }) => {
     };
 
     const addOcupacion = () => {
-        updateOcupaciones([...ocupaciones, { ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: [] }]);
+        updateOcupaciones([...ocupaciones, { ocupacion_trabajo: "", ocupacion_empresa: "", ocupacion_sector: "" }]);
     };
 
     const removeOcupacion = (index) => {
@@ -35,7 +35,7 @@ const Ocupacion = ({ onChange, enumerados, valuesIniciales = [] }) => {
         const { value } = e.target;
         const sector = value[0] || "";
         const newOcupaciones = ocupaciones.map((item, i) =>
-            i === index ? { ...item, ocupacion_sector: [sector] } : item
+            i === index ? { ...item, ocupacion_sector: sector } : item
         );
         updateOcupaciones(newOcupaciones);
     };

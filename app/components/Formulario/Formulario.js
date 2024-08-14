@@ -503,16 +503,7 @@ const FormularioGraduado = ({
                     enumerados={enumerados}
                     valuesIniciales={formData.ocupaciones}
                   />
-
-                  {/* <Textarea
-                    variant="outlined"
-                    label="Información adicional"
-                    name="ocupacion_informacion_adicional"
-                    onChange={handleChange}
-                    value={formData.ocupacion_informacion_adicional || ""}
-                    className="bg-tremor-background"
-                  /> */}
-
+                  
                   <Typography
                     variant="h5"
                     color="blue-gray"
