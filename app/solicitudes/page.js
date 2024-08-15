@@ -14,6 +14,7 @@ const Solicitudes = () => {
 
   const fetchData = async (params = {}) => {
     try {
+      setLoading(true);
       const response = await obtenerGraduadosPorValidar(params);
       setGraduadosPorValidar(response.data);
       setPaginas(response.links);
@@ -48,6 +49,7 @@ const Solicitudes = () => {
       <TablaSolicitudes
         solicitudes={graduadosPorValidar}
         fetchData={fetchData}
+        loading={loading}
       />
       <PaginacionSolicitudes
         paginas={paginas}

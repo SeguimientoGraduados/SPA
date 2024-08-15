@@ -19,7 +19,7 @@ const TABLE_HEAD = [
 
 const TablaGraduados = ({ graduadosPorCiudad, loading }) => {
   if (loading) {
-    return <Spinner className=" self-center h-12 w-12" color="blue" />
+    return <Spinner className=" self-center h-12 w-12" color="blue" />;
   }
   return (
     <div className="w-full max-w-[95vw] h-[60vh] min-h-[500px] max-h-[1000px] overflow-auto">
@@ -98,28 +98,31 @@ const TablaGraduados = ({ graduadosPorCiudad, loading }) => {
                     </Typography>
                   </td>
                   <td className="p-2">
-                    <TrabajoTooltip
-                      empresa={
-                        graduado.ocupacion_empresa
-                          ? graduado.ocupacion_empresa
-                          : null
-                      }
-                      trabajo={
-                        graduado.ocupacion_trabajo
-                          ? graduado.ocupacion_trabajo
-                          : null
-                      }
-                      sector={
-                        graduado.ocupacion_sector
-                          ? graduado.ocupacion_sector
-                          : null
-                      }
-                      info={
-                        graduado.ocupacion_informacion_adicional
-                          ? graduado.ocupacion_informacion_adicional
-                          : null
-                      }
-                    />
+                    {graduado.ocupaciones.map((ocupacion, index) => (
+                      <TrabajoTooltip
+                        key={index}
+                        empresa={
+                          ocupacion.ocupacion_empresa
+                            ? ocupacion.ocupacion_empresa
+                            : null
+                        }
+                        trabajo={
+                          ocupacion.ocupacion_trabajo
+                            ? ocupacion.ocupacion_trabajo
+                            : null
+                        }
+                        sector={
+                          ocupacion.ocupacion_sector
+                            ? ocupacion.ocupacion_sector
+                            : null
+                        }
+                        info={
+                          ocupacion.ocupacion_informacion_adicional
+                            ? ocupacion.ocupacion_informacion_adicional
+                            : null
+                        }
+                      />
+                    ))}
                   </td>
                   <td className="p-2">
                     <ExperienciaTooltip
