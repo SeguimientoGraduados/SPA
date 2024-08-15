@@ -34,7 +34,6 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
     oferta: false,
     demanda: false,
   });
-
   const [cargando, setCargando] = useState(true);
 
   const handlePaisChange = (pais) => {
@@ -80,6 +79,15 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
     if (anioMaxSeleccionado) {
       filtros.anioHasta = anioMaxSeleccionado;
     }
+    if (intereses.comunidad) {
+      filtros.interes_comunidad = intereses.comunidad;
+    }
+    if (intereses.oferta) {
+      filtros.interes_oferta = intereses.oferta;
+    }
+    if (intereses.demanda) {
+      filtros.interes_demanda = intereses.demanda;
+    }
     onDescargarExcel(filtros);
   };
 
@@ -104,6 +112,7 @@ const Filtros = ({ onFiltrosChange, onDescargarExcel, onLimpiarCiudad, ciudadSel
   useEffect(() => {
     const obtenerValores = async () => {
       try {
+
         const response = await obtenerValoresParaFiltrar();
         setPaises(response.paises);
         setDepartamentos(response.departamentos);
